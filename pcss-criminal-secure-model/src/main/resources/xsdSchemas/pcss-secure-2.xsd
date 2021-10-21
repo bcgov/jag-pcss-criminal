@@ -1,0 +1,91 @@
+<xsd:schema xmlns:pcss="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"/>
+    <xsd:element name="getAppearanceCriminalApprMethodSecure" type="tns:getAppearanceCriminalApprMethodSecure"/>
+    <xsd:element name="getAppearanceCriminalApprMethodSecureResponse" type="tns:getAppearanceCriminalApprMethodSecureResponse"/>
+    <xsd:element name="getAppearanceCriminalCountSecure" type="tns:getAppearanceCriminalCountSecure"/>
+    <xsd:element name="getAppearanceCriminalCountSecureResponse" type="tns:getAppearanceCriminalCountSecureResponse"/>
+    <xsd:element name="getAppearanceCriminalSecure" type="tns:getAppearanceCriminalSecure"/>
+    <xsd:element name="getAppearanceCriminalSecureResponse" type="tns:getAppearanceCriminalSecureResponse"/>
+    <xsd:element name="getFileDetailCriminalSecure" type="tns:getFileDetailCriminalSecure"/>
+    <xsd:element name="getFileDetailCriminalSecureResponse" type="tns:getFileDetailCriminalSecureResponse"/>
+    <xsd:complexType name="getAppearanceCriminalApprMethodSecure">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalApprMethodSecureRequest" nillable="true" type="tns:getAppearanceCriminalApprMethodSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodSecureRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalApprMethodSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodSecureResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalApprMethodResponse" nillable="true" type="tns:getAppearanceCriminalApprMethodResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodResponse">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalApprMethodResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountSecure">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalCountSecureRequest" nillable="true" type="tns:getAppearanceCriminalCountSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountSecureRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalCountSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountSecureResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalCountResponse" nillable="true" type="tns:getAppearanceCriminalCountResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountResponse">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalCountResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalSecure">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalSecureRequest" nillable="true" type="tns:getAppearanceCriminalSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalSecureRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalSecureRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalSecureResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalResponse" nillable="true" type="tns:getAppearanceCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResponse">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalSecure">
+        <xsd:sequence>
+            <xsd:element name="getFileDetailCriminalSecureRequest" nillable="true" type="tns:getFileDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getFileDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalSecureResponse">
+        <xsd:sequence>
+            <xsd:element name="getFileDetailCriminalResponse" nillable="true" type="tns:getFileDetailCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalResponse">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getFileDetailCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

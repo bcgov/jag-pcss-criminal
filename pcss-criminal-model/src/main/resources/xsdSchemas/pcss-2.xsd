@@ -1,0 +1,421 @@
+<xsd:schema xmlns:pcss="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"/>
+    <xsd:element name="getAppearanceCriminalApprMethod" type="tns:getAppearanceCriminalApprMethod"/>
+    <xsd:element name="getAppearanceCriminalApprMethodResponse" type="tns:getAppearanceCriminalApprMethodResponse"/>
+    <xsd:element name="getAppearanceCriminalCount" type="tns:getAppearanceCriminalCount"/>
+    <xsd:element name="getAppearanceCriminalCountResponse" type="tns:getAppearanceCriminalCountResponse"/>
+    <xsd:element name="getAppearanceCriminalResource" type="tns:getAppearanceCriminalResource"/>
+    <xsd:element name="getAppearanceCriminalResourceResponse" type="tns:getAppearanceCriminalResourceResponse"/>
+    <xsd:element name="getPersonnelAvailability" type="tns:getPersonnelAvailability"/>
+    <xsd:element name="getPersonnelAvailabilityResponse" type="tns:getPersonnelAvailabilityResponse"/>
+    <xsd:element name="getPersonnelAvailDetail" type="tns:getPersonnelAvailDetail"/>
+    <xsd:element name="getPersonnelAvailDetailResponse" type="tns:getPersonnelAvailDetailResponse"/>
+    <xsd:element name="getPersonnelSearch" type="tns:getPersonnelSearch"/>
+    <xsd:element name="getPersonnelSearchResponse" type="tns:getPersonnelSearchResponse"/>
+    <xsd:element name="getSyncCriminalAppearance" type="tns:getSyncCriminalAppearance"/>
+    <xsd:element name="getSyncCriminalAppearanceResponse" type="tns:getSyncCriminalAppearanceResponse"/>
+    <xsd:element name="getSyncCriminalHearingRestriction" type="tns:getSyncCriminalHearingRestriction"/>
+    <xsd:element name="getSyncCriminalHearingRestrictionResponse" type="tns:getSyncCriminalHearingRestrictionResponse"/>
+    <xsd:element name="setAppearanceCriminal" type="tns:setAppearanceCriminal"/>
+    <xsd:element name="setAppearanceCriminalResponse" type="tns:setAppearanceCriminalResponse"/>
+    <xsd:element name="setAppearanceMethodCriminal" type="tns:setAppearanceMethodCriminal"/>
+    <xsd:element name="setAppearanceMethodCriminalResponse" type="tns:setAppearanceMethodCriminalResponse"/>
+    <xsd:element name="setCounselDetailCriminal" type="tns:setCounselDetailCriminal"/>
+    <xsd:element name="setCounselDetailCriminalResponse" type="tns:setCounselDetailCriminalResponse"/>
+    <xsd:element name="setHearingRestrictionCriminal" type="tns:setHearingRestrictionCriminal"/>
+    <xsd:element name="setHearingRestrictionCriminalResponse" type="tns:setHearingRestrictionCriminalResponse"/>
+    <xsd:element name="getCrownAssignment" type="tns:getCrownAssignment"/>
+    <xsd:element name="getCrownAssignmentResponse" type="tns:getCrownAssignmentResponse"/>
+    <xsd:element name="setCrownFileDetail" type="tns:setCrownFileDetail"/>
+    <xsd:element name="setCrownFileDetailResponse" type="tns:setCrownFileDetailResponse"/>
+    <xsd:element name="setCrownAssignment" type="tns:setCrownAssignment"/>
+    <xsd:element name="setCrownAssignmentResponse" type="tns:setCrownAssignmentResponse"/>
+    <xsd:element name="setFileNote" type="tns:setFileNote"/>
+    <xsd:element name="setFileNoteResponse" type="tns:setFileNoteResponse"/>
+    <xsd:element name="getAppearanceCriminal" type="tns:getAppearanceCriminal"/>
+    <xsd:element name="getAppearanceCriminalResponse" type="tns:getAppearanceCriminalResponse"/>
+    <xsd:element name="getFileDetailCriminal" type="tns:getFileDetailCriminal"/>
+    <xsd:element name="getFileDetailCriminalResponse" type="tns:getFileDetailCriminalResponse"/>
+    <xsd:element name="getClosedFile" type="tns:getClosedFile"/>
+    <xsd:element name="getClosedFileResponse" type="tns:getClosedFileResponse"/>
+    <xsd:complexType name="getAppearanceCriminalApprMethod">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalApprMethodRequest" nillable="true" type="tns:getAppearanceCriminalApprMethodRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalApprMethodRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalApprMethodResponse" nillable="true" type="tns:getAppearanceCriminalApprMethodResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalApprMethodResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalApprMethodResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCount">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalCountRequest" nillable="true" type="tns:getAppearanceCriminalCountRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalCountRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalCountResponse" nillable="true" type="tns:getAppearanceCriminalCountResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalCountResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalCountResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResource">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalResourceRequest" nillable="true" type="tns:getAppearanceCriminalResourceRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResourceRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalResourceRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResourceResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalResourceResponse" nillable="true" type="tns:getAppearanceCriminalResourceResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResourceResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalResourceResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailability">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelAvailabilityRequest" nillable="true" type="tns:getPersonnelAvailabilityRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailabilityRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelAvailabilityRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailabilityResponse">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelAvailabilityResponse" nillable="true" type="tns:getPersonnelAvailabilityResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailabilityResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelAvailabilityResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailDetail">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelAvailDetailRequest" nillable="true" type="tns:getPersonnelAvailDetailRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailDetailRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelAvailDetailRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailDetailResponse">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelAvailDetailResponse" nillable="true" type="tns:getPersonnelAvailDetailResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelAvailDetailResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelAvailDetailResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelSearch">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelSearchRequest" nillable="true" type="tns:getPersonnelSearchRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelSearchRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelSearchRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelSearchResponse">
+        <xsd:sequence>
+            <xsd:element name="getPersonnelSearchResponse" nillable="true" type="tns:getPersonnelSearchResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getPersonnelSearchResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getPersonnelSearchResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalAppearance">
+        <xsd:sequence>
+            <xsd:element name="getSyncCriminalAppearanceRequest" nillable="true" type="tns:getSyncCriminalAppearanceRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalAppearanceRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getSyncCriminalAppearanceRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalAppearanceResponse">
+        <xsd:sequence>
+            <xsd:element name="getSyncCriminalAppearanceResponse" nillable="true" type="tns:getSyncCriminalAppearanceResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalAppearanceResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getSyncCriminalAppearanceResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalHearingRestriction">
+        <xsd:sequence>
+            <xsd:element name="getSyncCriminalHearingRestrictionRequest" nillable="true" type="tns:getSyncCriminalHearingRestrictionRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalHearingRestrictionRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getSyncCriminalHearingRestrictionRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalHearingRestrictionResponse">
+        <xsd:sequence>
+            <xsd:element name="getSyncCriminalHearingRestrictionResponse" nillable="true" type="tns:getSyncCriminalHearingRestrictionResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getSyncCriminalHearingRestrictionResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getSyncCriminalHearingRestrictionResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceCriminal">
+        <xsd:sequence>
+            <xsd:element name="setAppearanceCriminalRequest" nillable="true" type="tns:setAppearanceCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setAppearanceCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="setAppearanceCriminalResponse" nillable="true" type="tns:setAppearanceCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setAppearanceCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceMethodCriminal">
+        <xsd:sequence>
+            <xsd:element name="setAppearanceMethodCriminalRequest" nillable="true" type="tns:setAppearanceMethodCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceMethodCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setAppearanceMethodCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceMethodCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="setAppearanceMethodCriminalResponse" nillable="true" type="tns:setAppearanceMethodCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setAppearanceMethodCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setAppearanceMethodCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCounselDetailCriminal">
+        <xsd:sequence>
+            <xsd:element name="setCounselDetailCriminalRequest" nillable="true" type="tns:setCounselDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCounselDetailCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCounselDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCounselDetailCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="setCounselDetailCriminalResponse" nillable="true" type="tns:setCounselDetailCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCounselDetailCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCounselDetailCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setHearingRestrictionCriminal">
+        <xsd:sequence>
+            <xsd:element name="setHearingRestrictionCriminalRequest" nillable="true" type="tns:setHearingRestrictionCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setHearingRestrictionCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setHearingRestrictionCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setHearingRestrictionCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="setHearingRestrictionCriminalResponse" nillable="true" type="tns:setHearingRestrictionCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setHearingRestrictionCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setHearingRestrictionCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getCrownAssignment">
+        <xsd:sequence>
+            <xsd:element name="getCrownAssignmentRequest" nillable="true" type="tns:getCrownAssignmentRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getCrownAssignmentRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getCrownAssignmentRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getCrownAssignmentResponse">
+        <xsd:sequence>
+            <xsd:element name="getCrownAssignmentResponse" nillable="true" type="tns:getCrownAssignmentResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getCrownAssignmentResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getCrownAssignmentResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownFileDetail">
+        <xsd:sequence>
+            <xsd:element name="setCrownFileDetailRequest" nillable="true" type="tns:setCrownFileDetailRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownFileDetailRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCrownFileDetailRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownFileDetailResponse">
+        <xsd:sequence>
+            <xsd:element name="setCrownFileDetailResponse" nillable="true" type="tns:setCrownFileDetailResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownFileDetailResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCrownFileDetailResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownAssignment">
+        <xsd:sequence>
+            <xsd:element name="setCrownAssignmentRequest" nillable="true" type="tns:setCrownAssignmentRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownAssignmentRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCrownAssignmentRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownAssignmentResponse">
+        <xsd:sequence>
+            <xsd:element name="setCrownAssignmentResponse" nillable="true" type="tns:setCrownAssignmentResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setCrownAssignmentResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setCrownAssignmentResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setFileNote">
+        <xsd:sequence>
+            <xsd:element name="setFileNoteRequest" nillable="true" type="tns:setFileNoteRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setFileNoteRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFileNoteRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setFileNoteResponse">
+        <xsd:sequence>
+            <xsd:element name="setFileNoteResponse" nillable="true" type="tns:setFileNoteResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="setFileNoteResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFileNoteResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminal">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalRequest" nillable="true" type="tns:getAppearanceCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="getAppearanceCriminalResponse" nillable="true" type="tns:getAppearanceCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getAppearanceCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getAppearanceCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminal">
+        <xsd:sequence>
+            <xsd:element name="getFileDetailCriminalRequest" nillable="true" type="tns:getFileDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getFileDetailCriminalRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalResponse">
+        <xsd:sequence>
+            <xsd:element name="getFileDetailCriminalResponse" nillable="true" type="tns:getFileDetailCriminalResponse2"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getFileDetailCriminalResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getFileDetailCriminalResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getClosedFile">
+        <xsd:sequence>
+            <xsd:element name="getClosedFileRequest" nillable="true" type="tns:getClosedFileRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getClosedFileRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getClosedFileRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getClosedFileResponse">
+        <xsd:sequence>
+            <xsd:element name="getClosedFileResponce" nillable="true" type="tns:getClosedFileResponce"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="getClosedFileResponce">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getClosedFileResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
