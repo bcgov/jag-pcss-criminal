@@ -29,22 +29,8 @@ public class InstantUtils {
         return first.substring(0, first.length() - 1);
     }
 
+    //Parse has been merged to this functionality. 
     public static Instant parse(String value) {
-        try {
-            Date d;
-            try {
-                d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US).parse(value);
-            } catch (ParseException ex) {
-                d = new SimpleDateFormat("dd-MMM-yy", Locale.US).parse(value);
-            }
-            return d.toInstant();
-
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-
-    public static Instant parseSoap(String value) {
         try {
             Date d;
             // Try to parse a datetime first then try date only if both fail return null
@@ -69,4 +55,5 @@ public class InstantUtils {
             return null;
         }
     }
+
 }
