@@ -2,7 +2,7 @@
         <jaxb:globalBindings>
             <jaxb:serializable uid="1" />
             <jaxb:javaType name="java.time.Instant" xmlType="xsd:dateTime"
-                   parseMethod="ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils.parse"
+                 parseMethod="ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils.parse"
                  printMethod="ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils.print" />
         </jaxb:globalBindings>
 </jaxb:bindings>

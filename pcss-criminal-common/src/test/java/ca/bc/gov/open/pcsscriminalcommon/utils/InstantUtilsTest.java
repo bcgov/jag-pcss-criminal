@@ -63,41 +63,10 @@ public class InstantUtilsTest {
     }
 
     @Test
-    @DisplayName("Success object parsed")
-    public void objectParsed() throws IOException {
-
-        Instant result = InstantUtils.parse("26-NOV-01 12.00.00.0000000 PM -08:00");
-
-        Assertions.assertEquals("2001-11-26T20:00:00Z", result.toString());
-
-    }
-
-    @Test
-    @DisplayName("Success object parsed no time")
-    public void objectParsedNoTime() throws IOException {
-
-        Instant result = InstantUtils.parse("16-Apr-21");
-
-        Assertions.assertEquals("2021-04-16T07:00:00Z", result.toString());
-
-    }
-
-
-    @Test
-    @DisplayName("Error object not parsed")
-    public void objecNotParsed() throws IOException {
-
-        Instant result = InstantUtils.parse(null);
-
-        Assertions.assertNull(result);
-
-    }
-
-    @Test
     @DisplayName("Success object soap parsed")
     public void objectParsedSoap() throws IOException {
 
-        Instant result = InstantUtils.parseSoap("26-NOV-01 12.00.00.0000000 PM -08:00");
+        Instant result = InstantUtils.parse("26-NOV-01 12.00.00.0000000 PM -08:00");
 
         Assertions.assertEquals("2001-11-26T07:00:00Z", result.toString());
 
@@ -107,7 +76,7 @@ public class InstantUtilsTest {
     @DisplayName("Success object soap parsed no time")
     public void objectParsedNoTimeSoap() throws IOException {
 
-        Instant result = InstantUtils.parseSoap("16-Apr-21");
+        Instant result = InstantUtils.parse("16-Apr-21");
 
         Assertions.assertEquals("2021-04-16T07:00:00Z", result.toString());
 
@@ -117,7 +86,7 @@ public class InstantUtilsTest {
     @DisplayName("Error object not soap parsed")
     public void objecNotParsedSoap() throws IOException {
 
-        Instant result = InstantUtils.parseSoap(null);
+        Instant result = InstantUtils.parse(null);
 
         Assertions.assertNull(result);
 
