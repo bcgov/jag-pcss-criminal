@@ -33,11 +33,10 @@ public class InstantUtils {
         try {
             Date d;
             try {
-                d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.).parse(value);
+                d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US).parse(value);
             } catch (ParseException ex) {
                 d = new SimpleDateFormat("dd-MMM-yy", Locale.US).parse(value);
             }
-            d.setTimeZone(TimeZone.getTimeZone("GMT-7"));
             return d.toInstant();
 
         } catch (Exception ex) {
