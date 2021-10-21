@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  #############################################################################
+  ###                         PCSS-CRIMINAL                                 ###
+  #############################################################################
+  pcss-criminal:
+    container_name: pcss-criminal-api
+    ports:
+      - 8080:8080
+    environment:
+    networks:
+      - pcss-network
+
+networks:
+  pcss-network:
+    driver: "bridge"

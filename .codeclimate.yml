@@ -1,0 +1,30 @@
+version: "2"
+checks:
+  similar-code:
+    enabled: false
+plugins:
+  sonar-java:
+    enabled: true
+    config:
+      sonar.java.source: "8"
+      tests_patterns:
+        - pcss-criminal-application/src/test/**/pcsscriminalapplication
+  pmd:
+    enabled: true
+  markdownlint:
+    enabled: true
+
+exclude_patterns:
+- "config/"
+- "db/"
+- "dist/"
+- "features/"
+- "**/node_modules/"
+- "script/"
+- "**/spec/"
+- "**/test/"
+- "**/tests/"
+- "Tests/"
+- "**/vendor/"
+- "**/*_test.go"
+- "**/*.d.ts"
