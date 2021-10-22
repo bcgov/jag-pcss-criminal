@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.TimeZone;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Create Account Test Suite")
@@ -23,6 +24,8 @@ public class InstantDeserializerTest {
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
+
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
         sut = new InstantDeserializer();
     }
