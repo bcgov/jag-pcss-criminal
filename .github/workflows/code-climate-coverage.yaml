@@ -71,9 +71,9 @@ jobs:
           cat target/site/jacoco-aggregate/jacoco.xml
     
       # Formatting the BACKEND coverage reports generated (dynamically)
-      - name: Format BACKEND coverage reports
-        run: |
-          ./cc-test-reporter format-coverage target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
+      #- name: Format BACKEND coverage reports
+      #  run: |
+      #    ./cc-test-reporter format-coverage target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
@@ -81,17 +81,17 @@ jobs:
         if: ${{ env.ACTION_DEBUG }}
 
       # Count of all total coverage files available
-      - name: Count files present
-        run: |
-          echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
+     # - name: Count files present
+     #   run: |
+      #    echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
           #echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
       # Upload JSON for debugging purposes
-      - name: Upload JSON for debugging purposes
-        uses: actions/upload-artifact@v2
-        with:
-          name: summed-java-coverage-report
-          path: coverage/pcss-codeclimate.json.json
+      #- name: Upload JSON for debugging purposes
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: summed-java-coverage-report
+      #    path: coverage/pcss-codeclimate.json.json
 
       # Upload total coverage report to Code Climate
-      - name: Upload coverage report to Code Climate
-        run: ./cc-test-reporter upload-coverage -d -i coverage/pcss-codeclimate.json.json
+      #- name: Upload coverage report to Code Climate
+      #  run: ./cc-test-reporter upload-coverage -d -i coverage/pcss-codeclimate.json.json
