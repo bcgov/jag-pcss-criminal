@@ -58,7 +58,7 @@ jobs:
 
       # Run Maven Verify to generate all jacoco reports
       - name: Build with Maven
-        run: mvn -B verify
+        run: mvn -B verify -DBASIC_AUTH_PASS=${{ secrets.BASIC_AUTH_PASS }} -DBASIC_AUTH_USER=${{ secrets.BASIC_AUTH_USER }} -DORDS_HOST=${{ secrets.ORDS_HOST }} -DSPLUNK_HTTP_URL=${{ secrets.SPLUNK_HTTP_URL }} -DSPLUNK_INDEX=${{ secrets.SPLUNK_INDEX }} -DSPLUNK_TOKEN=${{ secrets.SPLUNK_TOKEN }}
 
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
