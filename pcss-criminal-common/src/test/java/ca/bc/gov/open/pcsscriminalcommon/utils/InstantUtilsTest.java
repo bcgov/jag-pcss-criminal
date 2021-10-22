@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.TimeZone;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Instant Utils Test Suite")
@@ -23,6 +24,8 @@ public class InstantUtilsTest {
     public void beforeAll() {
 
         MockitoAnnotations.openMocks(this);
+
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
     }
 
