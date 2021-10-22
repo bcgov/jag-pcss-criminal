@@ -63,7 +63,7 @@ jobs:
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
-          JACOCO_SOURCE_PATH=pcss-criminal-application/src/main/java ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/efax-codeclimate.json;
+          JACOCO_SOURCE_PATH=pcss-criminal-application/target/site/jacoco ./cc-test-reporter format-coverage pcss-criminal-application/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/efax-codeclimate.json;
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
