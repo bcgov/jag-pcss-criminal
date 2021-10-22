@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalcommon.utils;
 
 import com.fasterxml.jackson.core.JsonParser;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +15,6 @@ import java.util.TimeZone;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Instant Utils Test Suite")
-@Slf4j
 public class InstantUtilsTest {
 
     @Mock
@@ -71,9 +69,7 @@ public class InstantUtilsTest {
     @DisplayName("Success object soap parsed")
     public void objectParsedSoap() throws IOException {
 
-        Instant result = InstantUtils.parse("26-NOV-01 12.00.00.0000000 PM");
-
-        log.info(TimeZone.getDefault().getDisplayName());
+        Instant result = InstantUtils.parse("26-NOV-01 12.00.00.0000000 PM -08:00");
 
         Assertions.assertEquals("2001-11-26T07:00:00Z", result.toString());
 
