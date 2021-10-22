@@ -63,17 +63,17 @@ jobs:
       # Debug
       - name: DO I EXIST?
         run: | 
-          ls pcss-criminal-application/target/site/jacoco
+          ls target/site/jacoco-aggregate
       
       # Debug
       - name: DO I EXIST PT.2
         run: |
-          cat pcss-criminal-application/target/site/jacoco/jacoco.xml
+          cat target/site/jacoco-aggregate/jacoco.xml
     
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
-          JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
+          JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
