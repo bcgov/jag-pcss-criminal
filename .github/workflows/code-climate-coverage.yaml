@@ -73,7 +73,7 @@ jobs:
       # Formatting the BACKEND coverage reports generated (dynamically)
       - name: Format BACKEND coverage reports
         run: |
-          JACOCO_SOURCE_PATH=${{ github.workspace }}/pcss-criminal-application/target/site/jacoco ./cc-test-reporter format-coverage ${{ github.workspace }}/pcss-criminal-application/target/site/jacoco/jacoco.xml -t jacoco -o coverage/efax-codeclimate.json;
+          JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
@@ -90,8 +90,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: summed-java-coverage-report
-          path: coverage/codeclimate-api.json
+          path: coverage/pcss-codeclimate.json.json
 
       # Upload total coverage report to Code Climate
       - name: Upload coverage report to Code Climate
-        run: ./cc-test-reporter upload-coverage -d -i coverage/codeclimate-api.json
+        run: ./cc-test-reporter upload-coverage -d -i coverage/pcss-codeclimate.json.json
