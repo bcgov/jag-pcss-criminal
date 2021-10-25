@@ -89,7 +89,6 @@ jobs:
       - name: Count files present
         run: |
           echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
-          echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
           
       # Sum the coverage reports
       - name: Summing the coverage reports generated
