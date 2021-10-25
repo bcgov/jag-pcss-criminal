@@ -71,27 +71,47 @@ jobs:
           cat target/site/jacoco-aggregate/jacoco.xml
     
       # Formatting the BACKEND coverage reports generated (dynamically)
-      #- name: Format BACKEND coverage reports
-      #  run: |
-      #    ./cc-test-reporter format-coverage target/site/jacoco-aggregate/jacoco.xml --input-type jacoco --output coverage/pcss-codeclimate.json;
+      - name: Format BACKEND coverage reports
+        run: |
+          projectRelRegex="^\.\/(.*)\/target\/site\/jacoco\/jacoco\.xml$"
+          for file in $(find . -name "jacoco.xml")
+          do
+              echo $file
+              echo $projectRelRegex
+              if [[ $file =~ $projectRelRegex ]]
+              then
+                  projectRel="${BASH_REMATCH[1]}"
+                  echo "analyzing project: " $projectRel
+                  projectName="${projectRel//\//-}"
+                  JACOCO_SOURCE_PATH=${{ github.workspace }}/$projectRel/src/main/java ./cc-test-reporter format-coverage ${{github.workspace}}/$projectRel/target/site/jacoco/jacoco.xml --input-type jacoco --output coverage/$projectName-codeclimate.json;
+                  echo "coverage generated: coverage/$projectName-codeclimate.json;"
+              else
+                  echo $file does not match
+              fi
+          done
       # List all formatted files in coverage directory
       - name: WHERE AM I - FORMATTED?
         run: |
           ls ${{ github.workspace }}/coverage
         if: ${{ env.ACTION_DEBUG }}
 
-      # Count of all total coverage files available
-     # - name: Count files present
-     #   run: |
-      #    echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
-          #echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
-      # Upload JSON for debugging purposes
-      #- name: Upload JSON for debugging purposes
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: summed-java-coverage-report
-      #    path: coverage/pcss-codeclimate.json.json
+      #Count of all total coverage files available
+      - name: Count files present
+        run: |
+          echo "FILE_COUNTER=$(ls -1q ./coverage | wc -l )" >> $GITHUB_ENV
+          echo "::set-env name=FILE_COUNTER::$(ls -1q ./coverage | wc -l )"
+          
+      # Sum the coverage reports
+      - name: Summing the coverage reports generated
+        run: ./cc-test-reporter sum-coverage coverage/*-codeclimate.json -p ${{ env.FILE_COUNTER }} -o coverage/total-codeclimate.json
+        
+      #Upload JSON for debugging purposes
+      - name: Upload JSON for debugging purposes
+        uses: actions/upload-artifact@v2
+        with:
+          name: summed-java-coverage-report
+          path: coverage/total-codeclimate.json
 
       # Upload total coverage report to Code Climate
-      #- name: Upload coverage report to Code Climate
-      #  run: ./cc-test-reporter upload-coverage -d -i coverage/pcss-codeclimate.json.json
+      - name: Upload coverage report to Code Climate
+        run: ./cc-test-reporter upload-coverage -d -i coverage/total-codeclimate.json
