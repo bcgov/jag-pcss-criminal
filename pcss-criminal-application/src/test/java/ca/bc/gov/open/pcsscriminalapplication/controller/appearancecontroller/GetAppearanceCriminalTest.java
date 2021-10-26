@@ -2,6 +2,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminal;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -35,7 +36,9 @@ public class GetAppearanceCriminalTest {
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() {
 
-        Assertions.assertNull(sut.getAppearanceCriminal());
+        GetAppearanceCriminal getAppearanceCriminalRequest = new GetAppearanceCriminal();
+
+        Assertions.assertNull(sut.getAppearanceCriminal(getAppearanceCriminalRequest));
 
     }
 
