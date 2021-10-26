@@ -39,16 +39,16 @@ public class MyBasicAuthenticationEntryPointTest {
     public void beforeAll() {
         MockitoAnnotations.openMocks(this);
 
-        sut = new MyBasicAuthenticationEntryPoint();
+        sut = new MyBasicAuthenticationEntryPoint(mockObjectMapper);
     }
 
     @Test
     @DisplayName("Test commence method")
     public void testCommence() throws IOException {
+
         Mockito.when(mockRequest.getRequestURI()).thenReturn("request URI");
         Mockito.when(mockResponse.getWriter()).thenReturn(mockWriter);
-        ReflectionTestUtils.setField(sut, "objectMapper", mockObjectMapper);
-
         Assertions.assertDoesNotThrow(() -> sut.commence(mockRequest, mockResponse, authExMock));
+
     }
 }

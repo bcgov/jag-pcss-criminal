@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
+import ca.bc.gov.open.pcsscriminalapplication.properties.SecurityProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
@@ -17,10 +18,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@EnableConfigurationProperties(SecurityProperties.class)
 public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public MyBasicAuthenticationEntryPoint(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public void commence(
