@@ -1,6 +1,5 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 
-import ca.bc.gov.open.pcsscriminalapplication.configuration.MyBasicAuthenticationEntryPoint;
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
