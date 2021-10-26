@@ -1,7 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import ca.bc.gov.open.pcsscriminalapplication.properties.SecurityProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,21 +14,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 @Configuration
+@EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${security.basic-auth.username}")
-    private String userName;
+    private final SecurityProperties securityProperties;
+    private final MyBasicAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Value("${security.basic-auth.password}")
-    private String password;
-
-    @Autowired private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
+    public SecurityConfig(SecurityProperties securityProperties, MyBasicAuthenticationEntryPoint authenticationEntryPoint) {
+        this.securityProperties = securityProperties;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser(userName)
-                .password(passwordEncoder().encode(password))
+                .withUser(securityProperties.getUsername())
+                .password(passwordEncoder().encode(securityProperties.getPassword()))
                 .roles("Admin");
     }
 

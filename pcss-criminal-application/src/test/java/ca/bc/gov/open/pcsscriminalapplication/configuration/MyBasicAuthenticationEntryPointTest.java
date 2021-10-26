@@ -39,7 +39,7 @@ public class MyBasicAuthenticationEntryPointTest {
     public void beforeAll() {
         MockitoAnnotations.openMocks(this);
 
-        sut = new MyBasicAuthenticationEntryPoint();
+        sut = new MyBasicAuthenticationEntryPoint(mockObjectMapper);
     }
 
     @Test
