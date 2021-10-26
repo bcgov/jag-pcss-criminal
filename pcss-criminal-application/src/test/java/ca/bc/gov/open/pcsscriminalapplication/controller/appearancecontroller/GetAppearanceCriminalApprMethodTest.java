@@ -35,7 +35,7 @@ class GetAppearanceCriminalApprMethodTest {
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() {
 
-        Assertions.assertNull(sut.getAppearanceCriminalApprMethod());
+        Assertions.assertNull(sut.getAppearanceCriminalApprMethod(null));
 
     }
 
