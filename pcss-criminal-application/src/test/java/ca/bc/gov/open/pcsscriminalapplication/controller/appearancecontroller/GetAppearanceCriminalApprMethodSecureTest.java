@@ -8,8 +8,6 @@ import ca.bc.gov.open.wsdl.pcss.secure.one.AppearanceMethod;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureResponse;
-import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethod;
-import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -89,22 +87,23 @@ public class GetAppearanceCriminalApprMethodSecureTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        GetAppearanceCriminalApprMethod getAppearanceCriminalApprMethodRequest = new GetAppearanceCriminalApprMethod();
-        GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest1 = new GetAppearanceCriminalApprMethodRequest();
-        ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest2 = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodRequest();
+        GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecureRequest = new GetAppearanceCriminalApprMethodSecure();
+        GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodRequest1 = new GetAppearanceCriminalApprMethodSecureRequest();
+        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest2 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest();
 
-        getAppearanceCriminalApprMethodRequest2.setAppearanceId("TEST");
-        getAppearanceCriminalApprMethodRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalApprMethodRequest2.setRequestDtm("2021-04-17");
-        getAppearanceCriminalApprMethodRequest2.setRequestPartId("TEST");
+        getAppearanceCriminalApprMethodSecureRequest2.setAppearanceId("TEST");
+        getAppearanceCriminalApprMethodSecureRequest2.setRequestAgencyIdentifierId("TEST");
+        getAppearanceCriminalApprMethodSecureRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalApprMethodSecureRequest2.setRequestPartId("TEST");
+        getAppearanceCriminalApprMethodSecureRequest2.setApplicationCd("TEST");
 
-        getAppearanceCriminalApprMethodRequest1.setGetAppearanceCriminalApprMethodRequest(getAppearanceCriminalApprMethodRequest2);
+        getAppearanceCriminalApprMethodRequest1.setGetAppearanceCriminalApprMethodSecureRequest(getAppearanceCriminalApprMethodSecureRequest2);
 
-        getAppearanceCriminalApprMethodRequest.setGetAppearanceCriminalApprMethodRequest(getAppearanceCriminalApprMethodRequest1);
+        getAppearanceCriminalApprMethodSecureRequest.setGetAppearanceCriminalApprMethodSecureRequest(getAppearanceCriminalApprMethodRequest1);
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
-        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalApprMethod(getAppearanceCriminalApprMethodRequest));
+        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalApprMethodSecure(getAppearanceCriminalApprMethodSecureRequest));
 
     }
 
@@ -112,9 +111,7 @@ public class GetAppearanceCriminalApprMethodSecureTest {
     @DisplayName("Error: with a bad date throw exception")
     public void whenBadDateExceptionThrown() throws BadDateException, JsonProcessingException {
 
-        GetAppearanceCriminalApprMethod getAppearanceCriminalApprMethodRequest = new GetAppearanceCriminalApprMethod();
-
-        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalApprMethod(getAppearanceCriminalApprMethodRequest));
+        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalApprMethodSecure(new GetAppearanceCriminalApprMethodSecure()));
 
     }
 
