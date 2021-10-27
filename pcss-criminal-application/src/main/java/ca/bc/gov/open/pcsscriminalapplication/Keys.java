@@ -35,5 +35,11 @@ public class Keys {
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
+    public static final String ORDS_APPEARANCE_SECURE = "secure/appearance";
+    public static final String ORDS_APPEARANCE_METHOD = "appearance-method";
+    public static final String ORDS_APPEARANCE_METHOD_SECURE = "secure/appearance-method";
+    public static final String ORDS_APPEARANCE_COUNT = "appearance-count";
+    public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance-count";
+    public static final String ORDS_APPEARANCE_RESOURCE = "appearance-resource";
 
 }

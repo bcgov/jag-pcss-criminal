@@ -112,7 +112,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodRequest.getRequestDtm())
@@ -164,7 +164,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodSecureRequest.getRequestDtm())
@@ -216,7 +216,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountRequest.getRequestDtm())
@@ -267,7 +267,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountSecureRequest.getRequestDtm())
@@ -319,7 +319,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_RESOURCE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalResourceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalResourceRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalResourceRequest.getRequestDtm())
@@ -370,7 +370,7 @@ public class AppearanceController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalSecureRequest.getRequestDtm())
@@ -450,7 +450,7 @@ public class AppearanceController {
                 ? setAppearanceMethodCriminal.getSetAppearanceMethodCriminalRequest().getSetAppearanceMethodCriminalRequest()
                 : new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest();
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD);
 
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest> body =
                 new HttpEntity<>(setAppearanceMethodCriminalRequest, new HttpHeaders());
