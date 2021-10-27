@@ -88,19 +88,109 @@ public class AppearanceController {
             throw new ORDSException();
 
         }
-        
+
     }
 
-    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = "getAppearanceCriminalApprMethod")
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD)
     @ResponsePayload
-    public GetAppearanceCriminalApprMethodResponse getAppearanceCriminalApprMethod(@RequestPayload GetAppearanceCriminalApprMethod getAppearanceCriminalApprMethod) {
-        return null;
+    public GetAppearanceCriminalApprMethodResponse getAppearanceCriminalApprMethod(@RequestPayload GetAppearanceCriminalApprMethod getAppearanceCriminalApprMethod) throws JsonProcessingException, BadDateException {
+
+        log.info("Get Appearance Criminal Appr Method");
+
+        ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest =
+                getAppearanceCriminalApprMethod.getGetAppearanceCriminalApprMethodRequest() != null
+                && getAppearanceCriminalApprMethod.getGetAppearanceCriminalApprMethodRequest().getGetAppearanceCriminalApprMethodRequest() != null
+                ? getAppearanceCriminalApprMethod.getGetAppearanceCriminalApprMethodRequest().getGetAppearanceCriminalApprMethodRequest()
+                : new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodRequest();
+
+        if (getAppearanceCriminalApprMethodRequest.getRequestDtm() == null) {
+
+            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethod, ""));
+            throw new BadDateException();
+
+        }
+
+        UriComponentsBuilder builder =
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodRequest.getRequestPartId())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodRequest.getAppearanceId());
+
+        try {
+
+            HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodResponse> resp =
+                    restTemplate.exchange(
+                            builder.toUriString(),
+                            HttpMethod.GET,
+                            new HttpEntity<>(new HttpHeaders()),
+                            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodResponse.class);
+
+            GetAppearanceCriminalApprMethodResponse out = new GetAppearanceCriminalApprMethodResponse();
+            GetAppearanceCriminalApprMethodResponse2 one = new GetAppearanceCriminalApprMethodResponse2();
+            one.setGetAppearanceCriminalApprMethodResponse(resp.getBody());
+            out.setGetAppearanceCriminalApprMethodResponse(one);
+            return out;
+
+        } catch (Exception ex) {
+
+            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethodRequest, ex.getMessage()));
+            throw new ORDSException();
+
+        }
+
     }
 
-    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = "getAppearanceCriminalApprMethodSecure")
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE)
     @ResponsePayload
-    public GetAppearanceCriminalApprMethodSecureResponse getAppearanceCriminalApprMethodSecure(@RequestPayload GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecure) {
-        return null;
+    public GetAppearanceCriminalApprMethodSecureResponse getAppearanceCriminalApprMethodSecure(@RequestPayload
+                             GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecure) throws JsonProcessingException, BadDateException {
+
+        log.info("Get Appearance Criminal Appr Method Secure");
+
+        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest =
+                getAppearanceCriminalApprMethodSecure.getGetAppearanceCriminalApprMethodSecureRequest() != null
+                        && getAppearanceCriminalApprMethodSecure.getGetAppearanceCriminalApprMethodSecureRequest().getGetAppearanceCriminalApprMethodSecureRequest() != null
+                        ? getAppearanceCriminalApprMethodSecure.getGetAppearanceCriminalApprMethodSecureRequest().getGetAppearanceCriminalApprMethodSecureRequest()
+                        : new  ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest();
+
+        if (getAppearanceCriminalApprMethodSecureRequest.getRequestDtm() == null) {
+
+            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethodSecure, ""));
+            throw new BadDateException();
+
+        }
+
+        UriComponentsBuilder builder =
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_APPEARANCE_CD, getAppearanceCriminalApprMethodSecureRequest.getApplicationCd())
+                        .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodSecureRequest.getAppearanceId());
+
+        try {
+
+            HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse> resp =
+                    restTemplate.exchange(
+                            builder.toUriString(),
+                            HttpMethod.GET,
+                            new HttpEntity<>(new HttpHeaders()),
+                            ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse.class);
+
+            GetAppearanceCriminalApprMethodSecureResponse out = new GetAppearanceCriminalApprMethodSecureResponse();
+            ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodResponse one = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodResponse();
+            one.setGetAppearanceCriminalApprMethodResponse(resp.getBody());
+            out.setGetAppearanceCriminalApprMethodResponse(one);
+            return out;
+
+        } catch (Exception ex) {
+
+            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethodSecureRequest, ex.getMessage()));
+            throw new ORDSException();
+
+        }
+
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = "getAppearanceCriminalCount")

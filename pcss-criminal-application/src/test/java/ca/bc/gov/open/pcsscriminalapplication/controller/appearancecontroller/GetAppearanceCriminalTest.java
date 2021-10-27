@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.wsdl.pcss.one.ApprDetail;
 import ca.bc.gov.open.wsdl.pcss.three.YesNoType;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalRequest;
@@ -19,9 +20,12 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
+import java.util.Collections;
+
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DisplayName("GetAppearanceCriminal Test")
 public class GetAppearanceCriminalTest {
 
     @Mock
@@ -68,6 +72,10 @@ public class GetAppearanceCriminalTest {
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse();
         response.setFutureRecCount("1");
         response.setResponseCd("TEST");
+        response.setHistoryRecCount("1");
+        response.setResponseMessageTxt("TEST");
+
+        response.setApprDetail(Collections.singletonList(new ApprDetail()));
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
@@ -76,6 +84,10 @@ public class GetAppearanceCriminalTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals("1", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getFutureRecCount());
         Assertions.assertEquals("TEST", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseCd());
+        Assertions.assertEquals("1", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getHistoryRecCount());
+        Assertions.assertEquals("TEST", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseMessageTxt());
+        Assertions.assertEquals(1, result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getApprDetail().size());
+
     }
 
     @Test

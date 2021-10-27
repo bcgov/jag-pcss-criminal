@@ -6,6 +6,8 @@ public class Keys {
 
     //Methods
     public static final String SOAP_METHOD_APPEARANCE = "getAppearanceCriminal";
+    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD = "getAppearanceCriminalApprMethod";
+    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE = "getAppearanceCriminalApprMethodSecure";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -18,6 +20,8 @@ public class Keys {
     public static final String QUERY_JUSTIN_NO = "justinNo";
     public static final String QUERY_FUTURE_FLAG = "futureYN";
     public static final String QUERY_HISTORY_FLAG = "historyYN";
+    public static final String QUERY_APPEARANCE_ID = "appearanceId";
+    public static final String QUERY_APPEARANCE_CD = "appearanceCd";
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
