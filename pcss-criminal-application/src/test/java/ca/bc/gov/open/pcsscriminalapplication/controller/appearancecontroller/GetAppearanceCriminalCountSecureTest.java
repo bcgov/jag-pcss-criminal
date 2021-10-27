@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.wsdl.pcss.secure.one.ApprCount;
 import ca.bc.gov.open.wsdl.pcss.secure.one.ApprDetail;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,33 +52,33 @@ public class GetAppearanceCriminalCountSecureTest {
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
 
-        GetAppearanceCriminalSecure getAppearanceCriminalSecure = new GetAppearanceCriminalSecure();
-        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest = new GetAppearanceCriminalSecureRequest();
-        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest1 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest();
+        GetAppearanceCriminalCountSecure getAppearanceCriminalCountSecure = new GetAppearanceCriminalCountSecure();
+        GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest = new GetAppearanceCriminalCountSecureRequest();
+        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest1 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest();
 
-        getAppearanceCriminalSecureRequest1.setAppearanceId("TEST");
-        getAppearanceCriminalSecureRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalSecureRequest1.setRequestDtm(Instant.now());
-        getAppearanceCriminalSecureRequest1.setRequestPartId("TEST");
-        getAppearanceCriminalSecureRequest1.setApplicationCd("TEST");
+        getAppearanceCriminalCountSecureRequest1.setAppearanceId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setRequestAgencyIdentifierId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setRequestDtm(Instant.now());
+        getAppearanceCriminalCountSecureRequest1.setRequestPartId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setApplicationCd("TEST");
 
-        getAppearanceCriminalSecureRequest.setGetAppearanceCriminalSecureRequest(getAppearanceCriminalSecureRequest1);
+        getAppearanceCriminalCountSecureRequest.setGetAppearanceCriminalCountSecureRequest(getAppearanceCriminalCountSecureRequest1);
 
-        getAppearanceCriminalSecure.setGetAppearanceCriminalSecureRequest(getAppearanceCriminalSecureRequest);
+        getAppearanceCriminalCountSecure.setGetAppearanceCriminalCountSecureRequest(getAppearanceCriminalCountSecureRequest);
 
-        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse response = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse();
+        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse response = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
-        response.setApprDetail(Collections.singletonList(new ApprDetail()));
+        response.setApprCount(Collections.singletonList(new ApprCount()));
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
-        GetAppearanceCriminalSecureResponse result = sut.getAppearanceCriminalSecure(getAppearanceCriminalSecure);
+        GetAppearanceCriminalCountSecureResponse result = sut.getAppearanceCriminalCountSecure(getAppearanceCriminalCountSecure);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("TEST", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseMessageTxt());
-        Assertions.assertEquals("TEST", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseCd());
-        Assertions.assertEquals(1, result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getApprDetail().size());
+        Assertions.assertEquals("TEST", result.getGetAppearanceCriminalCountResponse().getGetAppearanceCriminalCountResponse().getResponseMessageTxt());
+        Assertions.assertEquals("TEST", result.getGetAppearanceCriminalCountResponse().getGetAppearanceCriminalCountResponse().getResponseCd());
+        Assertions.assertEquals(1, result.getGetAppearanceCriminalCountResponse().getGetAppearanceCriminalCountResponse().getApprCount().size());
 
     }
 
@@ -85,23 +86,23 @@ public class GetAppearanceCriminalCountSecureTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        GetAppearanceCriminalSecure getAppearanceCriminalSecure = new GetAppearanceCriminalSecure();
-        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest = new GetAppearanceCriminalSecureRequest();
-        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest1 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest();
+        GetAppearanceCriminalCountSecure getAppearanceCriminalCountSecure = new GetAppearanceCriminalCountSecure();
+        GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest = new GetAppearanceCriminalCountSecureRequest();
+        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest1 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest();
 
-        getAppearanceCriminalSecureRequest1.setAppearanceId("TEST");
-        getAppearanceCriminalSecureRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalSecureRequest1.setRequestDtm(Instant.now());
-        getAppearanceCriminalSecureRequest1.setRequestPartId("TEST");
-        getAppearanceCriminalSecureRequest1.setApplicationCd("TEST");
+        getAppearanceCriminalCountSecureRequest1.setAppearanceId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setRequestAgencyIdentifierId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setRequestDtm(Instant.now());
+        getAppearanceCriminalCountSecureRequest1.setRequestPartId("TEST");
+        getAppearanceCriminalCountSecureRequest1.setApplicationCd("TEST");
 
-        getAppearanceCriminalSecureRequest.setGetAppearanceCriminalSecureRequest(getAppearanceCriminalSecureRequest1);
+        getAppearanceCriminalCountSecureRequest.setGetAppearanceCriminalCountSecureRequest(getAppearanceCriminalCountSecureRequest1);
 
-        getAppearanceCriminalSecure.setGetAppearanceCriminalSecureRequest(getAppearanceCriminalSecureRequest);
+        getAppearanceCriminalCountSecure.setGetAppearanceCriminalCountSecureRequest(getAppearanceCriminalCountSecureRequest);
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
-        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalSecure(getAppearanceCriminalSecure));
+        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalCountSecure(getAppearanceCriminalCountSecure));
 
     }
 
@@ -109,7 +110,7 @@ public class GetAppearanceCriminalCountSecureTest {
     @DisplayName("Error: with a bad date throw exception")
     public void whenBadDateExceptionThrown() {
 
-        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalSecure(new GetAppearanceCriminalSecure()));
+        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalCountSecure(new GetAppearanceCriminalCountSecure()));
 
     }
 
