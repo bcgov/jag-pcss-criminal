@@ -18,6 +18,10 @@ public class Keys {
     public static final String SOAP_METHOD_APPEARANCE_COUNT_SECURE = "getAppearanceCriminalCountSecure";
     public static final String SOAP_METHOD_SET_APPEARANCE = "setAppearanceCriminal";
     public static final String SOAP_METHOD_SET_APPEARANCE_METHOD = "setAppearanceMethodCriminal";
+    public static final String SOAP_METHOD_FILE_CLOSED = "getClosedFile";
+    public static final String SOAP_METHOD_FILE_DETAIL = "getFileDetailCriminal";
+    public static final String SOAP_METHOD_FILE_DETAIL_SECURE = "getFileDetailCriminalSecure";
+    public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -32,6 +36,10 @@ public class Keys {
     public static final String QUERY_HISTORY_FLAG = "historyYN";
     public static final String QUERY_APPEARANCE_ID = "appearanceId";
     public static final String QUERY_APPEARANCE_CD = "appearanceCd";
+    public static final String QUERY_APPLICATION_CD = "apllicationCd";
+    public static final String QUERY_AGENCY_IDENTIFIER = "agencyIdentifier";
+    public static final String QUERY_FROM_DATE = "fromDtm";
+    public static final String QUERY_TO_DATE = "toDtm";
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
