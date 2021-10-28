@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Resource;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
+import java.time.Instant;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -42,26 +44,13 @@ public class GetAppearanceCriminalResourceTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, objectMapperMock);
+        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
 
     }
 
     @Test
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
-
-        GetAppearanceCriminalResource getAppearanceCriminalResource = new GetAppearanceCriminalResource();
-        GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest = new GetAppearanceCriminalResourceRequest();
-        ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest();
-
-        getAppearanceCriminalResourceRequest1.setAppearanceId("TEST");
-        getAppearanceCriminalResourceRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalResourceRequest1.setRequestDtm("2021-04-17");
-        getAppearanceCriminalResourceRequest1.setRequestPartId("TEST");
-
-        getAppearanceCriminalResourceRequest.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest1);
-
-        getAppearanceCriminalResource.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest);
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse();
         response.setResponseMessageTxt("TEST");
@@ -70,7 +59,7 @@ public class GetAppearanceCriminalResourceTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
-        GetAppearanceCriminalResourceResponse result = sut.getAppearanceCriminalResource(getAppearanceCriminalResource);
+        GetAppearanceCriminalResourceResponse result = sut.getAppearanceCriminalResource(createTestRequest());
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals("TEST", result.getGetAppearanceCriminalResourceResponse().getGetAppearanceCriminalResourceResponse().getResponseMessageTxt());
@@ -83,22 +72,9 @@ public class GetAppearanceCriminalResourceTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        GetAppearanceCriminalResource getAppearanceCriminalResource = new GetAppearanceCriminalResource();
-        GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest = new GetAppearanceCriminalResourceRequest();
-        ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest();
-
-        getAppearanceCriminalResourceRequest1.setAppearanceId("TEST");
-        getAppearanceCriminalResourceRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalResourceRequest1.setRequestDtm("2021-04-17");
-        getAppearanceCriminalResourceRequest1.setRequestPartId("TEST");
-
-        getAppearanceCriminalResourceRequest.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest1);
-
-        getAppearanceCriminalResource.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest);
-
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
-        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalResource(getAppearanceCriminalResource));
+        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalResource(createTestRequest()));
 
     }
 
@@ -107,6 +83,25 @@ public class GetAppearanceCriminalResourceTest {
     public void whenBadDateExceptionThrown() {
 
         Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalResource(new GetAppearanceCriminalResource()));
+
+    }
+
+    private GetAppearanceCriminalResource createTestRequest() {
+
+        GetAppearanceCriminalResource getAppearanceCriminalResource = new GetAppearanceCriminalResource();
+        GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest = new GetAppearanceCriminalResourceRequest();
+        ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest();
+
+        getAppearanceCriminalResourceRequest1.setAppearanceId("TEST");
+        getAppearanceCriminalResourceRequest1.setRequestAgencyIdentifierId("TEST");
+        getAppearanceCriminalResourceRequest1.setRequestDtm(Instant.now());
+        getAppearanceCriminalResourceRequest1.setRequestPartId("TEST");
+
+        getAppearanceCriminalResourceRequest.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest1);
+
+        getAppearanceCriminalResource.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest);
+
+        return getAppearanceCriminalResource;
 
     }
 

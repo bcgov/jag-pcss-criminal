@@ -3,15 +3,14 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
-import ca.bc.gov.open.pcsscriminalapplication.model.OrdsErrorLog;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
@@ -31,12 +30,12 @@ public class AppearanceController {
 
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
-    private final ObjectMapper objectMapper;
+    private final LogBuilder logBuilder;
 
-    public AppearanceController(RestTemplate restTemplate, PcssProperties pcssProperties, ObjectMapper objectMapper) {
+    public AppearanceController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
-        this.objectMapper = objectMapper;
+        this.logBuilder = logBuilder;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE)
@@ -53,7 +52,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminal, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminal, ""));
             throw new BadDateException();
 
         }
@@ -84,8 +83,7 @@ public class AppearanceController {
             return getAppearanceCriminalResponse;
 
         } catch (Exception ex) {
-
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminalRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminalRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -106,7 +104,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalApprMethodRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethod, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethod, ""));
             throw new BadDateException();
 
         }
@@ -136,7 +134,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethodRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD, getAppearanceCriminalApprMethodRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -158,7 +156,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalApprMethodSecureRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE, getAppearanceCriminalApprMethodSecure, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE, getAppearanceCriminalApprMethodSecure, ""));
             throw new BadDateException();
 
         }
@@ -189,7 +187,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE, getAppearanceCriminalApprMethodSecureRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE, getAppearanceCriminalApprMethodSecureRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -210,7 +208,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalCountRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT, getAppearanceCriminalCount, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT, getAppearanceCriminalCount, ""));
             throw new BadDateException();
 
         }
@@ -240,7 +238,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT, getAppearanceCriminalCountRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT, getAppearanceCriminalCountRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -261,7 +259,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalCountSecureRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE, getAppearanceCriminalCountSecure, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE, getAppearanceCriminalCountSecure, ""));
             throw new BadDateException();
 
         }
@@ -292,7 +290,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE, getAppearanceCriminalCountSecureRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE, getAppearanceCriminalCountSecureRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -313,7 +311,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalResourceRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_RESOURCE, getAppearanceCriminalResource, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_RESOURCE, getAppearanceCriminalResource, ""));
             throw new BadDateException();
 
         }
@@ -343,7 +341,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_RESOURCE, getAppearanceCriminalResourceRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_RESOURCE, getAppearanceCriminalResourceRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -364,7 +362,7 @@ public class AppearanceController {
 
         if (getAppearanceCriminalSecureRequest.getRequestDtm() == null) {
 
-            log.warn(writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_SECURE, getAppearanceCriminalSecure, ""));
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_SECURE, getAppearanceCriminalSecure, ""));
             throw new BadDateException();
 
         }
@@ -396,7 +394,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_SECURE, getAppearanceCriminalSecureRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE_SECURE, getAppearanceCriminalSecureRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -434,7 +432,7 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_APPEARANCE, setAppearanceCriminalRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_APPEARANCE, setAppearanceCriminalRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
@@ -472,22 +470,10 @@ public class AppearanceController {
 
         } catch (Exception ex) {
 
-            log.error(writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_APPEARANCE_METHOD, setAppearanceMethodCriminalRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_APPEARANCE_METHOD, setAppearanceMethodCriminalRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
-
-    }
-
-    //TODO: this should eventually be move to utils
-    private String writeLogMessage(String errorMessage, String method, Object requestObject, String exception) throws JsonProcessingException {
-
-        return objectMapper.writeValueAsString(
-                new OrdsErrorLog(
-                        errorMessage,
-                        method,
-                        exception,
-                        requestObject));
 
     }
 
