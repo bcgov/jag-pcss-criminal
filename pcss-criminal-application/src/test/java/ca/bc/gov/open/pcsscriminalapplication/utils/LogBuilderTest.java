@@ -2,7 +2,6 @@ package ca.bc.gov.open.pcsscriminalapplication.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONException;
 import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -20,7 +19,7 @@ public class LogBuilderTest {
 
     @Test
     @DisplayName("Test data elements converted to string")
-    public void testElementsConvertedToString() throws JSONException, JsonProcessingException {
+    public void testElementsConvertedToString() throws JsonProcessingException {
 
         String result = sut.writeLogMessage("TEST", "TEST", null, "TEST");
 
