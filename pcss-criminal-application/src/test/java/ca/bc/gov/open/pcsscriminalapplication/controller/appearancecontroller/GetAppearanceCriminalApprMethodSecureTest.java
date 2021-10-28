@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.one.AppearanceMethod;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureRequest;
@@ -45,27 +46,13 @@ public class GetAppearanceCriminalApprMethodSecureTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, objectMapperMock);
+        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
 
     }
 
     @Test
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
-
-        GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecureRequest = new GetAppearanceCriminalApprMethodSecure();
-        GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodRequest1 = new GetAppearanceCriminalApprMethodSecureRequest();
-        ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest2 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest();
-
-        getAppearanceCriminalApprMethodSecureRequest2.setAppearanceId("TEST");
-        getAppearanceCriminalApprMethodSecureRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalApprMethodSecureRequest2.setRequestDtm(Instant.now());
-        getAppearanceCriminalApprMethodSecureRequest2.setRequestPartId("TEST");
-        getAppearanceCriminalApprMethodSecureRequest2.setApplicationCd("TEST");
-
-        getAppearanceCriminalApprMethodRequest1.setGetAppearanceCriminalApprMethodSecureRequest(getAppearanceCriminalApprMethodSecureRequest2);
-
-        getAppearanceCriminalApprMethodSecureRequest.setGetAppearanceCriminalApprMethodSecureRequest(getAppearanceCriminalApprMethodRequest1);
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse response = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse();
         response.setResponseMessageTxt("TEST");
@@ -74,7 +61,7 @@ public class GetAppearanceCriminalApprMethodSecureTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
-        GetAppearanceCriminalApprMethodSecureResponse result = sut.getAppearanceCriminalApprMethodSecure(getAppearanceCriminalApprMethodSecureRequest);
+        GetAppearanceCriminalApprMethodSecureResponse result = sut.getAppearanceCriminalApprMethodSecure(createTestRequest());
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals("TEST", result.getGetAppearanceCriminalApprMethodResponse().getGetAppearanceCriminalApprMethodResponse().getResponseMessageTxt());
@@ -87,6 +74,22 @@ public class GetAppearanceCriminalApprMethodSecureTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+
+        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalApprMethodSecure(createTestRequest()));
+
+    }
+
+    @Test
+    @DisplayName("Error: with a bad date throw exception")
+    public void whenBadDateExceptionThrown() {
+
+        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalApprMethodSecure(new GetAppearanceCriminalApprMethodSecure()));
+
+    }
+
+    private GetAppearanceCriminalApprMethodSecure createTestRequest() {
+
         GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecureRequest = new GetAppearanceCriminalApprMethodSecure();
         GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodRequest1 = new GetAppearanceCriminalApprMethodSecureRequest();
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest2 = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest();
@@ -101,17 +104,7 @@ public class GetAppearanceCriminalApprMethodSecureTest {
 
         getAppearanceCriminalApprMethodSecureRequest.setGetAppearanceCriminalApprMethodSecureRequest(getAppearanceCriminalApprMethodRequest1);
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
-
-        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalApprMethodSecure(getAppearanceCriminalApprMethodSecureRequest));
-
-    }
-
-    @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void whenBadDateExceptionThrown() throws BadDateException, JsonProcessingException {
-
-        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalApprMethodSecure(new GetAppearanceCriminalApprMethodSecure()));
+        return getAppearanceCriminalApprMethodSecureRequest;
 
     }
 
