@@ -4,6 +4,40 @@
         xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"/>
 
+    <xsd:element name="getPing">
+        <xsd:complexType >
+            <xsd:sequence></xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getPingResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="status" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getHealth">
+        <xsd:complexType>
+            <xsd:sequence/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="getHealthResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="appid" nillable="true" type="xsd:string"/>
+                <xsd:element name="method" nillable="true" type="xsd:string"/>
+                <xsd:element name="status" nillable="true" type="xsd:string"/>
+                <xsd:element name="host" nillable="true" type="xsd:string"/>
+                <xsd:element name="instance" nillable="true" type="xsd:string"/>
+                <xsd:element name="version" nillable="true" type="xsd:string"/>
+                <xsd:element name="compatibility" nillable="true" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
     <xsd:element name="getAppearanceCriminalApprMethod">
         <xsd:complexType >
             <xsd:sequence>
