@@ -22,6 +22,7 @@ public class Keys {
     public static final String SOAP_METHOD_FILE_DETAIL = "getFileDetailCriminal";
     public static final String SOAP_METHOD_FILE_DETAIL_SECURE = "getFileDetailCriminalSecure";
     public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
+    public static final String SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL = "setHearingRestrictionCriminal";
     public static final String SOAP_METHOD_HEALTH = "getHealth";
     public static final String SOAP_METHOD_PING = "getPing";
 
@@ -38,7 +39,7 @@ public class Keys {
     public static final String QUERY_HISTORY_FLAG = "historyYN";
     public static final String QUERY_APPEARANCE_ID = "appearanceId";
     public static final String QUERY_APPEARANCE_CD = "appearanceCd";
-    public static final String QUERY_APPLICATION_CD = "apllicationCd";
+    public static final String QUERY_APPLICATION_CD = "applicationCd";
     public static final String QUERY_AGENCY_IDENTIFIER = "agencyIdentifier";
     public static final String QUERY_FROM_DATE = "fromDtm";
     public static final String QUERY_TO_DATE = "toDtm";
@@ -51,6 +52,7 @@ public class Keys {
     public static final String ORDS_APPEARANCE_COUNT = "appearance-count";
     public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance-count";
     public static final String ORDS_APPEARANCE_RESOURCE = "appearance-resource";
+    public static final String ORDS_HEARING = "hearing";
     public static final String ORDS_HEALTH = "health";
     public static final String ORDS_PING = "ping";
 
