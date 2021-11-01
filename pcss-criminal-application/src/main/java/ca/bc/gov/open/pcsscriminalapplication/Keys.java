@@ -22,6 +22,8 @@ public class Keys {
     public static final String SOAP_METHOD_FILE_DETAIL = "getFileDetailCriminal";
     public static final String SOAP_METHOD_FILE_DETAIL_SECURE = "getFileDetailCriminalSecure";
     public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
+    public static final String SOAP_METHOD_HEALTH = "getHealth";
+    public static final String SOAP_METHOD_PING = "getPing";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -49,5 +51,7 @@ public class Keys {
     public static final String ORDS_APPEARANCE_COUNT = "appearance-count";
     public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance-count";
     public static final String ORDS_APPEARANCE_RESOURCE = "appearance-resource";
+    public static final String ORDS_HEALTH = "health";
+    public static final String ORDS_PING = "ping";
 
 }
