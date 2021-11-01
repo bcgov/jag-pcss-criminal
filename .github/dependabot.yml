@@ -2,7 +2,8 @@ version: 2
 updates:
   # Mvn dependencies
   - package-ecosystem: "maven"
-    directory: "/src"
+    directory: "/"
+    open-pull-requests-limit: 3
     schedule:
       interval: "weekly"
       day: "tuesday"
