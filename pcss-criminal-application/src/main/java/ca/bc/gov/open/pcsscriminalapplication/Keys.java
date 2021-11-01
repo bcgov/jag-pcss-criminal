@@ -24,6 +24,9 @@ public class Keys {
     public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
     public static final String SOAP_METHOD_HEALTH = "getHealth";
     public static final String SOAP_METHOD_PING = "getPing";
+    public static final String SOAP_METHOD_PERSONNEL_AVAILABILITY = "getGetPersonnelAvailability";
+    public static final String SOAP_METHOD_PERSONNEL_DETAIL = "getPersonnelAvailDetail";
+    public static final String SOAP_METHOD_PERSONNEL_SEARCH = "getPersonnelSearch";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -39,9 +42,14 @@ public class Keys {
     public static final String QUERY_APPEARANCE_ID = "appearanceId";
     public static final String QUERY_APPEARANCE_CD = "appearanceCd";
     public static final String QUERY_APPLICATION_CD = "apllicationCd";
+    public static final String QUERY_PERSON_CD = "personCd";
     public static final String QUERY_AGENCY_IDENTIFIER = "agencyIdentifier";
     public static final String QUERY_FROM_DATE = "fromDtm";
     public static final String QUERY_TO_DATE = "toDtm";
+    public static final String QUERY_AVAILABILITY_DATE = "availabilityDt";
+    public static final String QUERY_PAAS_PART_ID = "paasPartId";
+    public static final String QUERY_SEARCH_TYPE_CD = "searchTypeCd";
+    public static final String QUERY_SEARCH_TEXT = "searchText";
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
@@ -53,5 +61,7 @@ public class Keys {
     public static final String ORDS_APPEARANCE_RESOURCE = "appearance-resource";
     public static final String ORDS_HEALTH = "health";
     public static final String ORDS_PING = "ping";
-
+    public static final String ORDS_PERSONNEL_AVAILABILITY = "personnel/availability";
+    public static final String ORDS_PERSONNEL_DETAIL = "personnel/availability-detail";
+    public static final String ORDS_PERSONNEL_SEARCH = "personnel/search";
 }
