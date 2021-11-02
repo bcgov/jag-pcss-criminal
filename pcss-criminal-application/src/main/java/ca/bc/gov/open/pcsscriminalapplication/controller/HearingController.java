@@ -40,7 +40,7 @@ public class HearingController {
     @ResponsePayload
     public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException, BadDateException {
 
-        log.info("Set Hearing Restriction Criminal Request received");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = setHearingRestrictionCriminal.getSetHearingRestrictionCriminalRequest() != null
                 && setHearingRestrictionCriminal.getSetHearingRestrictionCriminalRequest().getSetHearingRestrictionCriminalRequest() != null
@@ -58,6 +58,8 @@ public class HearingController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -69,6 +71,8 @@ public class HearingController {
             SetHearingRestrictionCriminalResponse2 setHearingRestrictionCriminalResponse2 = new SetHearingRestrictionCriminalResponse2();
             setHearingRestrictionCriminalResponse2.setSetHearingRestrictionCriminalResponse(response.getBody());
             setHearingRestrictionCriminalResponse.setSetHearingRestrictionCriminalResponse(setHearingRestrictionCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
             return setHearingRestrictionCriminalResponse;
 
