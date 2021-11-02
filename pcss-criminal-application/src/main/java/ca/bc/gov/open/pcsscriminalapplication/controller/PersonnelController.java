@@ -38,7 +38,7 @@ public class PersonnelController {
     @ResponsePayload
     public GetPersonnelAvailabilityResponse getPersonnelAvailability(@RequestPayload GetPersonnelAvailability getPersonnelAvailability) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Personnel Availability");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest getPersonnelAvailabilityRequest =
                 getPersonnelAvailability.getGetPersonnelAvailabilityRequest() != null
@@ -65,6 +65,8 @@ public class PersonnelController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -76,6 +78,8 @@ public class PersonnelController {
             GetPersonnelAvailabilityResponse2 getPersonnelAvailabilityResponse2 = new GetPersonnelAvailabilityResponse2();
             getPersonnelAvailabilityResponse2.setGetPersonnelAvailabilityResponse(response.getBody());
             getPersonnelAvailabilityResponse.setGetPersonnelAvailabilityResponse(getPersonnelAvailabilityResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
 
             return getPersonnelAvailabilityResponse;
 
@@ -92,7 +96,7 @@ public class PersonnelController {
     @ResponsePayload
     public GetPersonnelAvailDetailResponse getPersonnelAvailDetail(@RequestPayload GetPersonnelAvailDetail getPersonnelAvailDetail) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Request Received");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest getPersonnelAvailDetailRequest =
                 getPersonnelAvailDetail.getGetPersonnelAvailDetailRequest() != null
@@ -118,6 +122,8 @@ public class PersonnelController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -129,6 +135,8 @@ public class PersonnelController {
             GetPersonnelAvailDetailResponse2 getPersonnelAvailDetailResponse2 = new GetPersonnelAvailDetailResponse2();
             getPersonnelAvailDetailResponse2.setGetPersonnelAvailDetailResponse(response.getBody());
             getPersonnelAvailDetailResponse.setGetPersonnelAvailDetailResponse(getPersonnelAvailDetailResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
 
             return getPersonnelAvailDetailResponse;
 
@@ -145,7 +153,7 @@ public class PersonnelController {
     @ResponsePayload
     public GetPersonnelSearchResponse getPersonnelSearch(GetPersonnelSearch getPersonnelSearch) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Personnel Search");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest getAppearanceCriminalRequest =
                 getPersonnelSearch.getGetPersonnelSearchRequest() != null
@@ -171,6 +179,8 @@ public class PersonnelController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -182,6 +192,8 @@ public class PersonnelController {
             GetPersonnelSearchResponse2 getPersonnelSearchResponse2 = new GetPersonnelSearchResponse2();
             getPersonnelSearchResponse2.setGetPersonnelSearchResponse(response.getBody());
             getPersonnelSearchResponse.setGetPersonnelSearchResponse(getPersonnelSearchResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
 
             return getPersonnelSearchResponse;
 

@@ -38,7 +38,7 @@ public class SyncController {
     @ResponsePayload
     public GetSyncCriminalAppearanceResponse getSyncCriminalAppearance(@RequestPayload GetSyncCriminalAppearance getSyncCriminalAppearance) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Sync Criminal Appearance");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_APPEARANCE);
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest =
                 getSyncCriminalAppearance.getGetSyncCriminalAppearanceRequest() != null
@@ -62,6 +62,8 @@ public class SyncController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SYNC_APPEARANCE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -73,6 +75,8 @@ public class SyncController {
             GetSyncCriminalAppearanceResponse2 getSyncCriminalAppearanceResponse2 = new GetSyncCriminalAppearanceResponse2();
             getSyncCriminalAppearanceResponse2.setGetSyncCriminalAppearanceResponse(response.getBody());
             getSyncCriminalAppearanceResponse.setGetSyncCriminalAppearanceResponse(getSyncCriminalAppearanceResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SYNC_APPEARANCE);
 
             return getSyncCriminalAppearanceResponse;
 
@@ -88,7 +92,7 @@ public class SyncController {
     @ResponsePayload
     public GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestriction(@RequestPayload GetSyncCriminalHearingRestriction getSyncCriminalHearingRestriction) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Sync Criminal Hearing Restriction");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_HEARING);
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest =
                 getSyncCriminalHearingRestriction.getGetSyncCriminalHearingRestrictionRequest() != null
@@ -112,6 +116,8 @@ public class SyncController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SYNC_HEARING);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -123,6 +129,8 @@ public class SyncController {
             GetSyncCriminalHearingRestrictionResponse2 getSyncCriminalHearingRestrictionResponse2 = new GetSyncCriminalHearingRestrictionResponse2();
             getSyncCriminalHearingRestrictionResponse2.setGetSyncCriminalHearingRestrictionResponse(response.getBody());
             getSyncCriminalHearingRestrictionResponse.setGetSyncCriminalHearingRestrictionResponse(getSyncCriminalHearingRestrictionResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SYNC_HEARING);
 
             return getSyncCriminalHearingRestrictionResponse;
 
