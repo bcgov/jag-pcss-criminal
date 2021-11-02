@@ -68,4 +68,10 @@ public class Keys {
     public static final String ORDS_PERSONNEL_SEARCH = "personnel/search";
     public static final String ORDS_SYNC_APPEARANCE = "sync/appearance";
     public static final String ORDS_SYNC_HEARING = "sync/hearing";
+
+    //Logs
+    public static final String LOG_RECEIVED = "{}: received";
+    public static final String LOG_ORDS = "{}: making ORDS request";
+    public static final String LOG_SUCCESS = "{}: successful";
+
 }

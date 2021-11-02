@@ -42,7 +42,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalResponse getAppearanceCriminal(@RequestPayload GetAppearanceCriminal getAppearanceCriminal) throws BadDateException, JsonProcessingException {
 
-        log.info("Get Appearance Criminal Request Received");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE);
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalRequest getAppearanceCriminalRequest =
                 getAppearanceCriminal.getGetAppearanceCriminalRequest() != null
@@ -68,6 +68,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -79,6 +81,8 @@ public class AppearanceController {
             GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
             getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
             getAppearanceCriminalResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE);
 
             return getAppearanceCriminalResponse;
 
@@ -94,7 +98,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalApprMethodResponse getAppearanceCriminalApprMethod(@RequestPayload GetAppearanceCriminalApprMethod getAppearanceCriminalApprMethod) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Appr Method");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD);
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest =
                 getAppearanceCriminalApprMethod.getGetAppearanceCriminalApprMethodRequest() != null
@@ -118,6 +122,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -129,6 +135,8 @@ public class AppearanceController {
             GetAppearanceCriminalApprMethodResponse2 getAppearanceCriminalApprMethodResponse2 = new GetAppearanceCriminalApprMethodResponse2();
             getAppearanceCriminalApprMethodResponse2.setGetAppearanceCriminalApprMethodResponse(response.getBody());
             getAppearanceCriminalApprMethodResponse.setGetAppearanceCriminalApprMethodResponse(getAppearanceCriminalApprMethodResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD);
 
             return getAppearanceCriminalApprMethodResponse;
 
@@ -146,7 +154,7 @@ public class AppearanceController {
     public GetAppearanceCriminalApprMethodSecureResponse getAppearanceCriminalApprMethodSecure(@RequestPayload
                              GetAppearanceCriminalApprMethodSecure getAppearanceCriminalApprMethodSecure) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Appr Method Secure");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE);
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest =
                 getAppearanceCriminalApprMethodSecure.getGetAppearanceCriminalApprMethodSecureRequest() != null
@@ -171,6 +179,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -182,6 +192,8 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodResponse getAppearanceCriminalApprMethodResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodResponse();
             getAppearanceCriminalApprMethodResponse2.setGetAppearanceCriminalApprMethodResponse(response.getBody());
             getAppearanceCriminalApprMethodSecureResponse.setGetAppearanceCriminalApprMethodResponse(getAppearanceCriminalApprMethodResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE);
 
             return getAppearanceCriminalApprMethodSecureResponse;
 
@@ -198,7 +210,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalCountResponse getAppearanceCriminalCount(@RequestPayload GetAppearanceCriminalCount getAppearanceCriminalCount) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Count");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_COUNT);
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalCountRequest getAppearanceCriminalCountRequest =
                 getAppearanceCriminalCount.getGetAppearanceCriminalCountRequest() != null
@@ -222,6 +234,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_COUNT);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalCountResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -233,6 +247,8 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse2 getAppearanceCriminalCountResponse2 = new ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse2();
             getAppearanceCriminalCountResponse2.setGetAppearanceCriminalCountResponse(response.getBody());
             getAppearanceCriminalCountResponse.setGetAppearanceCriminalCountResponse(getAppearanceCriminalCountResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_COUNT);
 
             return getAppearanceCriminalCountResponse;
 
@@ -249,7 +265,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalCountSecureResponse getAppearanceCriminalCountSecure(@RequestPayload GetAppearanceCriminalCountSecure getAppearanceCriminalCountSecure) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Count Secure");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE);
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest =
                 getAppearanceCriminalCountSecure.getGetAppearanceCriminalCountSecureRequest() != null
@@ -274,6 +290,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -285,6 +303,8 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalCountResponse getAppearanceCriminalCountResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalCountResponse();
             getAppearanceCriminalCountResponse2.setGetAppearanceCriminalCountResponse(response.getBody());
             getAppearanceCriminalCountSecureResponse.setGetAppearanceCriminalCountResponse(getAppearanceCriminalCountResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_COUNT_SECURE);
 
             return getAppearanceCriminalCountSecureResponse;
 
@@ -301,7 +321,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalResourceResponse getAppearanceCriminalResource(@RequestPayload GetAppearanceCriminalResource getAppearanceCriminalResource) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Criminal Resource");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_RESOURCE);
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest =
                 getAppearanceCriminalResource.getGetAppearanceCriminalResourceRequest() != null
@@ -325,6 +345,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_RESOURCE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -336,6 +358,8 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse2 getAppearanceCriminalResourceResponse2 = new ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse2();
             getAppearanceCriminalResourceResponse2.setGetAppearanceCriminalResourceResponse(response.getBody());
             getAppearanceCriminalResourceResponse.setGetAppearanceCriminalResourceResponse(getAppearanceCriminalResourceResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_RESOURCE);
 
             return getAppearanceCriminalResourceResponse;
 
@@ -352,7 +376,7 @@ public class AppearanceController {
     @ResponsePayload
     public GetAppearanceCriminalSecureResponse getAppearanceCriminalSecure(@RequestPayload GetAppearanceCriminalSecure getAppearanceCriminalSecure) throws JsonProcessingException, BadDateException {
 
-        log.info("Get Appearance Secure");
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_APPEARANCE_SECURE);
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest =
                 getAppearanceCriminalSecure.getGetAppearanceCriminalSecureRequest() != null
@@ -378,6 +402,8 @@ public class AppearanceController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_APPEARANCE_SECURE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -389,6 +415,8 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse getAppearanceCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse();
             getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
             getAppearanceCriminalSecureResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_SECURE);
 
             return getAppearanceCriminalSecureResponse;
 
@@ -405,6 +433,8 @@ public class AppearanceController {
     @ResponsePayload
     public SetAppearanceCriminalResponse setAppearanceCriminal(@RequestPayload SetAppearanceCriminal setAppearanceCriminal) throws JsonProcessingException {
 
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_APPEARANCE);
+
         ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest setAppearanceCriminalRequest = setAppearanceCriminal.getSetAppearanceCriminalRequest() != null
                         && setAppearanceCriminal.getSetAppearanceCriminalRequest().getSetAppearanceCriminalRequest() != null
                         ? setAppearanceCriminal.getSetAppearanceCriminalRequest().getSetAppearanceCriminalRequest()
@@ -415,6 +445,8 @@ public class AppearanceController {
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest> body =
                 new HttpEntity<>(setAppearanceCriminalRequest, new HttpHeaders());
         try {
+
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_APPEARANCE);
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
@@ -427,6 +459,8 @@ public class AppearanceController {
             SetAppearanceCriminalResponse2 setAppearanceCriminalResponse2 = new SetAppearanceCriminalResponse2();
             setAppearanceCriminalResponse2.setSetAppearanceCriminalResponse(response.getBody());
             setAppearanceCriminalResponse.setSetAppearanceCriminalResponse(setAppearanceCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_APPEARANCE);
 
             return setAppearanceCriminalResponse;
 
@@ -443,6 +477,8 @@ public class AppearanceController {
     @ResponsePayload
     public SetAppearanceMethodCriminalResponse setAppearanceMethodCriminal(@RequestPayload SetAppearanceMethodCriminal setAppearanceMethodCriminal) throws JsonProcessingException {
 
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_APPEARANCE_METHOD);
+
         ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest setAppearanceMethodCriminalRequest = setAppearanceMethodCriminal.getSetAppearanceMethodCriminalRequest() != null
                 && setAppearanceMethodCriminal.getSetAppearanceMethodCriminalRequest().getSetAppearanceMethodCriminalRequest() != null
                 ? setAppearanceMethodCriminal.getSetAppearanceMethodCriminalRequest().getSetAppearanceMethodCriminalRequest()
@@ -453,6 +489,8 @@ public class AppearanceController {
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest> body =
                 new HttpEntity<>(setAppearanceMethodCriminalRequest, new HttpHeaders());
         try {
+
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_APPEARANCE_METHOD);
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalResponse> response =
                     restTemplate.exchange(
@@ -465,6 +503,8 @@ public class AppearanceController {
             SetAppearanceMethodCriminalResponse2 setAppearanceMethodCriminalResponse2 = new SetAppearanceMethodCriminalResponse2();
             setAppearanceMethodCriminalResponse2.setSetAppearanceMethodCriminalResponse(response.getBody());
             setAppearanceMethodCriminalResponse.setSetAppearanceMethodCriminalResponse(setAppearanceMethodCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_APPEARANCE_METHOD);
 
             return setAppearanceMethodCriminalResponse;
 
