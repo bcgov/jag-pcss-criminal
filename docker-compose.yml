@@ -5,12 +5,11 @@ services:
   #############################################################################
   pcss-criminal:
     container_name: pcss-criminal-api
+    build:
+        context: .
+    environment:
+      - BASIC_AUTH_USER=${BASIC_AUTH_USER}
+      - BASIC_AUTH_PASS=${BASIC_AUTH_PASS}
+      - PCSS_HOST=${PCSS_HOST}
     ports:
       - 8080:8080
-    environment:
-    networks:
-      - pcss-network
-
-networks:
-  pcss-network:
-    driver: "bridge"
