@@ -40,6 +40,8 @@ public class FileController {
     @ResponsePayload
     public GetClosedFileResponse getClosedFile(@RequestPayload GetClosedFile getClosedFile) throws JsonProcessingException, BadDateException {
 
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_CLOSED);
+
         ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest getClosedFileRequest =
                 getClosedFile.getGetClosedFileRequest() != null
                         && getClosedFile.getGetClosedFileRequest().getGetClosedFileRequest() != null
@@ -64,6 +66,8 @@ public class FileController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_FILE_CLOSED);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -76,9 +80,12 @@ public class FileController {
             getClosedFileResponce.setGetClosedFileResponse(response.getBody());
             getClosedFileResponse.setGetClosedFileResponce(getClosedFileResponce);
 
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_CLOSED);
+
             return getClosedFileResponse;
 
         } catch (Exception ex) {
+
             log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_FILE_CLOSED, getClosedFileRequest, ex.getMessage()));
             throw new ORDSException();
 
@@ -89,6 +96,8 @@ public class FileController {
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_DETAIL)
     @ResponsePayload
     public GetFileDetailCriminalResponse getFileDetailCriminal(@RequestPayload GetFileDetailCriminal getFileDetailCriminal) throws JsonProcessingException, BadDateException {
+
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_DETAIL);
 
         ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalRequest getFileDetailCriminalRequest =
                 getFileDetailCriminal.getGetFileDetailCriminalRequest() != null
@@ -113,6 +122,8 @@ public class FileController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_FILE_DETAIL);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -124,6 +135,8 @@ public class FileController {
             GetFileDetailCriminalResponse2 getFileDetailCriminalResponse2 = new GetFileDetailCriminalResponse2();
             getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(response.getBody());
             getFileDetailCriminalResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_DETAIL);
 
             return getFileDetailCriminalResponse;
 
@@ -138,6 +151,8 @@ public class FileController {
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_DETAIL_SECURE)
     @ResponsePayload
     public GetFileDetailCriminalSecureResponse getFileDetailCriminalSecure(@RequestPayload GetFileDetailCriminalSecure getFileDetailCriminalSecure) throws BadDateException, JsonProcessingException {
+
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalRequest getFileDetailCriminalRequest =
                 getFileDetailCriminalSecure.getGetFileDetailCriminalSecureRequest() != null
@@ -162,6 +177,8 @@ public class FileController {
 
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -173,6 +190,8 @@ public class FileController {
             ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse getFileDetailCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse();
             getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(response.getBody());
             getFileDetailCriminalSecureResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
 
             return getFileDetailCriminalSecureResponse;
 
@@ -188,6 +207,8 @@ public class FileController {
     @ResponsePayload
     public SetFileNoteResponse setFileNote(@RequestPayload SetFileNote setFileNote) throws JsonProcessingException {
 
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_FILE_NOTE);
+
         ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest setFileNoteRequest =
                   setFileNote.getSetFileNoteRequest() != null &&
                   setFileNote.getSetFileNoteRequest().getSetFileNoteRequest() != null ?
@@ -200,6 +221,8 @@ public class FileController {
                 new HttpEntity<>(setFileNoteRequest, new HttpHeaders());
         try {
 
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_FILE_NOTE);
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -211,6 +234,8 @@ public class FileController {
             SetFileNoteResponse2 setFileNoteResponse2 = new SetFileNoteResponse2();
             setFileNoteResponse2.setSetFileNoteResponse(response.getBody());
             setFileNoteResponse.setSetFileNoteResponse(setFileNoteResponse2);
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_FILE_NOTE);
 
             return setFileNoteResponse;
 
