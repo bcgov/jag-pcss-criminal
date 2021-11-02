@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class HearingController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL)
     @ResponsePayload
-    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException, BadDateException {
+    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(@RequestPayload SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException, BadDateException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
