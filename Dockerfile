@@ -3,11 +3,8 @@
 #############################################################################################
 FROM maven:3.8.3-jdk-11 as build
 
-ARG SERVICE_NAME=pcss-criminal-application
 ARG SKIP_TESTS=false
 ARG MVN_PROFILE=default
-
-ENV SERVICE_NAME=${SERVICE_NAME}
 
 WORKDIR /
 
