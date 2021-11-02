@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
+import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
@@ -37,7 +38,7 @@ public class HearingController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL)
     @ResponsePayload
-    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException {
+    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException, BadDateException {
 
         log.info("Set Hearing Restriction Criminal Request received");
 
@@ -45,6 +46,11 @@ public class HearingController {
                 && setHearingRestrictionCriminal.getSetHearingRestrictionCriminalRequest().getSetHearingRestrictionCriminalRequest() != null
                 ? setHearingRestrictionCriminal.getSetHearingRestrictionCriminalRequest().getSetHearingRestrictionCriminalRequest()
                 : new SetHearingRestrictionCriminalRequest();
+
+        if(setHearingRestrictionCriminalRequest.getRequestDtm() == null) {
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL, setHearingRestrictionCriminal, ""));
+            throw new BadDateException();
+        }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_HEARING);
 
