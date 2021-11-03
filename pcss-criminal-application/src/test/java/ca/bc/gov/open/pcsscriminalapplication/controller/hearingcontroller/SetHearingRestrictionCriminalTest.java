@@ -78,7 +78,7 @@ public class SetHearingRestrictionCriminalTest {
 
     @Test
     @DisplayName("Error: with a bad date throw exception")
-    public void badDateException() throws JsonProcessingException {
+    public void errorBadDateException() throws JsonProcessingException {
 
         Assertions.assertThrows(BadDateException.class, () -> sut.setHearingRestrictionCriminal(new SetHearingRestrictionCriminal()));
 

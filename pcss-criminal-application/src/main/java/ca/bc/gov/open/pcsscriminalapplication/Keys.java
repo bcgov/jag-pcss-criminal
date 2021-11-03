@@ -30,6 +30,7 @@ public class Keys {
     public static final String SOAP_METHOD_PERSONNEL_SEARCH = "getPersonnelSearch";
     public static final String SOAP_METHOD_SYNC_APPEARANCE = "getSyncCriminalAppearance";
     public static final String SOAP_METHOD_SYNC_HEARING = "getSyncCriminalHearingRestriction";
+    public static final String SOAP_METHOD_CROWN_FILE_DETAIL = "setCrownFileDetail";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -70,6 +71,7 @@ public class Keys {
     public static final String ORDS_PERSONNEL_SEARCH = "personnel/search";
     public static final String ORDS_SYNC_APPEARANCE = "sync/appearance";
     public static final String ORDS_SYNC_HEARING = "sync/hearing";
+    public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
 
     //Logs
     public static final String LOG_RECEIVED = "{}: received";
