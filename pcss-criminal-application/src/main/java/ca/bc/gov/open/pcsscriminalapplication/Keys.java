@@ -32,6 +32,7 @@ public class Keys {
     public static final String SOAP_METHOD_SYNC_HEARING = "getSyncCriminalHearingRestriction";
     public static final String SOAP_METHOD_CROWN_FILE_DETAIL = "setCrownFileDetail";
     public static final String SOAP_METHOD_CROWN_ASSIGNMENT = "getCrownAssignment";
+    public static final String SOAP_METHOD_SET_CROWN_ASSIGNMENT = "setCrownAssignment";
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";

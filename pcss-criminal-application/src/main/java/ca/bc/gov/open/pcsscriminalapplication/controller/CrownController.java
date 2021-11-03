@@ -6,10 +6,14 @@ import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
+import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse2;
+import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
+import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse;
+import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse2;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
@@ -95,7 +99,50 @@ public class CrownController {
 
     }
 
-    public void setCrownAssignment() {
+    public SetCrownAssignmentResponse setCrownAssignment(@RequestBody SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
+
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+        SetCrownAssignmentRequest setCrownAssignmentRequest = setCrownAssignment.getSetCrownAssignmentRequest() != null
+                && setCrownAssignment.getSetCrownAssignmentRequest().getSetCrownAssignmentRequest() != null
+                ? setCrownAssignment.getSetCrownAssignmentRequest().getSetCrownAssignmentRequest()
+                : new SetCrownAssignmentRequest();
+
+        if(setCrownAssignmentRequest.getRequestDtm() == null) {
+
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT, setCrownAssignment, ""));
+            throw new BadDateException();
+
+        }
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CROWN_ASSIGNMENT);
+
+        HttpEntity<SetCrownAssignmentRequest> body = new HttpEntity<>(setCrownAssignmentRequest);
+
+        try {
+
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+            HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse> response =
+                    restTemplate.exchange(
+                            builder.toUriString(),
+                            HttpMethod.POST,
+                            body,
+                            ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse.class);
+
+            SetCrownAssignmentResponse setCrownAssignmentResponse = new SetCrownAssignmentResponse();
+            SetCrownAssignmentResponse2 setCrownAssignmentResponse2 = new SetCrownAssignmentResponse2();
+            setCrownAssignmentResponse2.setSetCrownAssignmentResponse(response.getBody());
+            setCrownAssignmentResponse.setSetCrownAssignmentResponse(setCrownAssignmentResponse2);
+
+            return setCrownAssignmentResponse;
+
+        } catch(Exception ex) {
+
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT, setCrownAssignment, ex.getMessage()));
+            throw new ORDSException();
+
+        }
 
     }
 
