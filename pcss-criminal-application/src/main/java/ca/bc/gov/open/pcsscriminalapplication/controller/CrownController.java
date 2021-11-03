@@ -96,7 +96,7 @@ public class CrownController {
     }
 
     public void setCounselDetailCriminal() {
-
+        // TODO: Implement this method
     }
 
     public SetCrownAssignmentResponse setCrownAssignment(@RequestBody SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
