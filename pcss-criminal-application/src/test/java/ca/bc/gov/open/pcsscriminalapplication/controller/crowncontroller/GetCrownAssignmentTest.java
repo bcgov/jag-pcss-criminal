@@ -1,15 +1,17 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
-import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
-import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
-import ca.bc.gov.open.wsdl.pcss.three.FileComplexityType;
+import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment;
+import java.util.ArrayList;
+import java.time.Instant;
+import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
+import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
-import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailRequest;
+import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
+import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
+import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -20,19 +22,16 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
-import java.time.Instant;
-
 import static org.mockito.ArgumentMatchers.any;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@DisplayName("SetCrownFileDetail Test")
-public class SetCrownFileDetailTest {
+@DisplayName("GetCrownAssignment Test")
+public class GetCrownAssignmentTest {
     @Mock
     private RestTemplate restTemplateMock;
 
@@ -58,28 +57,26 @@ public class SetCrownFileDetailTest {
     @Test
     @DisplayName("Success: post returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
-
-        ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse response = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
+        ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
         response.setResponseCd("Test");
-        response.setMdocCcn("Test");
         response.setResponseMessageTxt("Test");
+        response.setCrownAssignment(Collections.singletonList(new CrownAssignment()));
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
-        SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
+        GetCrownAssignmentResponse result =  sut.getCrownAssignment(createTestRequest());
 
-        ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerResult = result.getSetCrownFileDetailResponse().getSetCrownFileDetailResponse();
+        ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse innerResult = result.getGetCrownAssignmentResponse().getGetCrownAssignmentResponse();
         Assertions.assertEquals("Test", innerResult.getResponseCd());
         Assertions.assertEquals("Test", innerResult.getResponseMessageTxt());
-        Assertions.assertEquals("Test", innerResult.getMdocCcn());
-
+        Assertions.assertEquals(response.getCrownAssignment(), innerResult.getCrownAssignment());
     }
 
     @Test
     @DisplayName("Error: with a bad date throw exception")
     public void errorBadDateException() {
 
-        Assertions.assertThrows(BadDateException.class, ()-> sut.setCrownFileDetail(new SetCrownFileDetail()));
+        Assertions.assertThrows(BadDateException.class, ()-> sut.getCrownAssignment(new GetCrownAssignment()));
 
     }
 
@@ -88,26 +85,23 @@ public class SetCrownFileDetailTest {
     public void errorOrdsException() {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
-        Assertions.assertThrows(ORDSException.class, () -> sut.setCrownFileDetail(createTestRequest()));
+        Assertions.assertThrows(ORDSException.class, () -> sut.getCrownAssignment(createTestRequest()));
 
     }
 
-    private SetCrownFileDetail createTestRequest() {
-        SetCrownFileDetail setCrownFileDetail = new SetCrownFileDetail();
-        SetCrownFileDetailRequest setCrownFileDetailRequest = new SetCrownFileDetailRequest();
-        ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest setCrownFileDetailRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
-        setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
-        setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
-        setCrownFileDetailRequest1.setJustinNo("Test");
-        setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
-        setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);
-        setCrownFileDetailRequest1.setFileDesignationCd(FileComplexityType.SPC);
-        setCrownFileDetailRequest1.setMdocCcn("Test");
+    private GetCrownAssignment createTestRequest() {
+        GetCrownAssignment getCrownAssignment = new GetCrownAssignment();
+        GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
+        ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest getCrownAssignmentRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest();
+        getCrownAssignmentRequest1.setRequestAgencyIdentifierId("Test");
+        getCrownAssignmentRequest1.setRequestPartId("Test");
+        getCrownAssignmentRequest1.setRequestDtm(Instant.now());
+        getCrownAssignmentRequest1.setJustinNo("Test");
+        getCrownAssignmentRequest1.setSinceDt(Instant.now());
 
-        setCrownFileDetailRequest.setSetCrownFileDetailRequest(setCrownFileDetailRequest1);
-        setCrownFileDetail.setSetCrownFileDetailRequest(setCrownFileDetailRequest);
+        getCrownAssignmentRequest.setGetCrownAssignmentRequest(getCrownAssignmentRequest1);
+        getCrownAssignment.setGetCrownAssignmentRequest(getCrownAssignmentRequest);
+        return getCrownAssignment;
 
-        return setCrownFileDetail;
     }
 }
