@@ -151,7 +151,7 @@ public class PersonnelController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_PERSONNEL_SEARCH)
     @ResponsePayload
-    public GetPersonnelSearchResponse getPersonnelSearch(GetPersonnelSearch getPersonnelSearch) throws JsonProcessingException, BadDateException {
+    public GetPersonnelSearchResponse getPersonnelSearch(@RequestPayload GetPersonnelSearch getPersonnelSearch) throws JsonProcessingException, BadDateException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
 
