@@ -25,7 +25,7 @@ public class Keys {
     public static final String SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL = "setHearingRestrictionCriminal";
     public static final String SOAP_METHOD_HEALTH = "getHealth";
     public static final String SOAP_METHOD_PING = "getPing";
-    public static final String SOAP_METHOD_PERSONNEL_AVAILABILITY = "getGetPersonnelAvailability";
+    public static final String SOAP_METHOD_PERSONNEL_AVAILABILITY = "getPersonnelAvailability";
     public static final String SOAP_METHOD_PERSONNEL_DETAIL = "getPersonnelAvailDetail";
     public static final String SOAP_METHOD_PERSONNEL_SEARCH = "getPersonnelSearch";
     public static final String SOAP_METHOD_SYNC_APPEARANCE = "getSyncCriminalAppearance";
