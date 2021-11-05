@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.InvalidUserException;
 import ca.bc.gov.open.pcsscriminalapplication.model.UserValidation;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
