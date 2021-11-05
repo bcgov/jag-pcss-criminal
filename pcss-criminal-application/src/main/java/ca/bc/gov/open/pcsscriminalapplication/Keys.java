@@ -79,6 +79,7 @@ public class Keys {
     public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
     public static final String ORDS_CROWN_ASSIGNMENT = "crown/assignment";
     public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "crown/detail-criminal";
+    public static final String ORDS_REQUEST_VALIDATION = "user-validate";
 
     //Logs
     public static final String LOG_RECEIVED = "{}: received";
