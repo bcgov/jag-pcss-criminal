@@ -6,11 +6,15 @@ import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
+import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse2;
+import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminal;
+import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse;
+import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse2;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse2;
@@ -19,14 +23,16 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.ws.server.endpoint.annotation.Endpoint;
+import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
+import org.springframework.ws.server.endpoint.annotation.RequestPayload;
+import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 @Slf4j
 @Endpoint
@@ -43,7 +49,9 @@ public class CrownController {
         this.logBuilder = logBuilder;
     }
 
-    public GetCrownAssignmentResponse getCrownAssignment(@RequestBody GetCrownAssignment getCrownAssignment) throws BadDateException, JsonProcessingException {
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_ASSIGNMENT)
+    @ResponsePayload
+    public GetCrownAssignmentResponse getCrownAssignment(@RequestPayload GetCrownAssignment getCrownAssignment) throws BadDateException, JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
 
@@ -95,11 +103,59 @@ public class CrownController {
         }
     }
 
-    public void setCounselDetailCriminal() {
-        // TODO: Implement this method
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL)
+    @ResponsePayload
+    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws BadDateException, JsonProcessingException {
+
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
+
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = setCounselDetailCriminal.getSetCounselDetailCriminalRequest() != null
+                && setCounselDetailCriminal.getSetCounselDetailCriminalRequest().getSetCounselDetailCriminalRequest() != null
+                ? setCounselDetailCriminal.getSetCounselDetailCriminalRequest().getSetCounselDetailCriminalRequest()
+                : new SetCounselDetailCriminalRequest();
+
+        if(setCounselDetailCriminalRequest.getRequestDtm() == null) {
+
+            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL, setCounselDetailCriminal, ""));
+            throw new BadDateException();
+
+        }
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
+
+        HttpEntity<SetCounselDetailCriminalRequest> body = new HttpEntity<>(setCounselDetailCriminalRequest);
+
+        try {
+
+            log.debug(Keys.LOG_ORDS, Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
+
+            HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse> response =
+                    restTemplate.exchange(
+                            builder.toUriString(),
+                            HttpMethod.POST,
+                            body,
+                            ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse.class);
+
+            SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
+            SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
+            setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(response.getBody());
+            setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
+
+            return setCounselDetailCriminalResponse;
+
+        } catch(Exception ex) {
+
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.ORDS_COUNSEL_DETAIL_CRIMINAL, setCounselDetailCriminal, ex.getMessage()));
+            throw new ORDSException();
+
+        }
+
+
     }
 
-    public SetCrownAssignmentResponse setCrownAssignment(@RequestBody SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT)
+    @ResponsePayload
+    public SetCrownAssignmentResponse setCrownAssignment(@RequestPayload SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
 
@@ -146,7 +202,9 @@ public class CrownController {
 
     }
 
-    public SetCrownFileDetailResponse setCrownFileDetail(@RequestBody SetCrownFileDetail setCrownFileDetail) throws BadDateException, JsonProcessingException {
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_FILE_DETAIL)
+    @ResponsePayload
+    public SetCrownFileDetailResponse setCrownFileDetail(@RequestPayload SetCrownFileDetail setCrownFileDetail) throws BadDateException, JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 

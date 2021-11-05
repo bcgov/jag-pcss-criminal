@@ -33,6 +33,8 @@ public class Keys {
     public static final String SOAP_METHOD_CROWN_FILE_DETAIL = "setCrownFileDetail";
     public static final String SOAP_METHOD_CROWN_ASSIGNMENT = "getCrownAssignment";
     public static final String SOAP_METHOD_SET_CROWN_ASSIGNMENT = "setCrownAssignment";
+    public static final String SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL = "setCounselDetailCriminal";
+
 
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
@@ -76,6 +78,7 @@ public class Keys {
     public static final String ORDS_SYNC_HEARING = "sync/hearing";
     public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
     public static final String ORDS_CROWN_ASSIGNMENT = "crown/assignment";
+    public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "crown/detail-criminal";
 
     //Logs
     public static final String LOG_RECEIVED = "{}: received";
