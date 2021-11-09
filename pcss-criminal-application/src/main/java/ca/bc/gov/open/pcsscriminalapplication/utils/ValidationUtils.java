@@ -2,6 +2,10 @@ package ca.bc.gov.open.pcsscriminalapplication.utils;
 
 public class ValidationUtils {
 
+    private ValidationUtils() {
+        //empty constructor
+    }
+
     public static boolean checkRequestAgencyIdentifierIdForErrors(String requestAgencyIdentifierId) {
         return (requestAgencyIdentifierId != null && requestAgencyIdentifierId.length() > 16);
     }
