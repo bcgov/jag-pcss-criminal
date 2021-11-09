@@ -4,10 +4,12 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.List;
+
 @Slf4j
 @Endpoint
 @EnableConfigurationProperties(PcssProperties.class)
@@ -27,11 +31,13 @@ public class SyncController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
+    private final SyncValidator syncValidator;
 
-    public SyncController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public SyncController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder, SyncValidator syncValidator) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
+        this.syncValidator = syncValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_APPEARANCE)
@@ -46,10 +52,16 @@ public class SyncController {
                         ? getSyncCriminalAppearance.getGetSyncCriminalAppearanceRequest().getGetSyncCriminalAppearanceRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
 
-        if (getSyncCriminalAppearanceRequest.getRequestDtm() == null) {
+        List<String> validation = syncValidator.validateGetSyncCriminalAppearance(getSyncCriminalAppearanceRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_SYNC_APPEARANCE, getSyncCriminalAppearance, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponseFailed = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse();
+            getSyncCriminalAppearanceResponseFailed.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getSyncCriminalAppearanceResponseFailed.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SYNC_APPEARANCE);
+
+            return buildAppearanceResponse(getSyncCriminalAppearanceResponseFailed);
 
         }
 
@@ -71,10 +83,7 @@ public class SyncController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse.class);
 
-            ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse();
-            GetSyncCriminalAppearanceResponse2 getSyncCriminalAppearanceResponse2 = new GetSyncCriminalAppearanceResponse2();
-            getSyncCriminalAppearanceResponse2.setGetSyncCriminalAppearanceResponse(response.getBody());
-            getSyncCriminalAppearanceResponse.setGetSyncCriminalAppearanceResponse(getSyncCriminalAppearanceResponse2);
+            ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponse = buildAppearanceResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SYNC_APPEARANCE);
 
@@ -85,6 +94,17 @@ public class SyncController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private  ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse buildAppearanceResponse(ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponseInner) {
+
+        ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse();
+        GetSyncCriminalAppearanceResponse2 getSyncCriminalAppearanceResponse2 = new GetSyncCriminalAppearanceResponse2();
+        getSyncCriminalAppearanceResponse2.setGetSyncCriminalAppearanceResponse(getSyncCriminalAppearanceResponseInner);
+        getSyncCriminalAppearanceResponse.setGetSyncCriminalAppearanceResponse(getSyncCriminalAppearanceResponse2);
+
+        return getSyncCriminalAppearanceResponse;
 
     }
 
@@ -100,10 +120,16 @@ public class SyncController {
                         ? getSyncCriminalHearingRestriction.getGetSyncCriminalHearingRestrictionRequest().getGetSyncCriminalHearingRestrictionRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
 
-        if (getSyncCriminalHearingRestrictionRequest.getRequestDtm() == null) {
+        List<String> validation = syncValidator.validateGetSyncCriminalHearingRestriction(getSyncCriminalHearingRestrictionRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_SYNC_HEARING, getSyncCriminalHearingRestriction, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse getSyncCriminalAppearanceResponseFailed = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse();
+            getSyncCriminalAppearanceResponseFailed.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getSyncCriminalAppearanceResponseFailed.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SYNC_HEARING);
+
+            return buildHearingResponse(getSyncCriminalAppearanceResponseFailed);
 
         }
 
@@ -125,10 +151,7 @@ public class SyncController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse.class);
 
-            ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse();
-            GetSyncCriminalHearingRestrictionResponse2 getSyncCriminalHearingRestrictionResponse2 = new GetSyncCriminalHearingRestrictionResponse2();
-            getSyncCriminalHearingRestrictionResponse2.setGetSyncCriminalHearingRestrictionResponse(response.getBody());
-            getSyncCriminalHearingRestrictionResponse.setGetSyncCriminalHearingRestrictionResponse(getSyncCriminalHearingRestrictionResponse2);
+            ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponse = buildHearingResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SYNC_HEARING);
 
@@ -139,6 +162,17 @@ public class SyncController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse buildHearingResponse(ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponseInner) {
+
+        ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse();
+        GetSyncCriminalHearingRestrictionResponse2 getSyncCriminalHearingRestrictionResponse2 = new GetSyncCriminalHearingRestrictionResponse2();
+        getSyncCriminalHearingRestrictionResponse2.setGetSyncCriminalHearingRestrictionResponse(getSyncCriminalHearingRestrictionResponseInner);
+        getSyncCriminalHearingRestrictionResponse.setGetSyncCriminalHearingRestrictionResponse(getSyncCriminalHearingRestrictionResponse2);
+
+        return getSyncCriminalHearingRestrictionResponse;
 
     }
 
