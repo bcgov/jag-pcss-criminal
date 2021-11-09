@@ -4,16 +4,15 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.HearingController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse;
 import ca.bc.gov.open.wsdl.pcss.three.HearingRestrictionType;
-import ca.bc.gov.open.wsdl.pcss.three.OperationMode2Type;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +26,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -42,6 +43,9 @@ public class SetHearingRestrictionCriminalTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private HearingValidator hearingValidatorMock;
+
     private HearingController sut;
 
     @BeforeAll
@@ -51,7 +55,7 @@ public class SetHearingRestrictionCriminalTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new HearingController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new HearingController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), hearingValidatorMock);
 
     }
 
@@ -67,6 +71,8 @@ public class SetHearingRestrictionCriminalTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
+        Mockito.when(hearingValidatorMock.validateSetHearingRestrictionCriminal(any())).thenReturn(new ArrayList<String>());
+
         ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalResponse result = sut.setHearingRestrictionCriminal(createTestRequest());
 
         SetHearingRestrictionCriminalResponse innerResponse = result.getSetHearingRestrictionCriminalResponse().getSetHearingRestrictionCriminalResponse();
@@ -77,10 +83,16 @@ public class SetHearingRestrictionCriminalTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void errorBadDateException() throws JsonProcessingException {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, () -> sut.setHearingRestrictionCriminal(new SetHearingRestrictionCriminal()));
+        Mockito.when(hearingValidatorMock.validateSetHearingRestrictionCriminal(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalResponse result = sut.setHearingRestrictionCriminal(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getSetHearingRestrictionCriminalResponse().getSetHearingRestrictionCriminalResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getSetHearingRestrictionCriminalResponse().getSetHearingRestrictionCriminalResponse().getResponseCd());
 
     }
 
@@ -89,6 +101,9 @@ public class SetHearingRestrictionCriminalTest {
     public void errorOrdsException() {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+
+        Mockito.when(hearingValidatorMock.validateSetHearingRestrictionCriminal(any())).thenReturn(new ArrayList<String>());
+
         Assertions.assertThrows(ORDSException.class, () -> sut.setHearingRestrictionCriminal(createTestRequest()));
 
     }

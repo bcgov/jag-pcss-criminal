@@ -45,7 +45,7 @@ public class HearingController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL)
     @ResponsePayload
-    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(@RequestPayload SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException, BadDateException {
+    public SetHearingRestrictionCriminalResponse setHearingRestrictionCriminal(@RequestPayload SetHearingRestrictionCriminal setHearingRestrictionCriminal) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
@@ -55,7 +55,7 @@ public class HearingController {
                 : new SetHearingRestrictionCriminalRequest();
 
         List<String> validationErrors = hearingValidator.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
-        if(validationErrors.isEmpty()) {
+        if(!validationErrors.isEmpty()) {
             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse();
             innerErrorResponse.setResponseCd("-2");
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
@@ -64,11 +64,6 @@ public class HearingController {
             log.warn(Keys.VALIDATION_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
             return errorResponse;
-        }
-
-        if(setHearingRestrictionCriminalRequest.getRequestDtm() == null) {
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL, setHearingRestrictionCriminal, ""));
-            throw new BadDateException();
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_HEARING);
