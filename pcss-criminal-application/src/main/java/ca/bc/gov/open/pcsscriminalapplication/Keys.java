@@ -84,5 +84,9 @@ public class Keys {
     public static final String LOG_RECEIVED = "{}: received";
     public static final String LOG_ORDS = "{}: making ORDS request";
     public static final String LOG_SUCCESS = "{}: successful";
+    public static final String LOG_FAILED_VALIDATION = "{}: request object validation failed";
+
+    //Response Codes
+    public static final Integer FAILED_VALIDATION = -2;
 
 }

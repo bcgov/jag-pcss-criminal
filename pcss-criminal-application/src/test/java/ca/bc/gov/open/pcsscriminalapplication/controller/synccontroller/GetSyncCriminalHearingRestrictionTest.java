@@ -4,8 +4,8 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.SyncController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.Appearance;
 import ca.bc.gov.open.wsdl.pcss.one.HearingRestriction;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,6 +37,9 @@ public class GetSyncCriminalHearingRestrictionTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private SyncValidator syncValidatorMock;
+
     private SyncController sut;
 
     @BeforeAll
@@ -45,7 +49,7 @@ public class GetSyncCriminalHearingRestrictionTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new SyncController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new SyncController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), syncValidatorMock);
 
     }
 
@@ -59,6 +63,7 @@ public class GetSyncCriminalHearingRestrictionTest {
         response.setHearingRestriction(Collections.singletonList(new HearingRestriction()));
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
+        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any())).thenReturn(new ArrayList<>());
 
         GetSyncCriminalHearingRestrictionResponse result = sut.getSyncCriminalHearingRestriction(createTestRequest());
 
@@ -69,21 +74,30 @@ public class GetSyncCriminalHearingRestrictionTest {
 
     }
 
+
+    @Test
+    @DisplayName("Fail: get returns validation failure object")
+    public void failTestReturns() throws BadDateException, JsonProcessingException {
+
+        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        GetSyncCriminalHearingRestrictionResponse result = sut.getSyncCriminalHearingRestriction(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getGetSyncCriminalHearingRestrictionResponse().getGetSyncCriminalHearingRestrictionResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getGetSyncCriminalHearingRestrictionResponse().getGetSyncCriminalHearingRestrictionResponse().getResponseCd());
+
+    }
+
+
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any())).thenReturn(new ArrayList<>());
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getSyncCriminalHearingRestriction(createTestRequest()));
-
-    }
-
-    @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void whenBadDateExceptionThrown() {
-
-        Assertions.assertThrows(BadDateException.class, () -> sut.getSyncCriminalHearingRestriction(new GetSyncCriminalHearingRestriction()));
 
     }
 
