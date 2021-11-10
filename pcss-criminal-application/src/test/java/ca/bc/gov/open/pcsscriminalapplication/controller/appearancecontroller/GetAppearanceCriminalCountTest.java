@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.ApprCount;
 import ca.bc.gov.open.wsdl.pcss.two.*;
@@ -35,6 +36,9 @@ public class GetAppearanceCriminalCountTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private AppearanceValidator appearanceValidatorMock;
+
     private AppearanceController sut;
 
     @BeforeAll
@@ -44,7 +48,7 @@ public class GetAppearanceCriminalCountTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), appearanceValidatorMock);
 
     }
 

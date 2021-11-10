@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.*;
@@ -12,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,6 +25,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.List;
+
 @Slf4j
 @Endpoint
 @EnableConfigurationProperties(PcssProperties.class)
@@ -31,11 +35,13 @@ public class AppearanceController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
+    private final AppearanceValidator appearanceValidator;
 
-    public AppearanceController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public AppearanceController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder, AppearanceValidator appearanceValidator) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
+        this.appearanceValidator = appearanceValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE)
@@ -50,12 +56,20 @@ public class AppearanceController {
                 ? getAppearanceCriminal.getGetAppearanceCriminalRequest().getGetAppearanceCriminalRequest()
                 : new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalRequest();
 
-        if (getAppearanceCriminalRequest.getRequestDtm() == null) {
+        List<String> validation =  appearanceValidator.validateGetAppearanceCriminal(getAppearanceCriminalRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminal, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse getAppearanceCriminalResponseValidation = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse();
+
+            getAppearanceCriminalResponseValidation.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getAppearanceCriminalResponseValidation.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
+
+            return buildAppearanceResponse(getAppearanceCriminalResponseValidation);
 
         }
+
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
@@ -91,6 +105,17 @@ public class AppearanceController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private GetAppearanceCriminalResponse buildAppearanceResponse(ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse getAppearanceCriminalResponseInner) {
+
+        GetAppearanceCriminalResponse getAppearanceCriminalResponse = new GetAppearanceCriminalResponse();
+        GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
+        getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(getAppearanceCriminalResponseInner);
+        getAppearanceCriminalResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+
+        return getAppearanceCriminalResponse;
 
     }
 

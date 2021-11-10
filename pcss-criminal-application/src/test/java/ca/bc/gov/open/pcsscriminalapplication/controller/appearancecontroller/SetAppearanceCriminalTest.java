@@ -3,6 +3,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Detail;
 import ca.bc.gov.open.wsdl.pcss.one.Detail2;
@@ -37,6 +38,9 @@ public class SetAppearanceCriminalTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private AppearanceValidator appearanceValidatorMock;
+
     private AppearanceController sut;
 
     @BeforeAll
@@ -46,7 +50,7 @@ public class SetAppearanceCriminalTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), appearanceValidatorMock);
 
     }
 
