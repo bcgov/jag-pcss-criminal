@@ -50,6 +50,21 @@ public class ValidateSetHearingRestrictionCriminalTest {
     }
 
     @Test
+    @DisplayName("Success: optional properties set to null")
+    public void sucessNullOptionalPropertiesReturns() {
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
+        setHearingRestrictionCriminalRequest.setRequestPartId("0000");
+        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
+
+        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+
+        Assertions.assertTrue(validationErrors.isEmpty());
+    }
+
+
+    @Test
     @DisplayName("Fail: agency identifier id failed")
     public void failAgencyIdentifierIdFailedReturns() {
 
@@ -258,6 +273,28 @@ public class ValidateSetHearingRestrictionCriminalTest {
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("HearingRestrictionCcn is not valid", validationErrors.get(0));
+    }
+
+    @Test
+    @DisplayName("Fail: operation mode cd required")
+    public void failOperationModeCdRequiredReturns() {
+
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
+        setHearingRestrictionCriminalRequest.setRequestPartId("0000");
+        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
+        setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
+        setHearingRestrictionCriminalRequest.setHearingRestrictionCd(HearingRestrictionType.S);
+        setHearingRestrictionCriminalRequest.setJustinNo("000");
+        setHearingRestrictionCriminalRequest.setPartId("000");
+        setHearingRestrictionCriminalRequest.setProfSeqNo("000");
+        setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
+
+        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+
+        Assertions.assertEquals(1, validationErrors.size());
+        Assertions.assertEquals("OperationModeCd is not valid", validationErrors.get(0));
     }
 
 }
