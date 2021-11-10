@@ -63,9 +63,7 @@ public class HearingValidatorImpl implements HearingValidator {
         if(request.getHearingRestrictionCcn() != null && checkConcurrencyControlTypeForErrors(request.getHearingRestrictionCcn())) {
             errors.add("HearingRestrictionCcn is not valid");
         }
-
-        // TODO: verify if enums need any validations: OperationModeCd, HearingRestrictionCd
-
+        
         return errors;
     }
 }
