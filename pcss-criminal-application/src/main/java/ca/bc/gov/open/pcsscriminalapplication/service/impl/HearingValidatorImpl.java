@@ -40,42 +40,29 @@ public class HearingValidatorImpl implements HearingValidator {
             errors.add("OperationModeCd is not valid");
         }
 
-        if(request.getHearingRestrictionId() != null) {
-            if(checkSystemIdTypeForErrors(request.getHearingRestrictionId())) {
-                errors.add("HearingRestrictionId is not valid");
-            }
+        if(request.getHearingRestrictionId() != null && checkSystemIdTypeForErrors(request.getHearingRestrictionId())) {
+            errors.add("HearingRestrictionId is not valid");
         }
 
-        if(request.getAdjudicatorPartId() != null) {
-            if(checkSystemIdTypeForErrors(request.getAdjudicatorPartId())) {
-                errors.add("AdjudicatorPartId is not valid");
-            }
+        if(request.getAdjudicatorPartId() != null && checkSystemIdTypeForErrors(request.getAdjudicatorPartId())) {
+            errors.add("AdjudicatorPartId is not valid");
         }
 
-        if(request.getJustinNo() != null) {
-            if(checkJustinNoTypeForErrors(request.getJustinNo())) {
-                errors.add("JustinNo is not valid");
-            }
+        if(request.getJustinNo() != null && checkJustinNoTypeForErrors(request.getJustinNo())) {
+            errors.add("JustinNo is not valid");
         }
 
-        if(request.getPartId() != null) {
-            if(checkSystemIdTypeForErrors(request.getPartId())) {
-                errors.add("PartId is not valid");
-            }
+        if(request.getPartId() != null && checkSystemIdTypeForErrors(request.getPartId())) {
+            errors.add("PartId is not valid");
         }
 
-        if(request.getProfSeqNo() != null) {
-            if(checkSystemSeqNoTypeForErrors(request.getProfSeqNo())) {
-                errors.add("ProfSeqNo is not valid");
-            }
+        if(request.getProfSeqNo() != null && checkSystemSeqNoTypeForErrors(request.getProfSeqNo())) {
+            errors.add("ProfSeqNo is not valid");
         }
 
-        if(request.getHearingRestrictionCcn() != null) {
-            if(checkConcurrencyControlTypeForErrors(request.getHearingRestrictionCcn())) {
-                errors.add("HearingRestrictionCcn is not valid");
-            }
+        if(request.getHearingRestrictionCcn() != null && checkConcurrencyControlTypeForErrors(request.getHearingRestrictionCcn())) {
+            errors.add("HearingRestrictionCcn is not valid");
         }
-
 
         // TODO: verify if enums need any validations: OperationModeCd, HearingRestrictionCd
 
