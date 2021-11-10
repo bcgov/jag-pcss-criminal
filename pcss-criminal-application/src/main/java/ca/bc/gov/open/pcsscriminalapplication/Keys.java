@@ -35,10 +35,10 @@ public class Keys {
     public static final String SOAP_METHOD_SET_CROWN_ASSIGNMENT = "setCrownAssignment";
     public static final String SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL = "setCounselDetailCriminal";
 
-
     //Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
     public static final String ORDS_ERROR_MESSAGE = "Error received from ORDS";
+    public static final String VALIDATION_ERROR_MESSAGE = "Invalid data received";
 
     //Query Params
     public static final String QUERY_AGENT_ID = "requestAgenId";
