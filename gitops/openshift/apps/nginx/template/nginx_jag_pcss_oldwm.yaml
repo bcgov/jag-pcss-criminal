@@ -8,25 +8,24 @@ labels:
   app: ${APP_NAME}
   app.kubernetes.io/name: ${COMPONENT_NAME}
   app.openshift.io/runtime: ${RUNTIME}
-
+  
 parameters:
 
 - name: APP_NAME
   description: The application name that each component is part of
   required: false
-  value: jag-pcss-criminal
+  value: jag-pcss
 
 - name: COMPONENT_NAME
   description: The application name that each component is part of
   required: false
-  value: nginx-jag-pcss-criminal
-
+  value: nginx-jag-pcss
+  
 - name: OC_NAMESPACE
   description: The OpenShift namespace prefix
   required: false
-  # Below value must be changed as per gold cluster oc nameplate
-  value: 17b24e
-
+  value: 5416bb
+  
 - name: OC_ENV
   description: The OpenShift environment, ie dev, test or prod
   required: true
@@ -35,17 +34,12 @@ parameters:
   description: The application name that each component is part of
   required: false
   value: nginx
-
-- name: ENDPOINT1
-  description: The target endpoint
+ 
+- name: ENDPOINT
+  description: The application name that each component is part of
   required: false
-  value: jag-pcss-criminal
-
-- name: ENDPOINT2
-  description: The target endpoint
-  required: false
-  value: nginx-jag-pcss-criminal-oldwm
-
+  value: nginx-jag-pcss
+  
 objects:
 
 - kind: ConfigMap
@@ -61,11 +55,7 @@ objects:
         access_log off;
       }
 
-      location = /api {
-        return 302 /api/actuator/health;
-      }
-
-      location /api/actuator/health {
+      location /ws {
         client_max_body_size 100m;
         proxy_read_timeout 240s;
         proxy_send_timeout 80s;
@@ -78,84 +68,14 @@ objects:
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Host $server_name;
         proxy_pass_request_headers on;
-        proxy_pass http://splitter/actuator/health;
+        proxy_pass https://wsgw.dev.jag.gov.bc.ca/courts/ocp/CeisScss;
       }
-      
-      location /api/ws {
-        client_max_body_size 100m;
-        proxy_read_timeout 240s;
-        proxy_send_timeout 80s;
-        proxy_redirect off;
-        port_in_redirect off;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $server_name;
-        proxy_pass_request_headers on;
-        proxy_pass http://splitter/ws;
-      }
-
-- kind: ConfigMap
-  apiVersion: v1
-  metadata:
-    name: ${COMPONENT_NAME}-upstream
-    namespace: ${OC_NAMESPACE}-${OC_ENV}
-  data:
-    nginx-upstream.conf: |-
-      upstream splitter {
-        server jag-pcss-criminal;
-        # Tured off for now
-        # server nginx-jag-pcss-criminal-oldwm;
-      }
-
-- kind: ImageStream
-  apiVersion: v1
-  metadata:
-    name: "${COMPONENT_NAME}"
-    namespace: ${OC_NAMESPACE}-tools
-
-- kind: BuildConfig
-  apiVersion: v1
-  metadata:
-    name: "${COMPONENT_NAME}"
-    namespace: ${OC_NAMESPACE}-${OC_ENV}
-  spec:
-    source:
-      type: Git
-      git:
-        uri: "https://github.com/sclorg/nginx-ex.git"
-    strategy:
-      type: Source
-      sourceStrategy:
-        from:
-          kind: ImageStreamTag
-          namespace: openshift
-          name: 'nginx:1.16-el8'
-    output:
-      to:
-        kind: ImageStreamTag
-        name: "${COMPONENT_NAME}:latest"
-        namespace: ${OC_NAMESPACE}-tools
-     
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
-    - type: GitHub
-      github:
-        secret: ${COMPONENT_NAME}-github-webhook-secret
-    - type: Generic
-      generic:
-        secret: ${COMPONENT_NAME}-generic-webhook-secret
 
 - kind: DeploymentConfig
   apiVersion: apps.openshift.io/v1
   metadata:
     name: ${COMPONENT_NAME}
     namespace: ${OC_NAMESPACE}-${OC_ENV}
-    annotations:
-      app.openshift.io/connects-to: ${ENDPOINT1}, ${ENDPOINT2}
   spec:
     strategy:
       type: Rolling
@@ -195,10 +115,6 @@ objects:
             configMap:
               name: ${COMPONENT_NAME}-conf
               defaultMode: 420
-          - name: ${COMPONENT_NAME}-upstream
-            configMap:
-              name: ${COMPONENT_NAME}-upstream
-              defaultMode: 420
         containers:
           - name: ${COMPONENT_NAME}
           # Below Immage url must be changed as per gold cluster image stream
@@ -214,9 +130,6 @@ objects:
               - name: ${COMPONENT_NAME}-conf
                 readOnly: true
                 mountPath: /opt/app-root/etc/nginx.default.d/
-              - name: ${COMPONENT_NAME}-upstream
-                readOnly: true
-                mountPath: /opt/app-root/etc/nginx.d
             terminationMessagePath: /dev/termination-log
             terminationMessagePolicy: File
             imagePullPolicy: Always
@@ -235,32 +148,12 @@ objects:
         protocol: TCP
         port: 8080
         targetPort: 8080
+      - name: 80-tcp
+        protocol: TCP
+        port: 80
+        targetPort: 8080
     selector:
       name: ${COMPONENT_NAME}
       deploymentconfig: ${COMPONENT_NAME}
     type: ClusterIP
     sessionAffinity: None
-
-- kind: Route
-  apiVersion: route.openshift.io/v1
-  metadata:
-    name: ${COMPONENT_NAME}
-    namespace: ${OC_NAMESPACE}-${OC_ENV}
-  annotations:
-    # if we do not use sticky-session, disable_cookies needs to be true
-    haproxy.router.openshift.io/disable_cookies: "true"
-    # balance algorithm
-    haproxy.router.openshift.io/balance: roundrobin
-  spec:
-    # Below value must be changed as per gold cluster certificate/DNS
-    host: ${COMPONENT_NAME}-${OC_NAMESPACE}-${OC_ENV}.apps.silver.devops.gov.bc.ca
-    to:
-      kind: Service
-      name: ${COMPONENT_NAME}
-      weight: 100
-    port:
-      targetPort: 8080-tcp
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: None
-    wildcardPolicy: None
