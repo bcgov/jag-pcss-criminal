@@ -41,13 +41,13 @@ public class Keys {
     public static final String VALIDATION_ERROR_MESSAGE = "Invalid data received";
 
     //Query Params
-    public static final String QUERY_AGENT_ID = "requestAgenId";
-    public static final String QUERY_PART_ID = "requestPartId";
-    public static final String QUERY_REQUEST_DATE = "requestDtm";
-    public static final String QUERY_JUSTIN_NO = "justinNo";
-    public static final String QUERY_FUTURE_FLAG = "futureYN";
-    public static final String QUERY_HISTORY_FLAG = "historyYN";
-    public static final String QUERY_APPEARANCE_ID = "appearanceId";
+    public static final String QUERY_AGENT_ID = "rqstagenid";
+    public static final String QUERY_PART_ID = "rqstpartid";
+    public static final String QUERY_REQUEST_DATE = "requestdtm";
+    public static final String QUERY_JUSTIN_NO = "justinno";
+    public static final String QUERY_FUTURE_FLAG = "futureyn";
+    public static final String QUERY_HISTORY_FLAG = "historyyn";
+    public static final String QUERY_APPEARANCE_ID = "apprid";
     public static final String QUERY_APPEARANCE_CD = "appearanceCd";
     public static final String QUERY_APPLICATION_CD = "applicationCd";
     public static final String QUERY_PERSON_CD = "personCd";
@@ -63,11 +63,11 @@ public class Keys {
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
     public static final String ORDS_APPEARANCE_SECURE = "secure/appearance";
-    public static final String ORDS_APPEARANCE_METHOD = "appearance-method";
-    public static final String ORDS_APPEARANCE_METHOD_SECURE = "secure/appearance-method";
-    public static final String ORDS_APPEARANCE_COUNT = "appearance-count";
-    public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance-count";
-    public static final String ORDS_APPEARANCE_RESOURCE = "appearance-resource";
+    public static final String ORDS_APPEARANCE_METHOD = "appearance/method";
+    public static final String ORDS_APPEARANCE_METHOD_SECURE = "secure/appearance/method";
+    public static final String ORDS_APPEARANCE_COUNT = "appearance/counts";
+    public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance/counts";
+    public static final String ORDS_APPEARANCE_RESOURCE = "appearance/resource";
     public static final String ORDS_HEARING = "hearing";
     public static final String ORDS_HEALTH = "health";
     public static final String ORDS_PING = "ping";
