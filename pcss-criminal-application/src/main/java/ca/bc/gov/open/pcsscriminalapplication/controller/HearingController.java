@@ -61,7 +61,7 @@ public class HearingController {
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
             SetHearingRestrictionCriminalResponse errorResponse = buildHearingResponse(innerErrorResponse);
 
-            log.warn(Keys.VALIDATION_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
             return errorResponse;
         }

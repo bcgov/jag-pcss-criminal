@@ -75,6 +75,7 @@ public class AppearanceController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalRequest.getRequestPartId())
+                        .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalRequest.getAppearanceId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_JUSTIN_NO, getAppearanceCriminalRequest.getJustinNo())
                         .queryParam(Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalRequest.getFutureYN())

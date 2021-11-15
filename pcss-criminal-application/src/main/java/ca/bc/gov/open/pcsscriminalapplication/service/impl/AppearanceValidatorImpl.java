@@ -8,6 +8,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureReque
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,6 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
         if (getAppearanceCriminalRequest == null) return Collections.singletonList("Empty request is invalid");
 
         List<String> errors = new ArrayList<>();
-
 
         if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
@@ -54,10 +54,21 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        getAppearanceCriminalApprMethodRequest.getRequestDtm();
-        getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId();
-        getAppearanceCriminalApprMethodRequest.getRequestPartId();
-        getAppearanceCriminalApprMethodRequest.getAppearanceId();
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalApprMethodRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalApprMethodRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalApprMethodRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalApprMethodRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
 
         return errors;
 
@@ -70,6 +81,28 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalApprMethodSecureRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalApprMethodSecureRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
+
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        //TODO: Add application cd validation
+
         return errors;
 
     }
@@ -80,6 +113,22 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
         if (getAppearanceCriminalCountRequest == null) return Collections.singletonList("Empty request is invalid");
 
         List<String> errors = new ArrayList<>();
+
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalCountRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalCountRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalCountRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalCountRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalCountRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
 
         return errors;
 
@@ -92,6 +141,28 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalCountSecureRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalCountSecureRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalCountSecureRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalCountSecureRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
+
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        //TODO: Add application cd validation
+
         return errors;
 
     }
@@ -102,6 +173,22 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
         if (getAppearanceCriminalResourceRequest == null) return Collections.singletonList("Empty request is invalid");
 
         List<String> errors = new ArrayList<>();
+
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalResourceRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalResourceRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalResourceRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalResourceRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalResourceRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
 
         return errors;
 
@@ -114,6 +201,28 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalSecureRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (getAppearanceCriminalSecureRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getAppearanceCriminalSecureRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalSecureRequest.getAppearanceId())) {
+            errors.add("AppearanceId is not valid");
+        }
+
+        if (ValidationUtils.checkJustinNoTypeForErrors(getAppearanceCriminalSecureRequest.getJustinNo())) {
+            errors.add("JustinNo is not valid");
+        }
+
+        //TODO: Add application cd validation
+
         return errors;
 
     }
@@ -125,6 +234,58 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (setAppearanceCriminalRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
+
+        for (int i = 0; i < setAppearanceCriminalRequest.getDetail().size(); i++) {
+
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPcssAppearanceId())) {
+                errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkJustinNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getJustinNo())) {
+                errors.add(MessageFormat.format("Details JustinNo at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPartId())) {
+                errors.add(MessageFormat.format("Details PartId at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getProfSeqNo())) {
+                errors.add(MessageFormat.format("Details ProfSeqNo at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceDt().toString())) {
+                errors.add(MessageFormat.format("Details AppearanceDt at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceTm())) {
+                errors.add(MessageFormat.format("Details AppearanceTm at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkAppearanceReasonCriminalTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceReasonCd())) {
+                errors.add(MessageFormat.format("Details AppearanceReasonCd at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtAgencyId())) {
+                errors.add(MessageFormat.format("Details CourtAgencyId at index {0} is not valid", i+1));
+            }
+
+            if (ValidationUtils.checkCourtRoomTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtRoomCd())) {
+                errors.add(MessageFormat.format("Details CourtRoomCd at index {0} is not valid", i+1));
+            }
+
+        }
+
         return errors;
 
     }
@@ -135,6 +296,18 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
         if (setAppearanceMethodCriminalRequest == null) return Collections.singletonList("Empty request is invalid");
 
         List<String> errors = new ArrayList<>();
+
+        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceMethodCriminalRequest.getRequestAgencyIdentifierId())) {
+            errors.add("RequestAgencyIdentifierId is not valid");
+        }
+
+        if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceMethodCriminalRequest.getRequestPartId())) {
+            errors.add("RequestPartId is not valid");
+        }
+
+        if (setAppearanceMethodCriminalRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(setAppearanceMethodCriminalRequest.getRequestDtm().toString())) {
+            errors.add("RequestDtm is not valid");
+        }
 
         return errors;
 

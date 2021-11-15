@@ -47,7 +47,7 @@ public class Keys {
     public static final String QUERY_JUSTIN_NO = "justinNo";
     public static final String QUERY_FUTURE_FLAG = "futureYN";
     public static final String QUERY_HISTORY_FLAG = "historyYN";
-    public static final String QUERY_APPEARANCE_ID = "appearanceId";
+    public static final String QUERY_APPEARANCE_ID = "apprid";
     public static final String QUERY_APPEARANCE_CD = "appearanceCd";
     public static final String QUERY_APPLICATION_CD = "applicationCd";
     public static final String QUERY_PERSON_CD = "personCd";
