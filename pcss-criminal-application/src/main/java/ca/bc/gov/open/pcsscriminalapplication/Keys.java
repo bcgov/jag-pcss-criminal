@@ -52,8 +52,8 @@ public class Keys {
     public static final String QUERY_APPLICATION_CD = "applicationCd";
     public static final String QUERY_PERSON_CD = "personCd";
     public static final String QUERY_AGENCY_IDENTIFIER = "agencyIdentifier";
-    public static final String QUERY_FROM_DATE = "fromDtm";
-    public static final String QUERY_TO_DATE = "toDtm";
+    public static final String QUERY_FROM_DATE = "fromdate";
+    public static final String QUERY_TO_DATE = "todate";
     public static final String QUERY_AVAILABILITY_DATE = "availabilityDt";
     public static final String QUERY_PAAS_PART_ID = "paasPartId";
     public static final String QUERY_SEARCH_TYPE_CD = "searchTypeCd";
@@ -79,6 +79,10 @@ public class Keys {
     public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
     public static final String ORDS_CROWN_ASSIGNMENT = "crown/assignment";
     public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "counsel/detail";
+    public static final String ORDS_CLOSED_FILE = "closed-file";
+    public static final String ORDS_FILE_DETAIL = "file/detail";
+    public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
+    public static final String ORDS_FILE_NOTE = "file/note";
 
     //Logs
     public static final String LOG_RECEIVED = "{}: received";
