@@ -68,7 +68,7 @@ public class Keys {
     public static final String ORDS_APPEARANCE_COUNT = "appearance/counts";
     public static final String ORDS_APPEARANCE_COUNT_SECURE = "secure/appearance/counts";
     public static final String ORDS_APPEARANCE_RESOURCE = "appearance/resource";
-    public static final String ORDS_HEARING = "hearing";
+    public static final String ORDS_HEARING = "hearing/restriction";
     public static final String ORDS_HEALTH = "health";
     public static final String ORDS_PING = "ping";
     public static final String ORDS_PERSONNEL_AVAILABILITY = "personnel/availability";
