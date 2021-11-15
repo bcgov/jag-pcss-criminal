@@ -85,6 +85,7 @@ public class AppearanceController {
             return getAppearanceCriminalResponse;
 
         } catch (Exception ex) {
+
             log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminalRequest, ex.getMessage()));
             throw new ORDSException();
 
