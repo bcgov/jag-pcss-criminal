@@ -58,7 +58,7 @@ public class Keys {
     public static final String QUERY_PAAS_PART_ID = "paasPartId";
     public static final String QUERY_SEARCH_TYPE_CD = "searchTypeCd";
     public static final String QUERY_SEARCH_TEXT = "searchText";
-    public static final String QUERY_SINCE_DATE = "sinceDt";
+    public static final String QUERY_SINCE_DATE = "sincedt";
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
@@ -78,7 +78,7 @@ public class Keys {
     public static final String ORDS_SYNC_HEARING = "sync/hearing";
     public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
     public static final String ORDS_CROWN_ASSIGNMENT = "crown/assignment";
-    public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "crown/detail-criminal";
+    public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "counsel/detail";
 
     //Logs
     public static final String LOG_RECEIVED = "{}: received";
