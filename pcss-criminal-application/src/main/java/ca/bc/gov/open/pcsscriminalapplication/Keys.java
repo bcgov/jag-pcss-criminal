@@ -60,6 +60,7 @@ public class Keys {
     public static final String QUERY_SEARCH_TEXT = "searchtxt";
     public static final String QUERY_SINCE_DATE = "sincedt";
     public static final String QUERY_PART_ID_LIST = "partidlist";
+    public static final String QUERY_SYNC_TO_DATE = "procuptodtm";
 
     //Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
@@ -76,7 +77,7 @@ public class Keys {
     public static final String ORDS_PERSONNEL_DETAIL = "personnel/availability/detail";
     public static final String ORDS_PERSONNEL_SEARCH = "personnel/search";
     public static final String ORDS_SYNC_APPEARANCE = "sync/appearance";
-    public static final String ORDS_SYNC_HEARING = "sync/hearing";
+    public static final String ORDS_SYNC_HEARING = "sync/hearing-restriction";
     public static final String ORDS_CROWN_FILE_DETAIL = "crown/file-detail";
     public static final String ORDS_CROWN_ASSIGNMENT = "crown/assignment";
     public static final String ORDS_COUNSEL_DETAIL_CRIMINAL = "counsel/detail";
