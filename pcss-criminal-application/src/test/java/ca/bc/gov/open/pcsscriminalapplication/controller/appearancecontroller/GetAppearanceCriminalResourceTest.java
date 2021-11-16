@@ -57,7 +57,7 @@ public class GetAppearanceCriminalResourceTest {
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
 
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCount(any())).thenReturn(new ArrayList<>());
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalResource(any())).thenReturn(new ArrayList<>());
 
         ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse();
         response.setResponseMessageTxt("TEST");
@@ -79,7 +79,7 @@ public class GetAppearanceCriminalResourceTest {
     @DisplayName("Fail: post returns validation failure object")
     public void failTestReturns() throws JsonProcessingException {
 
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCount(any())).thenReturn(Collections.singletonList("BAD DATA"));
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalResource(any())).thenReturn(Collections.singletonList("BAD DATA"));
 
         GetAppearanceCriminalResourceResponse result = sut.getAppearanceCriminalResource(createTestRequest());
 
@@ -93,7 +93,7 @@ public class GetAppearanceCriminalResourceTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCount(any())).thenReturn(new ArrayList<>());
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalResource(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
