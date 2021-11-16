@@ -97,10 +97,6 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
             errors.add("AppearanceId is not valid");
         }
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())) {
-            errors.add("RequestAgencyIdentifierId is not valid");
-        }
-
         //TODO: Add application cd validation
 
         return errors;
