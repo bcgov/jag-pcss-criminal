@@ -59,11 +59,10 @@ public class HearingController {
             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse();
             innerErrorResponse.setResponseCd("-2");
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-            SetHearingRestrictionCriminalResponse errorResponse = buildHearingResponse(innerErrorResponse);
 
-            log.warn(Keys.VALIDATION_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
+            log.warn(Keys.VALIDATION_ERROR_MESSAGE);
 
-            return errorResponse;
+            return buildHearingResponse(innerErrorResponse);
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_HEARING);
@@ -81,11 +80,9 @@ public class HearingController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse.class);
 
-            SetHearingRestrictionCriminalResponse setHearingRestrictionCriminalResponse = buildHearingResponse(response.getBody());
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
-            return setHearingRestrictionCriminalResponse;
+            return buildHearingResponse(response.getBody());
 
         } catch(Exception ex) {
             log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL, setHearingRestrictionCriminalRequest, ex.getMessage()));

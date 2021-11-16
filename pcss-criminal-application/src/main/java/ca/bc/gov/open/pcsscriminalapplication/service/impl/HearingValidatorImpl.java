@@ -11,7 +11,7 @@ import java.util.List;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkConcurrencyControlTypeForErrors;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkDateTimeTypeForErrors;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkJustinNoTypeForErrors;
-import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkRequestAgencyIdentifierIdForErrors;
+import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkAgencyIdentifierTypeForErrors;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkSystemIdTypeForErrors;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkSystemSeqNoTypeForErrors;
 
@@ -24,7 +24,7 @@ public class HearingValidatorImpl implements HearingValidator {
 
         List<String> errors = new ArrayList<String>();
 
-        if(checkRequestAgencyIdentifierIdForErrors(request.getRequestAgencyIdentifierId())) {
+        if(checkAgencyIdentifierTypeForErrors(request.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
