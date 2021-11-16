@@ -8,6 +8,7 @@ import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.one.ApprDetail;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
+import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -56,6 +58,8 @@ public class GetAppearanceCriminalSecureTest {
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
 
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalSecure(any())).thenReturn(new ArrayList<>());
+
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse response = new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
@@ -73,20 +77,28 @@ public class GetAppearanceCriminalSecureTest {
     }
 
     @Test
-    @DisplayName("Error: ords throws exception")
-    public void errorOrdsException() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalSecure(any())).thenReturn(Collections.singletonList("BAD DATA"));
 
-        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalSecure(createTestRequest()));
+        GetAppearanceCriminalSecureResponse result = sut.getAppearanceCriminalSecure(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getGetAppearanceCriminalResponse().getGetAppearanceCriminalResponse().getResponseCd());
 
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void whenBadDateExceptionThrown() {
+    @DisplayName("Error: ords throws exception")
+    public void errorOrdsException() {
 
-        Assertions.assertThrows(BadDateException.class, () -> sut.getAppearanceCriminalSecure(new GetAppearanceCriminalSecure()));
+        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalSecure(any())).thenReturn(new ArrayList<>());
+
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+
+        Assertions.assertThrows(ORDSException.class, () -> sut.getAppearanceCriminalSecure(createTestRequest()));
 
     }
 
