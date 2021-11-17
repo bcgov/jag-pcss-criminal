@@ -5,5 +5,5 @@ import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
 import java.util.List;
 
 public interface HearingValidator {
-    public List<String> validateSetHearingRestrictionCriminal(SetHearingRestrictionCriminalRequest request);
+    List<String> validateSetHearingRestrictionCriminal(SetHearingRestrictionCriminalRequest request);
 }
