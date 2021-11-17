@@ -1,6 +1,8 @@
 package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +13,8 @@ import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.check
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkJustinNoTypeForErrors;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkSystemIdTypeForErrors;
 
-public class CrownValidatorImpl {
+@Service
+public class CrownValidatorImpl implements CrownValidator {
     public List<String> validateGetCrownAssignment(GetCrownAssignmentRequest request) {
 
         if(request == null) return Collections.singletonList("Empty request is invalid");
@@ -26,7 +29,7 @@ public class CrownValidatorImpl {
             errors.add("RequestPartId is not valid");
         }
 
-        if(checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
             errors.add("RequestDtm is not valid");
         }
 

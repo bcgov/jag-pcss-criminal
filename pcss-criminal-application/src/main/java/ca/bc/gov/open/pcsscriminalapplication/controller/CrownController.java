@@ -72,7 +72,7 @@ public class CrownController {
             innerErrorResponse.setResponseCd("-2");
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
-            log.warn(Keys.VALIDATION_ERROR_MESSAGE);
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
 
             return buildGetCrownAssignmentResponse(innerErrorResponse);
         }
