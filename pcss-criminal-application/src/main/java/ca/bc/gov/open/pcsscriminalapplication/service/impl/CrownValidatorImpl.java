@@ -35,7 +35,7 @@ public class CrownValidatorImpl {
         }
 
         if(request.getSinceDt() != null && checkDateTimeTypeForErrors(request.getSinceDt().toString())) {
-            errors.add("SinceDtm is not valid");
+            errors.add("SinceDt is not valid");
         }
 
         return errors;

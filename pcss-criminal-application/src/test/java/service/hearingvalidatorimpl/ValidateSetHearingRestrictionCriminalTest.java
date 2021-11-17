@@ -17,7 +17,7 @@ import org.junit.jupiter.api.TestInstance;
 @DisplayName("ValidateSetHearingRestrictionCriminal Test")
 public class ValidateSetHearingRestrictionCriminalTest {
 
-    HearingValidatorImpl sut;
+    private HearingValidatorImpl sut;
 
     @BeforeAll
     public void BeforeAll() {
@@ -51,7 +51,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
 
     @Test
     @DisplayName("Success: optional properties set to null")
-    public void sucessNullOptionalPropertiesReturns() {
+    public void successNullOptionalPropertiesReturns() {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");

@@ -99,6 +99,8 @@ public class GetCrownAssignmentTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any())).thenReturn(new ArrayList<String>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
         Assertions.assertThrows(ORDSException.class, () -> sut.getCrownAssignment(createTestRequest()));
 
