@@ -67,10 +67,10 @@ public class SyncController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_APPEARANCE)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalAppearanceRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm());
 
         try {
 
@@ -135,10 +135,10 @@ public class SyncController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_HEARING)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalHearingRestrictionRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm());
 
         try {
 

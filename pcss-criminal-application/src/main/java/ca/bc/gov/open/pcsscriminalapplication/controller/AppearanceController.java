@@ -73,10 +73,7 @@ public class AppearanceController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalRequest.getAppearanceId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_JUSTIN_NO, getAppearanceCriminalRequest.getJustinNo())
                         .queryParam(Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalRequest.getFutureYN())
                         .queryParam(Keys.QUERY_HISTORY_FLAG, getAppearanceCriminalRequest.getHistoryYN());
@@ -102,6 +99,7 @@ public class AppearanceController {
             return getAppearanceCriminalResponse;
 
         } catch (Exception ex) {
+
             log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_APPEARANCE, getAppearanceCriminalRequest, ex.getMessage()));
             throw new ORDSException();
 
@@ -148,9 +146,6 @@ public class AppearanceController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD)
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodRequest.getAppearanceId());
 
         try {
@@ -222,7 +217,7 @@ public class AppearanceController {
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodSecureRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_APPEARANCE_CD, getAppearanceCriminalApprMethodSecureRequest.getApplicationCd())
+                        .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalApprMethodSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodSecureRequest.getAppearanceId());
 
         try {
@@ -291,9 +286,6 @@ public class AppearanceController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT)
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalCountRequest.getAppearanceId());
 
         try {
@@ -432,9 +424,6 @@ public class AppearanceController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_RESOURCE)
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalResourceRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalResourceRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalResourceRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalResourceRequest.getAppearanceId());
 
         try {
@@ -503,8 +492,10 @@ public class AppearanceController {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalSecureRequest.getAppearanceId())
                         .queryParam(Keys.QUERY_JUSTIN_NO, getAppearanceCriminalSecureRequest.getJustinNo())
                         .queryParam(Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalSecureRequest.getFutureYN())
                         .queryParam(Keys.QUERY_HISTORY_FLAG, getAppearanceCriminalSecureRequest.getHistoryYN());
