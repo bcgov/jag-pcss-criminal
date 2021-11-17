@@ -1,6 +1,5 @@
 package ca.bc.gov.open.pcsscriminalcommon.serializer;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -39,6 +38,18 @@ public class InstantDeserializerTest {
         Instant result = sut.deserialize(jsonParserMock, null);
 
         Assertions.assertEquals("2001-11-26T12:00:00Z", result.toString());
+
+    }
+
+    @Test
+    @DisplayName("Success object deserialized short date")
+    public void objectDeserializedShortDate() throws IOException {
+
+        Mockito.when(jsonParserMock.getText()).thenReturn("26-NOV-01");
+
+        Instant result = sut.deserialize(jsonParserMock, null);
+
+        Assertions.assertEquals("2001-11-26T00:00:00Z", result.toString());
 
     }
 
