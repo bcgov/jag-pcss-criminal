@@ -301,6 +301,31 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
             errors.add("RequestDtm is not valid");
         }
 
+        for (int i = 0; i < setAppearanceMethodCriminalRequest.getDetail().size(); i++) {
+
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getApprId())) {
+                errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
+            }
+
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getRoleCd())) {
+                errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
+            }
+
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getAssetUsageSeqNo())) {
+                errors.add(MessageFormat.format("Details JustinNo at index {0} is not valid", i + 1));
+            }
+
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getAppearanceMethodCd())) {
+                errors.add(MessageFormat.format("Details PartId at index {0} is not valid", i + 1));
+            }
+
+
+            if (ValidationUtils.checkConcurrencyControlTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getApprMethodCcn())) {
+                errors.add(MessageFormat.format("Details AppearanceReasonCd at index {0} is not valid", i + 1));
+            }
+
+        }
+
         return errors;
 
     }
