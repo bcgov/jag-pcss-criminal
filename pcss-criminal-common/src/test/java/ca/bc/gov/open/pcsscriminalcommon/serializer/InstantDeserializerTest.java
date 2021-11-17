@@ -43,6 +43,18 @@ public class InstantDeserializerTest {
     }
 
     @Test
+    @DisplayName("Success object deserialized short date")
+    public void objectDeserializedShortDate() throws IOException {
+
+        Mockito.when(jsonParserMock.getText()).thenReturn("26-NOV-01");
+
+        Instant result = sut.deserialize(jsonParserMock, null);
+
+        Assertions.assertEquals("2001-11-26T00:00:00Z", result.toString());
+
+    }
+
+    @Test
     @DisplayName("Error object not deserialized")
     public void objecNotDeserialized() throws IOException {
 
