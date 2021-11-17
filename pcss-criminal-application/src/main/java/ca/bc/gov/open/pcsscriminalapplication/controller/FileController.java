@@ -56,7 +56,7 @@ public class FileController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CLOSED_FILE)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getClosedFileRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_AGENT_ID, getClosedFileRequest.getAgencyId())
                         .queryParam(Keys.QUERY_PART_ID, getClosedFileRequest.getRequestPartId())
@@ -113,7 +113,7 @@ public class FileController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_FILE_DETAIL)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getFileDetailCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getFileDetailCriminalRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getFileDetailCriminalRequest.getRequestDtm())
@@ -168,7 +168,7 @@ public class FileController {
         }
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SECURE_FILE_DETAIL)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getFileDetailCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getFileDetailCriminalRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getFileDetailCriminalRequest.getRequestDtm())
@@ -215,7 +215,7 @@ public class FileController {
                   setFileNote.getSetFileNoteRequest().getSetFileNoteRequest() :
                   new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_FILE_NOTE);
 
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest> body =
                 new HttpEntity<>(setFileNoteRequest, new HttpHeaders());

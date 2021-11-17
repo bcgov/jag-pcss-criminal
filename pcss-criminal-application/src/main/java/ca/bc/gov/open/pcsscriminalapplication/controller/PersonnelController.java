@@ -59,7 +59,7 @@ public class PersonnelController {
                         .queryParam(Keys.QUERY_PART_ID, getPersonnelAvailabilityRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getPersonnelAvailabilityRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_PERSON_CD, getPersonnelAvailabilityRequest.getPersonTypeCd().value())
-                        .queryParam(Keys.QUERY_PART_ID, getPersonnelAvailabilityRequest.getPartIdList())
+                        .queryParam(Keys.QUERY_PART_ID_LIST, getPersonnelAvailabilityRequest.getPartIdList())
                         .queryParam(Keys.QUERY_FROM_DATE, getPersonnelAvailabilityRequest.getFromDt())
                         .queryParam(Keys.QUERY_TO_DATE, getPersonnelAvailabilityRequest.getToDt());
 
@@ -170,10 +170,10 @@ public class PersonnelController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PERSONNEL_SEARCH)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getAppearanceCriminalRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalRequest.getAgencyId())
+                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getAppearanceCriminalRequest.getAgencyId())
                         .queryParam(Keys.QUERY_SEARCH_TEXT, getAppearanceCriminalRequest.getSearchTxt())
                         .queryParam(Keys.QUERY_SEARCH_TYPE_CD, getAppearanceCriminalRequest.getSearchTypeCd().value());
 

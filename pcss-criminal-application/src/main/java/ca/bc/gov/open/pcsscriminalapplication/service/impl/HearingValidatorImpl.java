@@ -22,7 +22,7 @@ public class HearingValidatorImpl implements HearingValidator {
 
         if (request == null) return Collections.singletonList("Empty request is invalid");
 
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
 
         if(checkAgencyIdentifierTypeForErrors(request.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");

@@ -32,4 +32,12 @@ public class ValidationUtils {
         return (concurrencyControlNo == null || concurrencyControlNo.length() > 12);
     }
 
+    public static boolean checkAppearanceReasonCriminalTypeForErrors(String appearanceReasonType) {
+        return (appearanceReasonType == null || appearanceReasonType.length() > 3);
+    }
+
+    public static boolean checkCourtRoomTypeForErrors(String courtRoomType) {
+        return (courtRoomType == null || courtRoomType.length() > 6);
+    }
+
 }

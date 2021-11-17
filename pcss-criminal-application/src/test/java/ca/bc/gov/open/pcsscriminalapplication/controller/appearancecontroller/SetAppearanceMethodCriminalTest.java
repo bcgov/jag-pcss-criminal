@@ -3,6 +3,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Detail3;
 import ca.bc.gov.open.wsdl.pcss.two.*;
@@ -17,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -33,6 +35,9 @@ public class SetAppearanceMethodCriminalTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private AppearanceValidator appearanceValidatorMock;
+
     private AppearanceController sut;
 
     @BeforeAll
@@ -42,13 +47,15 @@ public class SetAppearanceMethodCriminalTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new AppearanceController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), appearanceValidatorMock);
 
     }
 
     @Test
     @DisplayName("Success: post returns expected object")
     public void successTestReturns() throws JsonProcessingException {
+
+        Mockito.when(appearanceValidatorMock.validateSetAppearanceMethodCriminal(any())).thenReturn(new ArrayList<>());
 
         ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalResponse response = new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalResponse();
         response.setResponseCd("TEST");
@@ -65,8 +72,24 @@ public class SetAppearanceMethodCriminalTest {
     }
 
     @Test
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
+
+        Mockito.when(appearanceValidatorMock.validateSetAppearanceMethodCriminal(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        SetAppearanceMethodCriminalResponse result = sut.setAppearanceMethodCriminal(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getSetAppearanceMethodCriminalResponse().getSetAppearanceMethodCriminalResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getSetAppearanceMethodCriminalResponse().getSetAppearanceMethodCriminalResponse().getResponseCd());
+
+    }
+
+    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
+
+        Mockito.when(appearanceValidatorMock.validateSetAppearanceMethodCriminal(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 

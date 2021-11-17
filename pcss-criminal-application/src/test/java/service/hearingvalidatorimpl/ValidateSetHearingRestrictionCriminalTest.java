@@ -295,6 +295,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("OperationModeCd is not valid", validationErrors.get(0));
+
     }
 
 }
