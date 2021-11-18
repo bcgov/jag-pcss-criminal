@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
 import ca.bc.gov.open.wsdl.pcss.three.FileComplexityType;
@@ -20,7 +21,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,6 +42,9 @@ public class SetCrownFileDetailTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private CrownValidator crownValidatorMock;
+
     private CrownController sut;
 
     @BeforeAll
@@ -51,7 +54,7 @@ public class SetCrownFileDetailTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), crownValidatorMock);
 
     }
 

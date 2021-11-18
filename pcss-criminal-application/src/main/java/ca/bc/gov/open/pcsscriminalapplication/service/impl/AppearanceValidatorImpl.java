@@ -23,7 +23,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -54,7 +54,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalApprMethodRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -81,7 +81,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -110,7 +110,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalCountRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalCountRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -137,7 +137,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -166,7 +166,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalResourceRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalResourceRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -193,7 +193,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -226,7 +226,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(setAppearanceCriminalRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -268,7 +268,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
                 errors.add(MessageFormat.format("Details AppearanceReasonCd at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtAgencyId())) {
+            if (ValidationUtils.checkAgencyIdentifierTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtAgencyId())) {
                 errors.add(MessageFormat.format("Details CourtAgencyId at index {0} is not valid", i+1));
             }
 
@@ -289,7 +289,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(setAppearanceMethodCriminalRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(setAppearanceMethodCriminalRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 

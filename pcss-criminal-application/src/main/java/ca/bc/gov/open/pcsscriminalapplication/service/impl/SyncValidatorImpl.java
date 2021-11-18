@@ -20,7 +20,7 @@ public class SyncValidatorImpl implements SyncValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
@@ -47,7 +47,7 @@ public class SyncValidatorImpl implements SyncValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if (ValidationUtils.checkRequestAgencyIdentifierIdForErrors(getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())) {
+        if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 

@@ -1,7 +1,9 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment;
-import java.util.ArrayList;
+
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
@@ -41,6 +43,9 @@ public class GetCrownAssignmentTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private CrownValidator crownValidatorMock;
+
     private CrownController sut;
 
     @BeforeAll
@@ -50,17 +55,20 @@ public class GetCrownAssignmentTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), crownValidatorMock);
 
     }
 
     @Test
-    @DisplayName("Success: post returns expected object")
+    @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws BadDateException, JsonProcessingException {
+
         ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
         response.setCrownAssignment(Collections.singletonList(new CrownAssignment()));
+
+        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any())).thenReturn(new ArrayList<String>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
@@ -73,16 +81,25 @@ public class GetCrownAssignmentTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void errorBadDateException() {
+    @DisplayName("Fail: get returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, ()-> sut.getCrownAssignment(new GetCrownAssignment()));
+        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        GetCrownAssignmentResponse result = sut.getCrownAssignment(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getGetCrownAssignmentResponse().getGetCrownAssignmentResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getGetCrownAssignmentResponse().getGetCrownAssignmentResponse().getResponseCd());
 
     }
+
 
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
+
+        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any())).thenReturn(new ArrayList<String>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
         Assertions.assertThrows(ORDSException.class, () -> sut.getCrownAssignment(createTestRequest()));
@@ -90,6 +107,7 @@ public class GetCrownAssignmentTest {
     }
 
     private GetCrownAssignment createTestRequest() {
+
         GetCrownAssignment getCrownAssignment = new GetCrownAssignment();
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest getCrownAssignmentRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest();

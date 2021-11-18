@@ -8,8 +8,8 @@ public class ValidationUtils {
         //empty constructor
     }
 
-    public static boolean checkRequestAgencyIdentifierIdForErrors(String requestAgencyIdentifierId) {
-        return (StringUtils.isEmpty(requestAgencyIdentifierId) || requestAgencyIdentifierId.length() > 16);
+    public static boolean checkAgencyIdentifierTypeForErrors(String agencyIdentifierId) {
+        return (StringUtils.isEmpty(agencyIdentifierId) || agencyIdentifierId.length() > 16);
     }
 
     public static boolean checkSystemIdTypeForErrors(String systemId) {
