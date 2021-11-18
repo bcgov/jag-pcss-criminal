@@ -120,7 +120,7 @@ public class CrownController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL)
     @ResponsePayload
-    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws BadDateException, JsonProcessingException {
+    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
@@ -129,11 +129,16 @@ public class CrownController {
                 ? setCounselDetailCriminal.getSetCounselDetailCriminalRequest().getSetCounselDetailCriminalRequest()
                 : new SetCounselDetailCriminalRequest();
 
-        if(setCounselDetailCriminalRequest.getRequestDtm() == null) {
+        List<String> validationErrors = crownValidator.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        if(!validationErrors.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL, setCounselDetailCriminal, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
+
+            return buildSetCounselDetailCriminalResponse(innerErrorResponse);
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
@@ -151,14 +156,9 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse.class);
 
-            SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
-            SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
-            setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(response.getBody());
-            setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
-            return setCounselDetailCriminalResponse;
+            return buildSetCounselDetailCriminalResponse(response.getBody());
 
         } catch(Exception ex) {
 
@@ -166,7 +166,16 @@ public class CrownController {
             throw new ORDSException();
 
         }
+    }
 
+    private SetCounselDetailCriminalResponse buildSetCounselDetailCriminalResponse(ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerResponse) {
+
+        SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
+        SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
+        setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(innerResponse);
+        setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
+
+        return setCounselDetailCriminalResponse;
 
     }
 

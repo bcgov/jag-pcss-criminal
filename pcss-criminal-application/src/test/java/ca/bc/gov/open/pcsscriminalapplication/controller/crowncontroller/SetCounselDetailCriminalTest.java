@@ -2,6 +2,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
@@ -65,6 +66,8 @@ public class SetCounselDetailCriminalTest {
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
 
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
         ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result = sut.setCounselDetailCriminal(createTestRequest());
@@ -75,16 +78,24 @@ public class SetCounselDetailCriminalTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void errorBadDateException() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, ()-> sut.setCounselDetailCriminal(new SetCounselDetailCriminal()));
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result = sut.setCounselDetailCriminal(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse().getResponseCd());
 
     }
 
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
+
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
         Assertions.assertThrows(ORDSException.class, () -> sut.setCounselDetailCriminal(createTestRequest()));
