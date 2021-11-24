@@ -4,12 +4,14 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +23,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.List;
+
 @Slf4j
 @Endpoint
 @EnableConfigurationProperties(PcssProperties.class)
@@ -29,16 +33,18 @@ public class FileController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
+    private final FileValidator fileValidator;
 
-    public FileController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public FileController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder, FileValidator fileValidator) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
+        this.fileValidator = fileValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_CLOSED)
     @ResponsePayload
-    public GetClosedFileResponse getClosedFile(@RequestPayload GetClosedFile getClosedFile) throws JsonProcessingException, BadDateException {
+    public GetClosedFileResponse getClosedFile(@RequestPayload GetClosedFile getClosedFile) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_CLOSED);
 
@@ -48,10 +54,17 @@ public class FileController {
                         ? getClosedFile.getGetClosedFileRequest().getGetClosedFileRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest();
 
-        if (getClosedFileRequest.getRequestDtm() == null) {
+        List<String> validation =  fileValidator.validateGetClosedFile(getClosedFileRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_FILE_CLOSED, getClosedFile, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponse = new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse();
+
+            getClosedFileResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getClosedFileResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_CLOSED);
+
+            return buildClosedFileResponse(getClosedFileResponse);
 
         }
 
@@ -75,10 +88,7 @@ public class FileController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse.class);
 
-            GetClosedFileResponse getClosedFileResponse = new GetClosedFileResponse();
-            GetClosedFileResponce getClosedFileResponce = new GetClosedFileResponce();
-            getClosedFileResponce.setGetClosedFileResponse(response.getBody());
-            getClosedFileResponse.setGetClosedFileResponce(getClosedFileResponce);
+            GetClosedFileResponse getClosedFileResponse = buildClosedFileResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_CLOSED);
 
@@ -93,9 +103,20 @@ public class FileController {
 
     }
 
+    private GetClosedFileResponse buildClosedFileResponse(ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponseInner) {
+
+        GetClosedFileResponse getClosedFileResponse = new GetClosedFileResponse();
+        GetClosedFileResponce getClosedFileResponce = new GetClosedFileResponce();
+        getClosedFileResponce.setGetClosedFileResponse(getClosedFileResponseInner);
+        getClosedFileResponse.setGetClosedFileResponce(getClosedFileResponce);
+
+        return getClosedFileResponse;
+
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_DETAIL)
     @ResponsePayload
-    public GetFileDetailCriminalResponse getFileDetailCriminal(@RequestPayload GetFileDetailCriminal getFileDetailCriminal) throws JsonProcessingException, BadDateException {
+    public GetFileDetailCriminalResponse getFileDetailCriminal(@RequestPayload GetFileDetailCriminal getFileDetailCriminal) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_DETAIL);
 
@@ -105,10 +126,17 @@ public class FileController {
                         ? getFileDetailCriminal.getGetFileDetailCriminalRequest().getGetFileDetailCriminalRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalRequest();
 
-        if (getFileDetailCriminalRequest.getRequestDtm() == null) {
+        List<String> validation =  fileValidator.validateGetFileDetailCriminal(getFileDetailCriminalRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_FILE_DETAIL, getFileDetailCriminal, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse getFileDetailCriminalResponse = new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse();
+
+            getFileDetailCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getFileDetailCriminalResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_DETAIL);
+
+            return buildFileDetailCriminalResponse(getFileDetailCriminalResponse);
 
         }
 
@@ -131,10 +159,7 @@ public class FileController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse.class);
 
-            GetFileDetailCriminalResponse getFileDetailCriminalResponse = new GetFileDetailCriminalResponse();
-            GetFileDetailCriminalResponse2 getFileDetailCriminalResponse2 = new GetFileDetailCriminalResponse2();
-            getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(response.getBody());
-            getFileDetailCriminalResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+            GetFileDetailCriminalResponse getFileDetailCriminalResponse = buildFileDetailCriminalResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_DETAIL);
 
@@ -148,9 +173,20 @@ public class FileController {
 
     }
 
+    private GetFileDetailCriminalResponse buildFileDetailCriminalResponse(ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse getFileDetailCriminalResponseInner) {
+
+        GetFileDetailCriminalResponse getFileDetailCriminalResponse = new GetFileDetailCriminalResponse();
+        GetFileDetailCriminalResponse2 getFileDetailCriminalResponse2 = new GetFileDetailCriminalResponse2();
+        getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(getFileDetailCriminalResponseInner);
+        getFileDetailCriminalResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+
+        return getFileDetailCriminalResponse;
+
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_DETAIL_SECURE)
     @ResponsePayload
-    public GetFileDetailCriminalSecureResponse getFileDetailCriminalSecure(@RequestPayload GetFileDetailCriminalSecure getFileDetailCriminalSecure) throws BadDateException, JsonProcessingException {
+    public GetFileDetailCriminalSecureResponse getFileDetailCriminalSecure(@RequestPayload GetFileDetailCriminalSecure getFileDetailCriminalSecure) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
 
@@ -160,10 +196,17 @@ public class FileController {
                         ? getFileDetailCriminalSecure.getGetFileDetailCriminalSecureRequest().getGetFileDetailCriminalRequest()
                         : new ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalRequest();
 
-        if (getFileDetailCriminalRequest.getRequestDtm() == null) {
+        List<String> validation =  fileValidator.validateGetFileDetailCriminalSecure(getFileDetailCriminalRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_FILE_DETAIL_SECURE, getFileDetailCriminalSecure, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse getFileDetailCriminalResponse = new ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse();
+
+            getFileDetailCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getFileDetailCriminalResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
+
+            return buildFileDetailCriminalSecureResponse(getFileDetailCriminalResponse);
 
         }
 
@@ -186,10 +229,7 @@ public class FileController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse.class);
 
-            GetFileDetailCriminalSecureResponse getFileDetailCriminalSecureResponse = new GetFileDetailCriminalSecureResponse();
-            ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse getFileDetailCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse();
-            getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(response.getBody());
-            getFileDetailCriminalSecureResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+            GetFileDetailCriminalSecureResponse getFileDetailCriminalSecureResponse = buildFileDetailCriminalSecureResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
 
@@ -200,6 +240,17 @@ public class FileController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private GetFileDetailCriminalSecureResponse buildFileDetailCriminalSecureResponse(ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse getFileDetailCriminalResponseInner) {
+
+        GetFileDetailCriminalSecureResponse getFileDetailCriminalSecureResponse = new GetFileDetailCriminalSecureResponse();
+        ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse getFileDetailCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalResponse();
+        getFileDetailCriminalResponse2.setGetFileDetailCriminalResponse(getFileDetailCriminalResponseInner);
+        getFileDetailCriminalSecureResponse.setGetFileDetailCriminalResponse(getFileDetailCriminalResponse2);
+
+        return getFileDetailCriminalSecureResponse;
 
     }
 
@@ -214,6 +265,21 @@ public class FileController {
                   setFileNote.getSetFileNoteRequest().getSetFileNoteRequest() != null ?
                   setFileNote.getSetFileNoteRequest().getSetFileNoteRequest() :
                   new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
+
+
+        List<String> validation =  fileValidator.validateSetFileNote(setFileNoteRequest);
+        if (!validation.isEmpty()) {
+
+            ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse setFileNoteResponse = new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse();
+
+            setFileNoteResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            setFileNoteResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_FILE_NOTE);
+
+            return buildFileNoteResponse(setFileNoteResponse);
+
+        }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_FILE_NOTE);
 
@@ -230,10 +296,7 @@ public class FileController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse.class);
 
-            SetFileNoteResponse setFileNoteResponse = new SetFileNoteResponse();
-            SetFileNoteResponse2 setFileNoteResponse2 = new SetFileNoteResponse2();
-            setFileNoteResponse2.setSetFileNoteResponse(response.getBody());
-            setFileNoteResponse.setSetFileNoteResponse(setFileNoteResponse2);
+            SetFileNoteResponse setFileNoteResponse = buildFileNoteResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_FILE_NOTE);
 
@@ -245,6 +308,17 @@ public class FileController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private SetFileNoteResponse buildFileNoteResponse(ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse setFileNoteResponseInner) {
+
+        SetFileNoteResponse setFileNoteResponse = new SetFileNoteResponse();
+        SetFileNoteResponse2 setFileNoteResponse2 = new SetFileNoteResponse2();
+        setFileNoteResponse2.setSetFileNoteResponse(setFileNoteResponseInner);
+        setFileNoteResponse.setSetFileNoteResponse(setFileNoteResponse2);
+
+        return setFileNoteResponse;
 
     }
 
