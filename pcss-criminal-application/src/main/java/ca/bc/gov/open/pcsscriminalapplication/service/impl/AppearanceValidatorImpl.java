@@ -240,39 +240,39 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         for (int i = 0; i < setAppearanceCriminalRequest.getDetail().size(); i++) {
 
-            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPcssAppearanceId())) {
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getPcssAppearanceId())) {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkJustinNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getJustinNo())) {
+            if (ValidationUtils.checkJustinNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getJustinNo())) {
                 errors.add(MessageFormat.format("Details JustinNo at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPartId())) {
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getPartId())) {
                 errors.add(MessageFormat.format("Details PartId at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getProfSeqNo())) {
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getProfSeqNo())) {
                 errors.add(MessageFormat.format("Details ProfSeqNo at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceDt().toString())) {
+            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getAppearanceDt().toString())) {
                 errors.add(MessageFormat.format("Details AppearanceDt at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceTm())) {
+            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getAppearanceTm())) {
                 errors.add(MessageFormat.format("Details AppearanceTm at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkAppearanceReasonCriminalTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceReasonCd())) {
+            if (ValidationUtils.checkAppearanceReasonCriminalTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getAppearanceReasonCd())) {
                 errors.add(MessageFormat.format("Details AppearanceReasonCd at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkAgencyIdentifierTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtAgencyId())) {
+            if (ValidationUtils.checkAgencyIdentifierTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getCourtAgencyId())) {
                 errors.add(MessageFormat.format("Details CourtAgencyId at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkCourtRoomTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getCourtRoomCd())) {
+            if (ValidationUtils.checkCourtRoomTypeForErrors(setAppearanceCriminalRequest.getDetail().get(i).getCourtRoomCd())) {
                 errors.add(MessageFormat.format("Details CourtRoomCd at index {0} is not valid", i+1));
             }
 
@@ -303,24 +303,24 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         for (int i = 0; i < setAppearanceMethodCriminalRequest.getDetail().size(); i++) {
 
-            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getApprId())) {
+            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getApprId())) {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getRoleCd())) {
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getRoleCd())) {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getAssetUsageSeqNo())) {
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getAssetUsageSeqNo())) {
                 errors.add(MessageFormat.format("Details JustinNo at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getAppearanceMethodCd())) {
+            if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getAppearanceMethodCd())) {
                 errors.add(MessageFormat.format("Details PartId at index {0} is not valid", i + 1));
             }
 
 
-            if (ValidationUtils.checkConcurrencyControlTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(0).getApprMethodCcn())) {
+            if (ValidationUtils.checkConcurrencyControlTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getApprMethodCcn())) {
                 errors.add(MessageFormat.format("Details AppearanceReasonCd at index {0} is not valid", i + 1));
             }
 
