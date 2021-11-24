@@ -4,10 +4,12 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +21,8 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.List;
+
 @Slf4j
 @Endpoint
 @EnableConfigurationProperties(PcssProperties.class)
@@ -27,16 +31,18 @@ public class PersonnelController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
+    private final PersonnelValidator personnelValidator;
 
-    public PersonnelController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public PersonnelController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder, PersonnelValidator personnelValidator) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
+        this.personnelValidator = personnelValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY)
     @ResponsePayload
-    public GetPersonnelAvailabilityResponse getPersonnelAvailability(@RequestPayload GetPersonnelAvailability getPersonnelAvailability) throws JsonProcessingException, BadDateException {
+    public GetPersonnelAvailabilityResponse getPersonnelAvailability(@RequestPayload GetPersonnelAvailability getPersonnelAvailability) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
 
@@ -46,10 +52,17 @@ public class PersonnelController {
                         ? getPersonnelAvailability.getGetPersonnelAvailabilityRequest().getGetPersonnelAvailabilityRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest();
 
-        if (getPersonnelAvailabilityRequest.getRequestDtm() == null) {
+        List<String> validation =  personnelValidator.validateGetPersonnelAvailability(getPersonnelAvailabilityRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY, getPersonnelAvailability, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse getAppearanceCriminalResponseValidation = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse();
+
+            getAppearanceCriminalResponseValidation.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getAppearanceCriminalResponseValidation.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
+
+            return buildPersonnelAvailabilityResponse(getAppearanceCriminalResponseValidation);
 
         }
 
@@ -74,10 +87,7 @@ public class PersonnelController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse.class);
 
-            GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse = new GetPersonnelAvailabilityResponse();
-            GetPersonnelAvailabilityResponse2 getPersonnelAvailabilityResponse2 = new GetPersonnelAvailabilityResponse2();
-            getPersonnelAvailabilityResponse2.setGetPersonnelAvailabilityResponse(response.getBody());
-            getPersonnelAvailabilityResponse.setGetPersonnelAvailabilityResponse(getPersonnelAvailabilityResponse2);
+            GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse = buildPersonnelAvailabilityResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
 
@@ -92,9 +102,20 @@ public class PersonnelController {
 
     }
 
+    private GetPersonnelAvailabilityResponse buildPersonnelAvailabilityResponse(ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponseInner) {
+
+        GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse = new GetPersonnelAvailabilityResponse();
+        GetPersonnelAvailabilityResponse2 getPersonnelAvailabilityResponse2 = new GetPersonnelAvailabilityResponse2();
+        getPersonnelAvailabilityResponse2.setGetPersonnelAvailabilityResponse(getPersonnelAvailabilityResponseInner);
+        getPersonnelAvailabilityResponse.setGetPersonnelAvailabilityResponse(getPersonnelAvailabilityResponse2);
+
+        return getPersonnelAvailabilityResponse;
+
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_PERSONNEL_DETAIL)
     @ResponsePayload
-    public GetPersonnelAvailDetailResponse getPersonnelAvailDetail(@RequestPayload GetPersonnelAvailDetail getPersonnelAvailDetail) throws JsonProcessingException, BadDateException {
+    public GetPersonnelAvailDetailResponse getPersonnelAvailDetail(@RequestPayload GetPersonnelAvailDetail getPersonnelAvailDetail) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
 
@@ -104,10 +125,17 @@ public class PersonnelController {
                         ? getPersonnelAvailDetail.getGetPersonnelAvailDetailRequest().getGetPersonnelAvailDetailRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest();
 
-        if (getPersonnelAvailDetailRequest.getRequestDtm() == null) {
+        List<String> validation =  personnelValidator.validateGetPersonnelAvailDetail(getPersonnelAvailDetailRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_PERSONNEL_DETAIL, getPersonnelAvailDetail, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse();
+
+            getPersonnelAvailDetailResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getPersonnelAvailDetailResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
+
+            return buildPersonnelAvailDetail(getPersonnelAvailDetailResponse);
 
         }
 
@@ -131,10 +159,7 @@ public class PersonnelController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse.class);
 
-            GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse = new GetPersonnelAvailDetailResponse();
-            GetPersonnelAvailDetailResponse2 getPersonnelAvailDetailResponse2 = new GetPersonnelAvailDetailResponse2();
-            getPersonnelAvailDetailResponse2.setGetPersonnelAvailDetailResponse(response.getBody());
-            getPersonnelAvailDetailResponse.setGetPersonnelAvailDetailResponse(getPersonnelAvailDetailResponse2);
+            GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse = buildPersonnelAvailDetail(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
 
@@ -149,33 +174,51 @@ public class PersonnelController {
 
     }
 
+    private GetPersonnelAvailDetailResponse buildPersonnelAvailDetail(ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponseInner) {
+
+        GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse = new GetPersonnelAvailDetailResponse();
+        GetPersonnelAvailDetailResponse2 getPersonnelAvailDetailResponse2 = new GetPersonnelAvailDetailResponse2();
+        getPersonnelAvailDetailResponse2.setGetPersonnelAvailDetailResponse(getPersonnelAvailDetailResponseInner);
+        getPersonnelAvailDetailResponse.setGetPersonnelAvailDetailResponse(getPersonnelAvailDetailResponse2);
+
+        return getPersonnelAvailDetailResponse;
+
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_PERSONNEL_SEARCH)
     @ResponsePayload
-    public GetPersonnelSearchResponse getPersonnelSearch(@RequestPayload GetPersonnelSearch getPersonnelSearch) throws JsonProcessingException, BadDateException {
+    public GetPersonnelSearchResponse getPersonnelSearch(@RequestPayload GetPersonnelSearch getPersonnelSearch) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
 
-        ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest getAppearanceCriminalRequest =
+        ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest getPersonnelSearchRequest =
                 getPersonnelSearch.getGetPersonnelSearchRequest() != null
                         && getPersonnelSearch.getGetPersonnelSearchRequest().getGetPersonnelSearchRequest() != null
                         ? getPersonnelSearch.getGetPersonnelSearchRequest().getGetPersonnelSearchRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest();
 
-        if (getAppearanceCriminalRequest.getRequestDtm() == null) {
+        List<String> validation =  personnelValidator.validateGetPersonnelSearch(getPersonnelSearchRequest);
+        if (!validation.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_PERSONNEL_SEARCH, getPersonnelSearch, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse getPersonnelSearchResponse = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse();
+
+            getPersonnelSearchResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            getPersonnelSearchResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
+
+            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
+
+            return buildPersonnelSearch(getPersonnelSearchResponse);
 
         }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PERSONNEL_SEARCH)
-                        .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getAppearanceCriminalRequest.getAgencyId())
-                        .queryParam(Keys.QUERY_SEARCH_TEXT, getAppearanceCriminalRequest.getSearchTxt())
-                        .queryParam(Keys.QUERY_SEARCH_TYPE_CD, getAppearanceCriminalRequest.getSearchTypeCd().value());
+                        .queryParam(Keys.QUERY_AGENT_ID, getPersonnelSearchRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_PART_ID, getPersonnelSearchRequest.getRequestPartId())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, getPersonnelSearchRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getPersonnelSearchRequest.getAgencyId())
+                        .queryParam(Keys.QUERY_SEARCH_TEXT, getPersonnelSearchRequest.getSearchTxt())
+                        .queryParam(Keys.QUERY_SEARCH_TYPE_CD, getPersonnelSearchRequest.getSearchTypeCd().value());
 
         try {
 
@@ -188,10 +231,7 @@ public class PersonnelController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse.class);
 
-            GetPersonnelSearchResponse getPersonnelSearchResponse = new GetPersonnelSearchResponse();
-            GetPersonnelSearchResponse2 getPersonnelSearchResponse2 = new GetPersonnelSearchResponse2();
-            getPersonnelSearchResponse2.setGetPersonnelSearchResponse(response.getBody());
-            getPersonnelSearchResponse.setGetPersonnelSearchResponse(getPersonnelSearchResponse2);
+            GetPersonnelSearchResponse getPersonnelSearchResponse = buildPersonnelSearch(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
 
@@ -199,10 +239,21 @@ public class PersonnelController {
 
         } catch (Exception ex) {
 
-            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_PERSONNEL_SEARCH, getAppearanceCriminalRequest, ex.getMessage()));
+            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_PERSONNEL_SEARCH, getPersonnelSearchRequest, ex.getMessage()));
             throw new ORDSException();
 
         }
+
+    }
+
+    private GetPersonnelSearchResponse buildPersonnelSearch(ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse getPersonnelSearchResponseInner) {
+
+        GetPersonnelSearchResponse getPersonnelSearchResponse = new GetPersonnelSearchResponse();
+        GetPersonnelSearchResponse2 getPersonnelSearchResponse2 = new GetPersonnelSearchResponse2();
+        getPersonnelSearchResponse2.setGetPersonnelSearchResponse(getPersonnelSearchResponseInner);
+        getPersonnelSearchResponse.setGetPersonnelSearchResponse(getPersonnelSearchResponse2);
+
+        return getPersonnelSearchResponse;
 
     }
 
