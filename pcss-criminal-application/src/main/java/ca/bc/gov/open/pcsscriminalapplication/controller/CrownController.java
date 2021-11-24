@@ -120,7 +120,7 @@ public class CrownController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL)
     @ResponsePayload
-    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws BadDateException, JsonProcessingException {
+    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
@@ -129,11 +129,16 @@ public class CrownController {
                 ? setCounselDetailCriminal.getSetCounselDetailCriminalRequest().getSetCounselDetailCriminalRequest()
                 : new SetCounselDetailCriminalRequest();
 
-        if(setCounselDetailCriminalRequest.getRequestDtm() == null) {
+        List<String> validationErrors = crownValidator.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        if(!validationErrors.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL, setCounselDetailCriminal, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
+
+            return buildSetCounselDetailCriminalResponse(innerErrorResponse);
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
@@ -151,14 +156,9 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse.class);
 
-            SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
-            SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
-            setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(response.getBody());
-            setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
-            return setCounselDetailCriminalResponse;
+            return buildSetCounselDetailCriminalResponse(response.getBody());
 
         } catch(Exception ex) {
 
@@ -166,7 +166,16 @@ public class CrownController {
             throw new ORDSException();
 
         }
+    }
 
+    private SetCounselDetailCriminalResponse buildSetCounselDetailCriminalResponse(ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerResponse) {
+
+        SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
+        SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
+        setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(innerResponse);
+        setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
+
+        return setCounselDetailCriminalResponse;
 
     }
 
@@ -181,10 +190,16 @@ public class CrownController {
                 ? setCrownAssignment.getSetCrownAssignmentRequest().getSetCrownAssignmentRequest()
                 : new SetCrownAssignmentRequest();
 
-        if(setCrownAssignmentRequest.getRequestDtm() == null) {
+        List<String> validationErrors = crownValidator.validateSetCrownAssignment(setCrownAssignmentRequest);
+        if(!validationErrors.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT, setCrownAssignment, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
+
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+            return buildSetCrownAssignmentResponse(innerErrorResponse);
 
         }
 
@@ -203,10 +218,9 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse.class);
 
-            SetCrownAssignmentResponse setCrownAssignmentResponse = new SetCrownAssignmentResponse();
-            SetCrownAssignmentResponse2 setCrownAssignmentResponse2 = new SetCrownAssignmentResponse2();
-            setCrownAssignmentResponse2.setSetCrownAssignmentResponse(response.getBody());
-            setCrownAssignmentResponse.setSetCrownAssignmentResponse(setCrownAssignmentResponse2);
+            SetCrownAssignmentResponse setCrownAssignmentResponse = buildSetCrownAssignmentResponse(response.getBody());
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 
             return setCrownAssignmentResponse;
 
@@ -216,6 +230,17 @@ public class CrownController {
             throw new ORDSException();
 
         }
+
+    }
+
+    private SetCrownAssignmentResponse buildSetCrownAssignmentResponse(ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse innerResponse) {
+
+        SetCrownAssignmentResponse setCrownAssignmentResponse = new SetCrownAssignmentResponse();
+        SetCrownAssignmentResponse2 setCrownAssignmentResponse2 = new SetCrownAssignmentResponse2();
+        setCrownAssignmentResponse2.setSetCrownAssignmentResponse(innerResponse);
+        setCrownAssignmentResponse.setSetCrownAssignmentResponse(setCrownAssignmentResponse2);
+
+        return setCrownAssignmentResponse;
 
     }
 
@@ -230,9 +255,17 @@ public class CrownController {
                 ? setCrownFileDetail.getSetCrownFileDetailRequest().getSetCrownFileDetailRequest()
                 : new SetCrownFileDetailRequest();
 
-        if(setCrownFileDetailRequest.getRequestDtm() == null) {
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_CROWN_FILE_DETAIL, setCrownFileDetail, ""));
-            throw new BadDateException();
+        List<String> validationErrors = crownValidator.validateSetCrownFileDetail(setCrownFileDetailRequest);
+        if(!validationErrors.isEmpty()) {
+
+            ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
+
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+            return buildSetCrownFileDetailResponse(innerErrorResponse);
+
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CROWN_FILE_DETAIL);
@@ -250,10 +283,7 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse.class);
 
-            SetCrownFileDetailResponse setCrownFileDetailResponse = new SetCrownFileDetailResponse();
-            SetCrownFileDetailResponse2 setCrownFileDetailResponse2 = new SetCrownFileDetailResponse2();
-            setCrownFileDetailResponse2.setSetCrownFileDetailResponse(response.getBody());
-            setCrownFileDetailResponse.setSetCrownFileDetailResponse(setCrownFileDetailResponse2);
+            SetCrownFileDetailResponse setCrownFileDetailResponse = buildSetCrownFileDetailResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 
@@ -265,4 +295,16 @@ public class CrownController {
         }
 
     }
+
+    private SetCrownFileDetailResponse buildSetCrownFileDetailResponse(ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerResponse) {
+
+        SetCrownFileDetailResponse setCrownFileDetailResponse = new SetCrownFileDetailResponse();
+        SetCrownFileDetailResponse2 setCrownFileDetailResponse2 = new SetCrownFileDetailResponse2();
+        setCrownFileDetailResponse2.setSetCrownFileDetailResponse(innerResponse);
+        setCrownFileDetailResponse.setSetCrownFileDetailResponse(setCrownFileDetailResponse2);
+
+        return setCrownFileDetailResponse;
+
+    }
+
 }

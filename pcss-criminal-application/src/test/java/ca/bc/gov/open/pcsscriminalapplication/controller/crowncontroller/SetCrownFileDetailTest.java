@@ -27,6 +27,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.xml.ws.http.HTTPException;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -67,6 +69,8 @@ public class SetCrownFileDetailTest {
         response.setMdocCcn("Test");
         response.setResponseMessageTxt("Test");
 
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
         SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
@@ -79,10 +83,16 @@ public class SetCrownFileDetailTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void errorBadDateException() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException, BadDateException {
 
-        Assertions.assertThrows(BadDateException.class, ()-> sut.setCrownFileDetail(new SetCrownFileDetail()));
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getSetCrownFileDetailResponse().getSetCrownFileDetailResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getSetCrownFileDetailResponse().getSetCrownFileDetailResponse().getResponseCd());
 
     }
 
@@ -90,7 +100,10 @@ public class SetCrownFileDetailTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+
         Assertions.assertThrows(ORDSException.class, () -> sut.setCrownFileDetail(createTestRequest()));
 
     }

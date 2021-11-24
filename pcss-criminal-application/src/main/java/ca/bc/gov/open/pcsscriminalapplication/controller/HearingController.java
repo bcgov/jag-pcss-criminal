@@ -58,7 +58,7 @@ public class HearingController {
         if(!validationErrors.isEmpty()) {
 
             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse();
-            innerErrorResponse.setResponseCd("-2");
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
             log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);

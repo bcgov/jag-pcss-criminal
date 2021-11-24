@@ -32,7 +32,7 @@ public class HearingValidatorImpl implements HearingValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if(checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
             errors.add("RequestDtm is not valid");
         }
 
