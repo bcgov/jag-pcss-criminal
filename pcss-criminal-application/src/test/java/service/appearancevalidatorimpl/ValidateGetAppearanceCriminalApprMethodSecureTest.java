@@ -32,7 +32,7 @@ public class ValidateGetAppearanceCriminalApprMethodSecureTest {
         GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest = new GetAppearanceCriminalApprMethodSecureRequest();
         getAppearanceCriminalApprMethodSecureRequest.setApplicationCd(VALUE);
         getAppearanceCriminalApprMethodSecureRequest.setAppearanceId(VALUE);
-        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalApprMethodSecureRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalApprMethodSecureRequest.setRequestPartId(VALUE);
 
@@ -49,7 +49,7 @@ public class ValidateGetAppearanceCriminalApprMethodSecureTest {
         GetAppearanceCriminalApprMethodSecureRequest getAppearanceCriminalApprMethodSecureRequest = new GetAppearanceCriminalApprMethodSecureRequest();
         getAppearanceCriminalApprMethodSecureRequest.setApplicationCd("TEST");
         getAppearanceCriminalApprMethodSecureRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm("2013-03-25");
         getAppearanceCriminalApprMethodSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalApprMethodSecureRequest.setRequestPartId(LONG_STRING);
 

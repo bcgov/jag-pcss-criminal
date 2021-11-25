@@ -31,7 +31,7 @@ public class ValidateGetAppearanceCriminalResourceTest {
 
         GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest = new GetAppearanceCriminalResourceRequest();
         getAppearanceCriminalResourceRequest.setAppearanceId(VALUE);
-        getAppearanceCriminalResourceRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getAppearanceCriminalResourceRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalResourceRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalResourceRequest.setRequestPartId(VALUE);
 
@@ -47,7 +47,7 @@ public class ValidateGetAppearanceCriminalResourceTest {
 
         GetAppearanceCriminalResourceRequest getAppearanceCriminalResourceRequest = new GetAppearanceCriminalResourceRequest();
         getAppearanceCriminalResourceRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalResourceRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getAppearanceCriminalResourceRequest.setRequestDtm("2013-03-25");
         getAppearanceCriminalResourceRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalResourceRequest.setRequestPartId(LONG_STRING);
 

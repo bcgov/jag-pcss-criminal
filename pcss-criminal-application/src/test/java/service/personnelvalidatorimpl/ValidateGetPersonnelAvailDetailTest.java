@@ -32,11 +32,11 @@ public class ValidateGetPersonnelAvailDetailTest {
     public void successTestReturns() {
 
         GetPersonnelAvailDetailRequest getPersonnelAvailDetailRequest = new GetPersonnelAvailDetailRequest();
-        getPersonnelAvailDetailRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getPersonnelAvailDetailRequest.setRequestDtm(DATE);
         getPersonnelAvailDetailRequest.setRequestAgencyIdentifierId(VALUE);
         getPersonnelAvailDetailRequest.setRequestPartId(VALUE);
         getPersonnelAvailDetailRequest.setPersonTypeCd(AvailablePersonType.C);
-        getPersonnelAvailDetailRequest.setAvailabilityDt(InstantUtils.parse(DATE));
+        getPersonnelAvailDetailRequest.setAvailabilityDt(DATE);
         getPersonnelAvailDetailRequest.setPaasPartId(VALUE);
 
         List<String> result = sut.validateGetPersonnelAvailDetail(getPersonnelAvailDetailRequest);
@@ -50,11 +50,11 @@ public class ValidateGetPersonnelAvailDetailTest {
     public void failTestReturns() {
 
         GetPersonnelAvailDetailRequest getPersonnelAvailDetailRequest = new GetPersonnelAvailDetailRequest();
-        getPersonnelAvailDetailRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getPersonnelAvailDetailRequest.setRequestDtm(BAD_DATE);
         getPersonnelAvailDetailRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getPersonnelAvailDetailRequest.setRequestPartId(LONG_STRING);
         getPersonnelAvailDetailRequest.setPersonTypeCd(AvailablePersonType.C);
-        getPersonnelAvailDetailRequest.setAvailabilityDt(InstantUtils.parse(BAD_DATE));
+        getPersonnelAvailDetailRequest.setAvailabilityDt(BAD_DATE);
         getPersonnelAvailDetailRequest.setPaasPartId(LONG_STRING);
 
         List<String> result = sut.validateGetPersonnelAvailDetail(getPersonnelAvailDetailRequest);

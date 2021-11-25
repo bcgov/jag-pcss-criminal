@@ -38,11 +38,11 @@ public class ValidateGetClosedFileTest {
 
         GetClosedFileRequest getClosedFileRequest = new GetClosedFileRequest();
 
-        getClosedFileRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getClosedFileRequest.setRequestDtm(DATE);
         getClosedFileRequest.setRequestAgencyIdentifierId(VALUE);
         getClosedFileRequest.setRequestPartId(VALUE);
-        getClosedFileRequest.setFromApprDt(InstantUtils.parse(DATE));
-        getClosedFileRequest.setToApprDt(InstantUtils.parse(DATE));
+        getClosedFileRequest.setFromApprDt(DATE);
+        getClosedFileRequest.setToApprDt(DATE);
         getClosedFileRequest.setAgencyId(VALUE);
 
         List<String> result = sut.validateGetClosedFile(getClosedFileRequest);
@@ -57,11 +57,11 @@ public class ValidateGetClosedFileTest {
 
         GetClosedFileRequest getClosedFileRequest = new GetClosedFileRequest();
 
-        getClosedFileRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getClosedFileRequest.setRequestDtm(BAD_DATE);
         getClosedFileRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getClosedFileRequest.setRequestPartId(LONG_STRING);
-        getClosedFileRequest.setFromApprDt(InstantUtils.parse(BAD_DATE));
-        getClosedFileRequest.setToApprDt(InstantUtils.parse(BAD_DATE));
+        getClosedFileRequest.setFromApprDt(BAD_DATE);
+        getClosedFileRequest.setToApprDt(BAD_DATE);
         getClosedFileRequest.setAgencyId(LONG_STRING);
 
         List<String> result = sut.validateGetClosedFile(getClosedFileRequest);

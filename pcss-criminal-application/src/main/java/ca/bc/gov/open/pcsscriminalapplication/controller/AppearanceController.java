@@ -6,6 +6,7 @@ import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.ApprDetail;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodResponse;
@@ -25,7 +26,12 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 @Slf4j
 @Endpoint
@@ -89,10 +95,7 @@ public class AppearanceController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse.class);
 
-            GetAppearanceCriminalResponse getAppearanceCriminalResponse = new GetAppearanceCriminalResponse();
-            GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
-            getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
-            getAppearanceCriminalResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+            GetAppearanceCriminalResponse getAppearanceCriminalResponse = buildAppearanceResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE);
 
@@ -109,6 +112,13 @@ public class AppearanceController {
 
     private GetAppearanceCriminalResponse buildAppearanceResponse(ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse getAppearanceCriminalResponseInner) {
 
+        if (getAppearanceCriminalResponseInner.getApprDetail() != null) {
+            for (ApprDetail apprDetail: getAppearanceCriminalResponseInner.getApprDetail()) {
+                apprDetail.setAppearanceDt(formatDate(apprDetail.getAppearanceDt()));
+                apprDetail.setAppearanceTm(formatDate(apprDetail.getAppearanceTm()));
+            }
+        }
+
         GetAppearanceCriminalResponse getAppearanceCriminalResponse = new GetAppearanceCriminalResponse();
         GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
         getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(getAppearanceCriminalResponseInner);
@@ -116,6 +126,20 @@ public class AppearanceController {
 
         return getAppearanceCriminalResponse;
 
+    }
+
+    private String formatDate(String inDate) {
+        SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
+        String outDate = "";
+        try {
+            Date date = dt.parse(inDate);
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+            outDate = dt1.format(date);
+        } catch (Exception e) {
+            log.error("WHY BAD DATE GUY");
+        }
+
+        return outDate;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE_APPR_METHOD)

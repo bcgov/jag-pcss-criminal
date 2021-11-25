@@ -69,7 +69,7 @@ public class PersonnelController {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PERSONNEL_AVAILABILITY)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getPersonnelAvailabilityRequest.getRequestAgencyIdentifierId())
-                        .queryParam(Keys.QUERY_PART_ID, getPersonnelAvailabilityRequest.getRequestPartId())
+                        .queryParam("partid", getPersonnelAvailabilityRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getPersonnelAvailabilityRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_PERSON_CD, getPersonnelAvailabilityRequest.getPersonTypeCd().value())
                         .queryParam(Keys.QUERY_PART_ID_LIST, getPersonnelAvailabilityRequest.getPartIdList())
@@ -141,7 +141,7 @@ public class PersonnelController {
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PERSONNEL_DETAIL)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getPersonnelAvailDetailRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getPersonnelAvailDetailRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getPersonnelAvailDetailRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getPersonnelAvailDetailRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_PERSON_CD, getPersonnelAvailDetailRequest.getPersonTypeCd().value())

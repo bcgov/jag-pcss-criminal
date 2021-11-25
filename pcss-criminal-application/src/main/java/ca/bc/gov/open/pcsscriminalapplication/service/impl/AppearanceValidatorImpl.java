@@ -240,7 +240,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         for (int i = 0; i < setAppearanceCriminalRequest.getDetail().size(); i++) {
 
-            if (ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPcssAppearanceId())) {
+            if (!setAppearanceCriminalRequest.getDetail().get(0).getPcssAppearanceId().isEmpty() && ValidationUtils.checkSystemIdTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getPcssAppearanceId())) {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i+1));
             }
 
@@ -256,7 +256,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
                 errors.add(MessageFormat.format("Details ProfSeqNo at index {0} is not valid", i+1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceDt().toString())) {
+            if (ValidationUtils.checkDateTimeTypeForErrors(setAppearanceCriminalRequest.getDetail().get(0).getAppearanceDt())) {
                 errors.add(MessageFormat.format("Details AppearanceDt at index {0} is not valid", i+1));
             }
 

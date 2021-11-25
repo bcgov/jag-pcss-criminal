@@ -113,10 +113,10 @@ public class GetClosedFileTest {
 
         getClosedFileRequest1.setAgencyId("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm(Instant.now());
+        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getClosedFileRequest1.setRequestPartId("TEST");
-        getClosedFileRequest1.setFromApprDt(Instant.now());
-        getClosedFileRequest1.setToApprDt(Instant.now());
+        getClosedFileRequest1.setFromApprDt("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setToApprDt("2013-03-25 13:04:22.1");
 
         getClosedFileRequest.setGetClosedFileRequest(getClosedFileRequest1);
 

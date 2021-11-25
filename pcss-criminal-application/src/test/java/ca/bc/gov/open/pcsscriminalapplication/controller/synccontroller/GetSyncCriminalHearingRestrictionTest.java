@@ -107,9 +107,9 @@ public class GetSyncCriminalHearingRestrictionTest {
         GetSyncCriminalHearingRestrictionRequest getSyncCriminalAppearanceRequest = new GetSyncCriminalHearingRestrictionRequest();
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalAppearanceRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
 
-        getSyncCriminalAppearanceRequest1.setProcessUpToDtm(Instant.now());
+        getSyncCriminalAppearanceRequest1.setProcessUpToDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest1.setRequestAgencyIdentifierId("TEST");
-        getSyncCriminalAppearanceRequest1.setRequestDtm(Instant.now());
+        getSyncCriminalAppearanceRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest1.setRequestPartId("TEST");
 
         getSyncCriminalAppearanceRequest.setGetSyncCriminalHearingRestrictionRequest(getSyncCriminalAppearanceRequest1);

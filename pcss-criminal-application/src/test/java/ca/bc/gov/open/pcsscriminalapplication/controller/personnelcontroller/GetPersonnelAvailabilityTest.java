@@ -111,9 +111,9 @@ public class GetPersonnelAvailabilityTest {
 
         getPersonnelAvailabilityRequest1.setPartIdList("TEST");
         getPersonnelAvailabilityRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelAvailabilityRequest1.setRequestDtm(Instant.now());
+        getPersonnelAvailabilityRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getPersonnelAvailabilityRequest1.setRequestPartId("TEST");
-        getPersonnelAvailabilityRequest1.setFromDt(Instant.now());
+        getPersonnelAvailabilityRequest1.setFromDt("2013-03-25 13:04:22.1");
         getPersonnelAvailabilityRequest1.setPersonTypeCd(AvailablePersonType.C);
 
         getPersonnelAvailabilityRequest.setGetPersonnelAvailabilityRequest(getPersonnelAvailabilityRequest1);

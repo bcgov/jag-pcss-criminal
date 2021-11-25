@@ -112,7 +112,7 @@ public class GetAppearanceCriminalApprMethodSecureTest {
 
         getAppearanceCriminalApprMethodSecureRequest2.setAppearanceId("TEST");
         getAppearanceCriminalApprMethodSecureRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalApprMethodSecureRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalApprMethodSecureRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalApprMethodSecureRequest2.setRequestPartId("TEST");
         getAppearanceCriminalApprMethodSecureRequest2.setApplicationCd("TEST");
 

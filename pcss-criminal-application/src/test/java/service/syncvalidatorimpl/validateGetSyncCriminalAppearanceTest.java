@@ -24,8 +24,8 @@ public class validateGetSyncCriminalAppearanceTest {
     public void successTestReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalAppearanceRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalAppearanceRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");
 
@@ -40,8 +40,8 @@ public class validateGetSyncCriminalAppearanceTest {
     public void successAgencyFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalAppearanceRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalAppearanceRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("000000000000000000");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");
 
@@ -57,8 +57,8 @@ public class validateGetSyncCriminalAppearanceTest {
     public void successPartIdFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalAppearanceRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalAppearanceRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("000000000000000000");
 
@@ -74,8 +74,8 @@ public class validateGetSyncCriminalAppearanceTest {
     public void successRequestDtmFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalAppearanceRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalAppearanceRequest.setRequestDtm("2013-03-25");
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");
 
@@ -91,8 +91,8 @@ public class validateGetSyncCriminalAppearanceTest {
     public void successProcessDtmFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest getSyncCriminalAppearanceRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(InstantUtils.parse("2001-DEC-26"));
-        getSyncCriminalAppearanceRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm("2013-03-25");
+        getSyncCriminalAppearanceRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");
 

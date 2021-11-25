@@ -45,7 +45,7 @@ public class ValidateSetAppearanceMethodCriminalTest {
         detail.setRoleCd(VALUE);
 
         setAppearanceMethodCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceMethodCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setAppearanceMethodCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setAppearanceMethodCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setAppearanceMethodCriminalRequest.setRequestPartId(VALUE);
 
@@ -72,7 +72,7 @@ public class ValidateSetAppearanceMethodCriminalTest {
         detail.setRoleCd(LONG_STRING);
 
         setAppearanceMethodCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceMethodCriminalRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        setAppearanceMethodCriminalRequest.setRequestDtm("2013-03-25");
         setAppearanceMethodCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setAppearanceMethodCriminalRequest.setRequestPartId(LONG_STRING);
 

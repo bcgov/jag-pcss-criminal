@@ -108,7 +108,7 @@ public class SetCounselDetailCriminalTest {
         ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest setCounselDetailCriminalRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest1.setRequestAgencyIdentifierId("Test");
         setCounselDetailCriminalRequest1.setRequestPartId("Test");
-        setCounselDetailCriminalRequest1.setRequestDtm(Instant.now());
+        setCounselDetailCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setCounselDetailCriminalRequest1.setProfPartId("Test");
         setCounselDetailCriminalRequest1.setProfSeqNo("Test");
         setCounselDetailCriminalRequest1.setDetail(Collections.singletonList(new Detail4()));

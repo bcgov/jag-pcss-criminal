@@ -31,7 +31,7 @@ public class ValidateGetAppearanceCriminalApprMethodTest {
 
         GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest = new GetAppearanceCriminalApprMethodRequest();
         getAppearanceCriminalApprMethodRequest.setAppearanceId(VALUE);
-        getAppearanceCriminalApprMethodRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getAppearanceCriminalApprMethodRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalApprMethodRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalApprMethodRequest.setRequestPartId(VALUE);
 
@@ -47,7 +47,7 @@ public class ValidateGetAppearanceCriminalApprMethodTest {
 
         GetAppearanceCriminalApprMethodRequest getAppearanceCriminalApprMethodRequest = new GetAppearanceCriminalApprMethodRequest();
         getAppearanceCriminalApprMethodRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalApprMethodRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getAppearanceCriminalApprMethodRequest.setRequestDtm("2013-03-25");
         getAppearanceCriminalApprMethodRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalApprMethodRequest.setRequestPartId(LONG_STRING);
 

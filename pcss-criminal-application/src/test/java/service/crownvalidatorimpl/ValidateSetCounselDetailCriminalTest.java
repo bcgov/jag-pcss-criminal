@@ -38,7 +38,7 @@ public class ValidateSetCounselDetailCriminalTest {
         SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 
@@ -67,7 +67,7 @@ public class ValidateSetCounselDetailCriminalTest {
         SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 
@@ -91,7 +91,7 @@ public class ValidateSetCounselDetailCriminalTest {
         SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setCounselDetailCriminalRequest.setRequestPartId(LONG_STRING);
-        setCounselDetailCriminalRequest.setRequestDtm(InstantUtils.parse("2020-SEP-05"));
+        setCounselDetailCriminalRequest.setRequestDtm("2020-SEP-05");
         setCounselDetailCriminalRequest.setProfPartId(LONG_STRING);
         setCounselDetailCriminalRequest.setProfSeqNo(LONG_STRING);
 
@@ -122,7 +122,7 @@ public class ValidateSetCounselDetailCriminalTest {
         SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 

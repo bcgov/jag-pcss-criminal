@@ -5,6 +5,7 @@ import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -32,7 +33,7 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -40,7 +41,7 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("JustinNo is not valid");
         }
 
-        if(request.getSinceDt() != null && checkDateTimeTypeForErrors(request.getSinceDt().toString())) {
+        if (!StringUtils.isEmpty(request.getSinceDt()) && checkDateTimeTypeForErrors(request.getSinceDt())) {
             errors.add("SinceDt is not valid");
         }
 

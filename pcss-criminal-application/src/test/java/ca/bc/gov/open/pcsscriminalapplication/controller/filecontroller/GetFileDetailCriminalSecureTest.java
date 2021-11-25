@@ -108,7 +108,7 @@ public class GetFileDetailCriminalSecureTest {
 
         getFileDetailCriminalRequest.setApplicationCd("TEST");
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId("TEST");
-        getFileDetailCriminalRequest.setRequestDtm(Instant.now());
+        getFileDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getFileDetailCriminalRequest.setRequestPartId("TEST");
         getFileDetailCriminalRequest.setJustinNo("TEST");
 

@@ -121,7 +121,7 @@ public class GetAppearanceCriminalTest {
         getAppearanceCriminalRequest2.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest2.setJustinNo("TEST");
         getAppearanceCriminalRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalRequest1.setGetAppearanceCriminalRequest(getAppearanceCriminalRequest2);

@@ -104,7 +104,7 @@ public class SetAppearanceMethodCriminalTest {
         ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest setAppearanceMethodCriminalRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest();
 
         setAppearanceMethodCriminalRequest1.setRequestAgencyIdentifierId("TEST");
-        setAppearanceMethodCriminalRequest1.setRequestDtm(Instant.now());
+        setAppearanceMethodCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setAppearanceMethodCriminalRequest1.setRequestPartId("TEST");
         setAppearanceMethodCriminalRequest1.setDetail(Collections.singletonList(new Detail3()));
 

@@ -32,7 +32,7 @@ public class ValidateGetPersonnelSearchTest {
     public void successTestReturns() {
 
         GetPersonnelSearchRequest getPersonnelSearchRequest = new GetPersonnelSearchRequest();
-        getPersonnelSearchRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getPersonnelSearchRequest.setRequestDtm(DATE);
         getPersonnelSearchRequest.setRequestAgencyIdentifierId(VALUE);
         getPersonnelSearchRequest.setRequestPartId(VALUE);
         getPersonnelSearchRequest.setSearchTypeCd(OfficerSearchType.PIN);
@@ -50,7 +50,7 @@ public class ValidateGetPersonnelSearchTest {
     public void failTestReturns() {
 
         GetPersonnelSearchRequest getPersonnelSearchRequest = new GetPersonnelSearchRequest();
-        getPersonnelSearchRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getPersonnelSearchRequest.setRequestDtm(BAD_DATE);
         getPersonnelSearchRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getPersonnelSearchRequest.setRequestPartId(LONG_STRING);
         getPersonnelSearchRequest.setSearchTypeCd(OfficerSearchType.PIN);

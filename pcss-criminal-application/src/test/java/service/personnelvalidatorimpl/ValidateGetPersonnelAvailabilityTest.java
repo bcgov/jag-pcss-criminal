@@ -33,13 +33,13 @@ public class ValidateGetPersonnelAvailabilityTest {
     public void successTestReturns() {
 
         GetPersonnelAvailabilityRequest getPersonnelAvailabilityRequest = new GetPersonnelAvailabilityRequest();
-        getPersonnelAvailabilityRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getPersonnelAvailabilityRequest.setRequestDtm(DATE);
         getPersonnelAvailabilityRequest.setRequestAgencyIdentifierId(VALUE);
         getPersonnelAvailabilityRequest.setRequestPartId(VALUE);
         getPersonnelAvailabilityRequest.setPersonTypeCd(AvailablePersonType.C);
         getPersonnelAvailabilityRequest.setPartIdList(VALUE);
-        getPersonnelAvailabilityRequest.setFromDt(InstantUtils.parse(DATE));
-        getPersonnelAvailabilityRequest.setToDt(InstantUtils.parse(DATE));
+        getPersonnelAvailabilityRequest.setFromDt(DATE);
+        getPersonnelAvailabilityRequest.setToDt(DATE);
 
         List<String> result = sut.validateGetPersonnelAvailability(getPersonnelAvailabilityRequest);
 
@@ -52,13 +52,13 @@ public class ValidateGetPersonnelAvailabilityTest {
     public void failTestReturns() {
 
         GetPersonnelAvailabilityRequest getPersonnelAvailabilityRequest = new GetPersonnelAvailabilityRequest();
-        getPersonnelAvailabilityRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getPersonnelAvailabilityRequest.setRequestDtm(BAD_DATE);
         getPersonnelAvailabilityRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getPersonnelAvailabilityRequest.setRequestPartId(LONG_STRING);
         getPersonnelAvailabilityRequest.setPersonTypeCd(AvailablePersonType.C);
         getPersonnelAvailabilityRequest.setPartIdList(LONG_STRING);
-        getPersonnelAvailabilityRequest.setFromDt(InstantUtils.parse(BAD_DATE));
-        getPersonnelAvailabilityRequest.setToDt(InstantUtils.parse(BAD_DATE));
+        getPersonnelAvailabilityRequest.setFromDt(BAD_DATE);
+        getPersonnelAvailabilityRequest.setToDt(BAD_DATE);
 
         List<String> result = sut.validateGetPersonnelAvailability(getPersonnelAvailabilityRequest);
 

@@ -113,9 +113,9 @@ public class GetCrownAssignmentTest {
         ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest getCrownAssignmentRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest();
         getCrownAssignmentRequest1.setRequestAgencyIdentifierId("Test");
         getCrownAssignmentRequest1.setRequestPartId("Test");
-        getCrownAssignmentRequest1.setRequestDtm(Instant.now());
+        getCrownAssignmentRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getCrownAssignmentRequest1.setJustinNo("Test");
-        getCrownAssignmentRequest1.setSinceDt(Instant.now());
+        getCrownAssignmentRequest1.setSinceDt("2013-03-25 13:04:22.1");
 
         getCrownAssignmentRequest.setGetCrownAssignmentRequest(getCrownAssignmentRequest1);
         getCrownAssignment.setGetCrownAssignmentRequest(getCrownAssignmentRequest);

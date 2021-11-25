@@ -114,7 +114,7 @@ public class SetCrownFileDetailTest {
         ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest setCrownFileDetailRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
         setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
         setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
+        setCrownFileDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setCrownFileDetailRequest1.setJustinNo("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);

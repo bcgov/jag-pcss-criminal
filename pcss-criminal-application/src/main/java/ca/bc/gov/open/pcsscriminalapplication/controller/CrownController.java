@@ -36,7 +36,10 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @Slf4j
 @Endpoint
@@ -305,6 +308,20 @@ public class CrownController {
 
         return setCrownFileDetailResponse;
 
+    }
+
+    private String formatDate(String inDate) {
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S", Locale.US);
+        String outDate = "";
+        try {
+            Date date = dt.parse(inDate);
+            SimpleDateFormat dt1 = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a");
+            outDate = dt1.format(date);
+        } catch (Exception e) {
+            log.error("WHY BAD DATE GUY");
+        }
+
+        return outDate;
     }
 
 }

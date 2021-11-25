@@ -33,7 +33,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -55,7 +55,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
 
         List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
@@ -71,7 +71,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("000000000000000000000000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -95,7 +95,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000000000000000000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -119,7 +119,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2001-DEC-26");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -143,7 +143,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("00000000000000000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -167,7 +167,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000000000000000000");
@@ -190,7 +190,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -213,7 +213,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -236,7 +236,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -259,7 +259,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
@@ -282,7 +282,7 @@ public class ValidateSetHearingRestrictionCriminalTest {
         SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
-        setHearingRestrictionCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setHearingRestrictionId("000");
         setHearingRestrictionCriminalRequest.setAdjudicatorPartId("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCd(HearingRestrictionType.S);

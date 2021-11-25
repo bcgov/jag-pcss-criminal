@@ -31,7 +31,7 @@ public class ValidateGetAppearanceCriminalCountSecureTest {
 
         GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest = new GetAppearanceCriminalCountSecureRequest();
         getAppearanceCriminalCountSecureRequest.setAppearanceId(VALUE);
-        getAppearanceCriminalCountSecureRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getAppearanceCriminalCountSecureRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalCountSecureRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalCountSecureRequest.setRequestPartId(VALUE);
 
@@ -47,7 +47,7 @@ public class ValidateGetAppearanceCriminalCountSecureTest {
 
         GetAppearanceCriminalCountSecureRequest getAppearanceCriminalCountSecureRequest = new GetAppearanceCriminalCountSecureRequest();
         getAppearanceCriminalCountSecureRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalCountSecureRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getAppearanceCriminalCountSecureRequest.setRequestDtm("2001-DEC-26");
         getAppearanceCriminalCountSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalCountSecureRequest.setRequestPartId(LONG_STRING);
 

@@ -105,7 +105,7 @@ public class SetFileNoteTest {
         ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest setAppearanceCriminalRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
 
         setAppearanceCriminalRequest1.setRequestAgencyIdentifierId("TEST");
-        setAppearanceCriminalRequest1.setRequestDtm(Instant.now());
+        setAppearanceCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setAppearanceCriminalRequest1.setRequestPartId("TEST");
         setAppearanceCriminalRequest1.setJustinNo("TEST");
         setAppearanceCriminalRequest1.setNoteTxt("TEST");

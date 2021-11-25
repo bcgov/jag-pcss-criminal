@@ -110,7 +110,7 @@ public class GetPersonnelSearchTest {
 
         getPersonnelSearchRequest1.setAgencyId("TEST");
         getPersonnelSearchRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelSearchRequest1.setRequestDtm(Instant.now());
+        getPersonnelSearchRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getPersonnelSearchRequest1.setRequestPartId("TEST");
         getPersonnelSearchRequest1.setSearchTxt("TEST");
         getPersonnelSearchRequest1.setSearchTypeCd(OfficerSearchType.PIN);

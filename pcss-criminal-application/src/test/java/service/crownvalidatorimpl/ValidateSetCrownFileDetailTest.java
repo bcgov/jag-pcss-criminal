@@ -35,7 +35,7 @@ public class ValidateSetCrownFileDetailTest {
         SetCrownFileDetailRequest setCrownFileDetailRequest = new SetCrownFileDetailRequest();
         setCrownFileDetailRequest.setRequestAgencyIdentifierId(VALUE);
         setCrownFileDetailRequest.setRequestPartId(VALUE);
-        setCrownFileDetailRequest.setRequestDtm(InstantUtils.parse(DATE));
+        setCrownFileDetailRequest.setRequestDtm(DATE);
         setCrownFileDetailRequest.setJustinNo(VALUE);
         setCrownFileDetailRequest.setMdocCcn(VALUE);
         setCrownFileDetailRequest.setCrownEstimateLenQty(VALUE);
@@ -55,7 +55,7 @@ public class ValidateSetCrownFileDetailTest {
         SetCrownFileDetailRequest setCrownFileDetailRequest = new SetCrownFileDetailRequest();
         setCrownFileDetailRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setCrownFileDetailRequest.setRequestPartId(LONG_STRING);
-        setCrownFileDetailRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        setCrownFileDetailRequest.setRequestDtm(BAD_DATE);
         setCrownFileDetailRequest.setJustinNo(LONG_STRING);
         setCrownFileDetailRequest.setMdocCcn(LONG_STRING);
         setCrownFileDetailRequest.setCrownEstimateLenQty(LONG_STRING);

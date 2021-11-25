@@ -34,9 +34,9 @@ public class ValidateSetAppearanceCriminalTest {
         SetAppearanceCriminalRequest setAppearanceCriminalRequest = new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
-        detail.setAppearanceDt(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        detail.setAppearanceDt("2013-03-25 13:04:22.1");
         detail.setAppearanceReasonCd("AAA");
-        detail.setAppearanceTm("2013-03-25 13:04:22.1111");
+        detail.setAppearanceTm("2013-03-25 13:04:22.1");
         detail.setCourtAgencyId(VALUE);
         detail.setCourtRoomCd(VALUE);
         detail.setEstimatedTimeHour(VALUE);
@@ -50,7 +50,7 @@ public class ValidateSetAppearanceCriminalTest {
         detail.setSupplementalEquipmentTxt(VALUE);
 
         setAppearanceCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        setAppearanceCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setAppearanceCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setAppearanceCriminalRequest.setRequestPartId(VALUE);
 
@@ -68,7 +68,7 @@ public class ValidateSetAppearanceCriminalTest {
         SetAppearanceCriminalRequest setAppearanceCriminalRequest = new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
-        detail.setAppearanceDt(InstantUtils.parse("2001-DEC-26"));
+        detail.setAppearanceDt("2013-03-25");
         detail.setAppearanceReasonCd(LONG_STRING);
         detail.setAppearanceTm(LONG_STRING);
         detail.setCourtAgencyId(LONG_STRING);
@@ -84,7 +84,7 @@ public class ValidateSetAppearanceCriminalTest {
         detail.setSupplementalEquipmentTxt(LONG_STRING);
 
         setAppearanceCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceCriminalRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        setAppearanceCriminalRequest.setRequestDtm("2013-03-25");
         setAppearanceCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setAppearanceCriminalRequest.setRequestPartId(LONG_STRING);
 

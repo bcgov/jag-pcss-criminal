@@ -109,7 +109,7 @@ public class GetAppearanceCriminalResourceTest {
 
         getAppearanceCriminalResourceRequest1.setAppearanceId("TEST");
         getAppearanceCriminalResourceRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalResourceRequest1.setRequestDtm(Instant.now());
+        getAppearanceCriminalResourceRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalResourceRequest1.setRequestPartId("TEST");
 
         getAppearanceCriminalResourceRequest.setGetAppearanceCriminalResourceRequest(getAppearanceCriminalResourceRequest1);

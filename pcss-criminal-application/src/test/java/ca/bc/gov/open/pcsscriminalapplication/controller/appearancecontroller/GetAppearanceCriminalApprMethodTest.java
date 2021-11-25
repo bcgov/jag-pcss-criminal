@@ -113,7 +113,7 @@ class GetAppearanceCriminalApprMethodTest {
 
         getAppearanceCriminalApprMethodRequest2.setAppearanceId("TEST");
         getAppearanceCriminalApprMethodRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalApprMethodRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalApprMethodRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalApprMethodRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalApprMethodRequest1.setGetAppearanceCriminalApprMethodRequest(getAppearanceCriminalApprMethodRequest2);
