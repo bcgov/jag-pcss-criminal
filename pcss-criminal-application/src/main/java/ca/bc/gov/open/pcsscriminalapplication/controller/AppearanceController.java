@@ -598,11 +598,7 @@ public class AppearanceController {
         try {
 
             log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_APPEARANCE);
-
-            //Truncate the date
-
-            log.info(logBuilder.writeLogMessage("HALP", "HALPMETHOD",setAppearanceCriminalRequest,"DOH"));
-
+            
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),
@@ -611,10 +607,6 @@ public class AppearanceController {
                             ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse.class);
 
             SetAppearanceCriminalResponse setAppearanceCriminalResponse = buildAppearanceCriminalResponse(response.getBody());
-
-            if (setAppearanceCriminalResponse.getSetAppearanceCriminalResponse().getSetAppearanceCriminalResponse().getResponseCd().equals(0)) {
-                //setAppearanceCriminalResponse.getSetAppearanceCriminalResponse().getSetAppearanceCriminalResponse().getDetail().foreach
-            }
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_APPEARANCE);
 
