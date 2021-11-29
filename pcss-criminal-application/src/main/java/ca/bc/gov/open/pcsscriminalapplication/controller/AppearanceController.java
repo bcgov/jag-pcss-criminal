@@ -598,7 +598,7 @@ public class AppearanceController {
         try {
 
             log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_APPEARANCE);
-            
+
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
                             builder.toUriString(),

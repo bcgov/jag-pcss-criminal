@@ -19,16 +19,15 @@ public class DateUtils {
         if (StringUtils.isBlank(inDate)) return null;
 
         SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
-        String outDate = "";
         try {
             Date date = dt.parse(inDate);
             SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-            outDate = dt1.format(date);
+            return dt1.format(date);
         } catch (Exception e) {
             log.error("Invalid date returned from ords");
         }
 
-        return outDate;
+        return inDate;
 
     }
 
