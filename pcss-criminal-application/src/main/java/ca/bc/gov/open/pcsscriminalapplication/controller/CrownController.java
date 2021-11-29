@@ -317,18 +317,4 @@ public class CrownController {
 
     }
 
-    private String formatDate(String inDate) {
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S", Locale.US);
-        String outDate = "";
-        try {
-            Date date = dt.parse(inDate);
-            SimpleDateFormat dt1 = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a");
-            outDate = dt1.format(date);
-        } catch (Exception e) {
-            log.error("WHY BAD DATE GUY");
-        }
-
-        return outDate;
-    }
-
 }
