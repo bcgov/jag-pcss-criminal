@@ -1,17 +1,15 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
-import java.time.Instant;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -61,7 +59,7 @@ public class SetCrownAssignmentTest {
 
     @Test
     @DisplayName("Success: post returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         SetCrownAssignmentResponse response = new SetCrownAssignmentResponse();
         response.setResponseCd("Test");
@@ -81,7 +79,7 @@ public class SetCrownAssignmentTest {
 
     @Test
     @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException, BadDateException {
+    public void failTestReturns() throws JsonProcessingException {
 
         Mockito.when(crownValidatorMock.validateSetCrownAssignment(any())).thenReturn(Collections.singletonList("BAD DATA"));
 

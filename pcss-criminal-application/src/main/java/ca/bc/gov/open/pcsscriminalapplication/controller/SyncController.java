@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
@@ -42,7 +41,7 @@ public class SyncController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_APPEARANCE)
     @ResponsePayload
-    public GetSyncCriminalAppearanceResponse getSyncCriminalAppearance(@RequestPayload GetSyncCriminalAppearance getSyncCriminalAppearance) throws JsonProcessingException, BadDateException {
+    public GetSyncCriminalAppearanceResponse getSyncCriminalAppearance(@RequestPayload GetSyncCriminalAppearance getSyncCriminalAppearance) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_APPEARANCE);
 
@@ -110,7 +109,7 @@ public class SyncController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_HEARING)
     @ResponsePayload
-    public GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestriction(@RequestPayload GetSyncCriminalHearingRestriction getSyncCriminalHearingRestriction) throws JsonProcessingException, BadDateException {
+    public GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestriction(@RequestPayload GetSyncCriminalHearingRestriction getSyncCriminalHearingRestriction) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_HEARING);
 

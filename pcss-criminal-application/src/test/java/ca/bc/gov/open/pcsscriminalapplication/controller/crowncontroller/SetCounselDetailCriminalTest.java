@@ -1,12 +1,11 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.Detail4;
-import java.time.Instant;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
@@ -60,7 +59,7 @@ public class SetCounselDetailCriminalTest {
 
     @Test
     @DisplayName("Success: post returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         SetCounselDetailCriminalResponse response = new SetCounselDetailCriminalResponse();
         response.setResponseCd("Test");
