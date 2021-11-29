@@ -5,11 +5,9 @@ import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
+import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse2;
@@ -40,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Consumer;
 
 @Slf4j
 @Endpoint
@@ -113,6 +112,14 @@ public class CrownController {
     }
 
     private GetCrownAssignmentResponse buildGetCrownAssignmentResponse(ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse getCrownAssignmentResponseInner) {
+
+        if (getCrownAssignmentResponseInner.getCrownAssignment() != null) {
+            getCrownAssignmentResponseInner.getCrownAssignment()
+                    .forEach(
+                            ((Consumer<CrownAssignment>) crownAssignment -> crownAssignment.setAssignmentDt(DateUtils.formatDate(crownAssignment.getAssignmentDt())))
+                            .andThen(crownAssignment -> crownAssignment.setAssignmentEndDt(DateUtils.formatDate(crownAssignment.getAssignmentEndDt())))
+                    );
+        }
 
         GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
         GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();

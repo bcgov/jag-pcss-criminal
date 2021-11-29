@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,8 @@ public class DateUtils {
     }
 
     public static String formatDate(String inDate) {
+
+        if (StringUtils.isBlank(inDate)) return null;
 
         SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
         String outDate = "";

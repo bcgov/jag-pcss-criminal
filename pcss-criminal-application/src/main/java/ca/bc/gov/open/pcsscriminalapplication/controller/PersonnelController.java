@@ -1,11 +1,13 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.Commitment;
+import ca.bc.gov.open.wsdl.pcss.one.Personnel;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @Endpoint
@@ -104,6 +107,15 @@ public class PersonnelController {
 
     private GetPersonnelAvailabilityResponse buildPersonnelAvailabilityResponse(ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponseInner) {
 
+        if (getPersonnelAvailabilityResponseInner.getPersonnel() != null) {
+            getPersonnelAvailabilityResponseInner.getPersonnel()
+                .forEach(
+                    ((Consumer<Personnel>) personnel -> personnel.setAvailabilityDt(DateUtils.formatDate(personnel.getAvailabilityDt())))
+                    .andThen(personnel -> personnel.setCommitmentDt(DateUtils.formatDate(personnel.getCommitmentDt())))
+                    .andThen(personnel -> personnel.setCreatedDt(DateUtils.formatDate(personnel.getCreatedDt())))
+                );
+        }
+
         GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse = new GetPersonnelAvailabilityResponse();
         GetPersonnelAvailabilityResponse2 getPersonnelAvailabilityResponse2 = new GetPersonnelAvailabilityResponse2();
         getPersonnelAvailabilityResponse2.setGetPersonnelAvailabilityResponse(getPersonnelAvailabilityResponseInner);
@@ -175,6 +187,15 @@ public class PersonnelController {
     }
 
     private GetPersonnelAvailDetailResponse buildPersonnelAvailDetail(ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponseInner) {
+
+        if (getPersonnelAvailDetailResponseInner.getCommitment() != null) {
+            getPersonnelAvailDetailResponseInner.getCommitment()
+                .forEach(
+                    ((Consumer<Commitment>) personnel -> personnel.setCommitmentTm(DateUtils.formatDate(personnel.getCommitmentTm())))
+                        .andThen(personnel -> personnel.setCommitmentDt(DateUtils.formatDate(personnel.getCommitmentDt())))
+                        .andThen(personnel -> personnel.setCreatedDt(DateUtils.formatDate(personnel.getCreatedDt())))
+                );
+        }
 
         GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse = new GetPersonnelAvailDetailResponse();
         GetPersonnelAvailDetailResponse2 getPersonnelAvailDetailResponse2 = new GetPersonnelAvailDetailResponse2();
