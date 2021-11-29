@@ -364,7 +364,7 @@ public class AppearanceController {
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountSecureRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountSecureRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_APPEARANCE_CD, getAppearanceCriminalCountSecureRequest.getApplicationCd())
+                        .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalCountSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalCountSecureRequest.getAppearanceId());
 
         try {

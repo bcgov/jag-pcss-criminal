@@ -49,8 +49,7 @@ public class Keys {
     public static final String QUERY_FUTURE_FLAG = "futureyn";
     public static final String QUERY_HISTORY_FLAG = "historyyn";
     public static final String QUERY_APPEARANCE_ID = "apprid";
-    public static final String QUERY_APPEARANCE_CD = "appearanceCd";
-    public static final String QUERY_APPLICATION_CD = "applicationCd";
+    public static final String QUERY_APPLICATION_CD = "applicationcd";
     public static final String QUERY_PERSON_CD = "parttypecd";
     public static final String QUERY_AGENCY_IDENTIFIER = "agenid";
     public static final String QUERY_FROM_DATE = "fromdate";
