@@ -43,6 +43,7 @@ public class Keys {
     //Query Params
     public static final String QUERY_AGENT_ID = "rqstagenid";
     public static final String QUERY_PART_ID = "rqstpartid";
+    public static final String QUERY_PART_ID_SIMPLE = "partid";
     public static final String QUERY_REQUEST_DATE = "requestdtm";
     public static final String QUERY_JUSTIN_NO = "justinno";
     public static final String QUERY_FUTURE_FLAG = "futureyn";

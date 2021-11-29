@@ -72,7 +72,7 @@ public class PersonnelController {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PERSONNEL_AVAILABILITY)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getPersonnelAvailabilityRequest.getRequestAgencyIdentifierId())
-                        .queryParam("partid", getPersonnelAvailabilityRequest.getRequestPartId())
+                        .queryParam(Keys.QUERY_PART_ID_SIMPLE, getPersonnelAvailabilityRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getPersonnelAvailabilityRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_PERSON_CD, getPersonnelAvailabilityRequest.getPersonTypeCd().value())
                         .queryParam(Keys.QUERY_PART_ID_LIST, getPersonnelAvailabilityRequest.getPartIdList())
