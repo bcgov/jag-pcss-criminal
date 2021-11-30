@@ -221,7 +221,7 @@ public class FileController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SECURE_FILE_DETAIL)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getFileDetailCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getFileDetailCriminalRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getFileDetailCriminalRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getFileDetailCriminalRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_JUSTIN_NO, getFileDetailCriminalRequest.getJustinNo())
                         .queryParam(Keys.QUERY_APPLICATION_CD, getFileDetailCriminalRequest.getApplicationCd());
 

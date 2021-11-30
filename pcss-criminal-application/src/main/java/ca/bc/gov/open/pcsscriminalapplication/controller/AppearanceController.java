@@ -224,7 +224,7 @@ public class AppearanceController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalApprMethodSecureRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalApprMethodSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodSecureRequest.getAppearanceId());
 
@@ -363,7 +363,7 @@ public class AppearanceController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalCountSecureRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalCountSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalCountSecureRequest.getAppearanceId());
 
@@ -512,7 +512,7 @@ public class AppearanceController {
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalSecureRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalSecureRequest.getAppearanceId())
                         .queryParam(Keys.QUERY_JUSTIN_NO, getAppearanceCriminalSecureRequest.getJustinNo())
                         .queryParam(Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalSecureRequest.getFutureYN())

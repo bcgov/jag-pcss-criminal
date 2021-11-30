@@ -31,4 +31,21 @@ public class DateUtils {
 
     }
 
+    public static String formatORDSDate(String inDate) {
+
+        if (StringUtils.isBlank(inDate)) return null;
+
+        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+        try {
+            Date date = dt.parse(inDate);
+            SimpleDateFormat dt1 = new SimpleDateFormat("dd-MMM-yyyy", Locale.US);
+            return dt1.format(date);
+        } catch (Exception e) {
+            log.error("Invalid date returned from ords");
+        }
+
+        return inDate;
+
+    }
+
 }
