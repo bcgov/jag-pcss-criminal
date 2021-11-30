@@ -6,6 +6,7 @@ import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountSecureRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -35,7 +36,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
             errors.add("RequestDtm is not valid");
         }
 
-        if (ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalRequest.getAppearanceId())) {
+        if (!StringUtils.isEmpty(getAppearanceCriminalRequest.getAppearanceId()) && ValidationUtils.checkSystemIdTypeForErrors(getAppearanceCriminalRequest.getAppearanceId())) {
             errors.add("AppearanceId is not valid");
         }
 

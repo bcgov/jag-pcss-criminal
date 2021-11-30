@@ -529,10 +529,7 @@ public class AppearanceController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse.class);
 
-            GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse = new GetAppearanceCriminalSecureResponse();
-            ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse getAppearanceCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse();
-            getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
-            getAppearanceCriminalSecureResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+            GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse = buildAppearanceCriminalSecureResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_SECURE);
 
