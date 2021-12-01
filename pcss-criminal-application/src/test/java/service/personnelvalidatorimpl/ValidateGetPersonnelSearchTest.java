@@ -53,14 +53,12 @@ public class ValidateGetPersonnelSearchTest {
         getPersonnelSearchRequest.setRequestDtm(BAD_DATE);
         getPersonnelSearchRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getPersonnelSearchRequest.setRequestPartId(LONG_STRING);
-        getPersonnelSearchRequest.setSearchTypeCd(OfficerSearchType.PIN);
         getPersonnelSearchRequest.setAgencyId(LONG_STRING);
-        getPersonnelSearchRequest.setSearchTxt(LONG_STRING);
 
         List<String> result = sut.validateGetPersonnelSearch(getPersonnelSearchRequest);
 
-        Assertions.assertEquals(4, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid", StringUtils.join(result, ","));
+        Assertions.assertEquals(6, result.size());
+        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid,SearchTypeCd is not valid,SearchTxt is not valid", StringUtils.join(result, ","));
 
     }
 

@@ -103,6 +103,14 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("AgencyId is not valid");
         }
 
+        if (getPersonnelSearchRequest.getSearchTypeCd() == null) {
+            errors.add("SearchTypeCd is not valid");
+        }
+
+        if (getPersonnelSearchRequest.getSearchTxt() == null) {
+            errors.add("SearchTxt is not valid");
+        }
+
         return errors;
 
     }
