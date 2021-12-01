@@ -64,12 +64,16 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (getPersonnelAvailDetailRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getRequestDtm().toString())) {
+        if (getPersonnelAvailDetailRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getAvailabilityDt().toString())) {
+        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getAvailabilityDt())) {
             errors.add("AvailabilityDt is not valid");
+        }
+
+        if (getPersonnelAvailDetailRequest.getPersonTypeCd() == null) {
+            errors.add("PersonTypeCd is not valid");
         }
 
         return errors;

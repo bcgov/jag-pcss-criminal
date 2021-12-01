@@ -53,14 +53,13 @@ public class ValidateGetPersonnelAvailDetailTest {
         getPersonnelAvailDetailRequest.setRequestDtm(BAD_DATE);
         getPersonnelAvailDetailRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getPersonnelAvailDetailRequest.setRequestPartId(LONG_STRING);
-        getPersonnelAvailDetailRequest.setPersonTypeCd(AvailablePersonType.C);
         getPersonnelAvailDetailRequest.setAvailabilityDt(BAD_DATE);
         getPersonnelAvailDetailRequest.setPaasPartId(LONG_STRING);
 
         List<String> result = sut.validateGetPersonnelAvailDetail(getPersonnelAvailDetailRequest);
 
-        Assertions.assertEquals(4, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AvailabilityDt is not valid", StringUtils.join(result, ","));
+        Assertions.assertEquals(5, result.size());
+        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AvailabilityDt is not valid,PersonTypeCd is not valid", StringUtils.join(result, ","));
 
     }
 
