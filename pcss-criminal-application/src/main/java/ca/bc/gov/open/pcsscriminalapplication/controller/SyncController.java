@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -69,7 +70,7 @@ public class SyncController {
                         .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalAppearanceRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, DateUtils.formatORDSDate(getSyncCriminalAppearanceRequest.getProcessUpToDtm()));
 
         try {
 
@@ -137,7 +138,7 @@ public class SyncController {
                         .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalHearingRestrictionRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, DateUtils.formatORDSDate(getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm()));
 
         try {
 
