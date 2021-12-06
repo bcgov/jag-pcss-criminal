@@ -78,7 +78,7 @@ public class ValidateSetAppearanceMethodCriminalTest {
         List<String> result = sut.validateSetAppearanceMethodCriminal(setAppearanceMethodCriminalRequest);
 
         Assertions.assertEquals(9, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifieId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details OperationModeCd at index 1 is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid", StringUtils.join(result, ","));
+        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details OperationModeCd at index 1 is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid", StringUtils.join(result, ","));
 
     }
 
