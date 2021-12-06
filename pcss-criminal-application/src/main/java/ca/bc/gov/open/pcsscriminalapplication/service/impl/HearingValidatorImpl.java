@@ -68,5 +68,5 @@ public class HearingValidatorImpl implements HearingValidator {
         return errors;
 
     }
-    
+
 }

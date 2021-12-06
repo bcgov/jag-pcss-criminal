@@ -97,7 +97,7 @@ public class ValidateSetCounselDetailCriminalTest {
 
         List<Detail4> detailList = new ArrayList<>();
         Detail4 detail = new Detail4();
-        detail.setOperationModeCd(OperationMode2Type.ADD);
+        detail.setOperationModeCd(null);
         detail.setCounselLastNm(null);
         detail.setCounselFirstNm(null);
         detail.setOfficePhoneNoTxt(LONG_STRING);
@@ -110,8 +110,8 @@ public class ValidateSetCounselDetailCriminalTest {
 
         List<String> validationErrors = sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
 
-        Assertions.assertEquals(7, validationErrors.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,ProfPartId is not valid,ProfSeqNo is not valid,Details CounselLastNm at index 1 is not valid,Details CounselFirstNm at index 1 is not valid", StringUtils.join(validationErrors, ","));
+        Assertions.assertEquals(8, validationErrors.size());
+        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,ProfPartId is not valid,ProfSeqNo is not valid,Details OperationModeCd at index 1 is not valid,Details CounselLastNm at index 1 is not valid,Details CounselFirstNm at index 1 is not valid", StringUtils.join(validationErrors, ","));
 
     }
 
