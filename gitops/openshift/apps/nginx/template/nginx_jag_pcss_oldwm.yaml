@@ -24,7 +24,8 @@ parameters:
 - name: OC_NAMESPACE
   description: The OpenShift namespace prefix
   required: false
-  value: 5416bb
+  # Change the OC_Namespace value as per the cluster being used.
+  value: cd1cf7
   
 - name: OC_ENV
   description: The OpenShift environment, ie dev, test or prod
