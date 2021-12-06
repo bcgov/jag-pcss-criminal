@@ -81,13 +81,15 @@ public class CrownValidatorImpl implements CrownValidator {
 
             for(int i = 0; i < request.getDetail().size(); i++) {
 
-                // TODO: Add operation mode cd validation
+                if(request.getDetail().get(i).getOperationModeCd() ==null) {
+                    errors.add(MessageFormat.format("Details OperationModeCd at index {0} is not valid", i+1));
+                }
 
-                if(request.getDetail().get(0).getCounselLastNm() == null) {
+                if(StringUtils.isBlank(request.getDetail().get(i).getCounselLastNm())) {
                     errors.add(MessageFormat.format("Details CounselLastNm at index {0} is not valid", i+1));
                 }
 
-                if(request.getDetail().get(0).getCounselFirstNm() == null) {
+                if(StringUtils.isBlank(request.getDetail().get(i).getCounselFirstNm())) {
                     errors.add(MessageFormat.format("Details CounselFirstNm at index {0} is not valid", i+1));
                 }
 

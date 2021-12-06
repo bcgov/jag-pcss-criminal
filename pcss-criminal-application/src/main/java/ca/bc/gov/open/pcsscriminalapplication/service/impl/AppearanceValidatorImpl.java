@@ -308,6 +308,10 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
             }
 
+            if (setAppearanceMethodCriminalRequest.getDetail().get(i).getOperationModeCd() == null) {
+                errors.add(MessageFormat.format("Details OperationModeCd at index {0} is not valid", i + 1));
+            }
+
             if (ValidationUtils.checkSystemSeqNoTypeForErrors(setAppearanceMethodCriminalRequest.getDetail().get(i).getRoleCd())) {
                 errors.add(MessageFormat.format("Details PcssAppearanceId at index {0} is not valid", i + 1));
             }

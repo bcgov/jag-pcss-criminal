@@ -67,7 +67,6 @@ public class ValidateSetAppearanceMethodCriminalTest {
         detail.setApprMethodCcn(LONG_STRING);
         detail.setAssetUsageSeqNo(LONG_STRING);
         detail.setInstructionTxt(LONG_STRING);
-        detail.setOperationModeCd(OperationModeType.F_ADD);
         detail.setPhoneNoTxt(LONG_STRING);
         detail.setRoleCd(LONG_STRING);
 
@@ -78,8 +77,8 @@ public class ValidateSetAppearanceMethodCriminalTest {
 
         List<String> result = sut.validateSetAppearanceMethodCriminal(setAppearanceMethodCriminalRequest);
 
-        Assertions.assertEquals(8, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid", StringUtils.join(result, ","));
+        Assertions.assertEquals(9, result.size());
+        Assertions.assertEquals("RequestAgencyIdentifieId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details OperationModeCd at index 1 is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid", StringUtils.join(result, ","));
 
     }
 
