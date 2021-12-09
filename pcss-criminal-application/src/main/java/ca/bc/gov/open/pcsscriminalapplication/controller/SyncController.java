@@ -15,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -65,12 +66,12 @@ public class SyncController {
 
         }
 
-        UriComponentsBuilder builder =
+        UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_APPEARANCE)
                         .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalAppearanceRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_SYNC_TO_DATE, DateUtils.formatORDSDate(getSyncCriminalAppearanceRequest.getProcessUpToDtm()));
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm()).build();
 
         try {
 
@@ -78,7 +79,7 @@ public class SyncController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            uriComponents.toUriString(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse.class);
@@ -133,12 +134,12 @@ public class SyncController {
 
         }
 
-        UriComponentsBuilder builder =
+        UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_HEARING)
                         .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalHearingRestrictionRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_SYNC_TO_DATE, DateUtils.formatORDSDate(getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm()));
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm()).build();
 
         try {
 
@@ -146,7 +147,7 @@ public class SyncController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            uriComponents.toUriString(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse.class);
