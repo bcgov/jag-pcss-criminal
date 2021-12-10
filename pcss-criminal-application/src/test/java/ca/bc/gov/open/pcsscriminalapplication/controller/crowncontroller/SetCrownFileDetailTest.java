@@ -1,5 +1,4 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
@@ -26,7 +25,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -62,7 +60,7 @@ public class SetCrownFileDetailTest {
 
     @Test
     @DisplayName("Success: post returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse response = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
         response.setResponseCd("Test");
@@ -84,7 +82,7 @@ public class SetCrownFileDetailTest {
 
     @Test
     @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException, BadDateException {
+    public void failTestReturns() throws JsonProcessingException {
 
         Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(Collections.singletonList("BAD DATA"));
 
@@ -114,7 +112,7 @@ public class SetCrownFileDetailTest {
         ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest setCrownFileDetailRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
         setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
         setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
+        setCrownFileDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setCrownFileDetailRequest1.setJustinNo("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);

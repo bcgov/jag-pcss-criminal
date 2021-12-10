@@ -29,31 +29,4 @@ public class InstantUtils {
         return first.substring(0, first.length() - 1);
     }
 
-    //Parse has been merged to this functionality. 
-    public static Instant parse(String value) {
-        try {
-            Date d;
-            // Try to parse a datetime first then try date only if both fail return null
-            try {
-                // Date time parser
-                var sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS", Locale.US);
-                sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-                d = sdf.parse(value);
-            } catch (ParseException ex) {
-                // Date only parser
-                try {
-                    var sdf = new SimpleDateFormat("dd-MMM-yy", Locale.US);
-                    sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
-                    d = sdf.parse(value);
-                } catch (ParseException ex2) {
-                    return Instant.parse(value + "Z");
-                }
-            }
-            return d.toInstant();
-        } catch (Exception ex) {
-            log.warn("Bad date received from soap request");
-            return null;
-        }
-    }
-
 }

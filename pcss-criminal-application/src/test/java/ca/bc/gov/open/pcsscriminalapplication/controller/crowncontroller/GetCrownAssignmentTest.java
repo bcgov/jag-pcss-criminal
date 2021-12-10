@@ -2,12 +2,10 @@ package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
@@ -61,7 +59,7 @@ public class GetCrownAssignmentTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
         response.setResponseCd("Test");
@@ -113,9 +111,9 @@ public class GetCrownAssignmentTest {
         ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest getCrownAssignmentRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest();
         getCrownAssignmentRequest1.setRequestAgencyIdentifierId("Test");
         getCrownAssignmentRequest1.setRequestPartId("Test");
-        getCrownAssignmentRequest1.setRequestDtm(Instant.now());
+        getCrownAssignmentRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getCrownAssignmentRequest1.setJustinNo("Test");
-        getCrownAssignmentRequest1.setSinceDt(Instant.now());
+        getCrownAssignmentRequest1.setSinceDt("2013-03-25 13:04:22.1");
 
         getCrownAssignmentRequest.setGetCrownAssignmentRequest(getCrownAssignmentRequest1);
         getCrownAssignment.setGetCrownAssignmentRequest(getCrownAssignmentRequest);

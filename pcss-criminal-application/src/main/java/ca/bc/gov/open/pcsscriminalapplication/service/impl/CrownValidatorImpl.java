@@ -5,6 +5,7 @@ import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -32,7 +33,7 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -40,7 +41,7 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("JustinNo is not valid");
         }
 
-        if(request.getSinceDt() != null && checkDateTimeTypeForErrors(request.getSinceDt().toString())) {
+        if (!StringUtils.isEmpty(request.getSinceDt()) && checkDateTimeTypeForErrors(request.getSinceDt())) {
             errors.add("SinceDt is not valid");
         }
 
@@ -80,13 +81,15 @@ public class CrownValidatorImpl implements CrownValidator {
 
             for(int i = 0; i < request.getDetail().size(); i++) {
 
-                // TODO: Add operation mode cd validation
+                if(request.getDetail().get(i).getOperationModeCd() == null) {
+                    errors.add(MessageFormat.format("Details OperationModeCd at index {0} is not valid", i+1));
+                }
 
-                if(request.getDetail().get(0).getCounselLastNm() == null) {
+                if(StringUtils.isBlank(request.getDetail().get(i).getCounselLastNm())) {
                     errors.add(MessageFormat.format("Details CounselLastNm at index {0} is not valid", i+1));
                 }
 
-                if(request.getDetail().get(0).getCounselFirstNm() == null) {
+                if(StringUtils.isBlank(request.getDetail().get(i).getCounselFirstNm())) {
                     errors.add(MessageFormat.format("Details CounselFirstNm at index {0} is not valid", i+1));
                 }
 
@@ -113,11 +116,11 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if(request.getJustinNo() != null && checkJustinNoTypeForErrors(request.getJustinNo())) {
+        if(StringUtils.isBlank(request.getJustinNo()) || checkJustinNoTypeForErrors(request.getJustinNo())) {
             errors.add("JustinNo is not valid");
         }
 
@@ -127,25 +130,23 @@ public class CrownValidatorImpl implements CrownValidator {
 
             for (int i = 0; i < request.getCrownAssignment().size(); i++) {
 
-                if (checkAgencyIdentifierTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasAgencyId())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getAssigningPaasAgencyId()) && checkAgencyIdentifierTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasAgencyId())) {
                     errors.add(MessageFormat.format("CrownAssignment AssigningPaasAgencyId at index {0} is not valid", i+1));
                 }
 
-                if (checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasPartId())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getAssigningPaasPartId()) && checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasPartId())) {
                     errors.add(MessageFormat.format("CrownAssignment AssigningPaasPartId at index {0} is not valid", i+1));
                 }
 
-                if (checkSystemSeqNoTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasSeqNo())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getAssigningPaasSeqNo()) && checkSystemSeqNoTypeForErrors(request.getCrownAssignment().get(i).getAssigningPaasSeqNo())) {
                     errors.add(MessageFormat.format("CrownAssignment AssigningPaasSeqNo at index {0} is not valid", i+1));
                 }
 
-                if (request.getCrownAssignment().get(i).getAssignmentDt() == null ||
-                        checkDateTimeTypeForErrors(request.getCrownAssignment().get(i).getAssignmentDt().toString())) {
+                if (checkDateTimeTypeForErrors(request.getCrownAssignment().get(i).getAssignmentDt())) {
                     errors.add(MessageFormat.format("CrownAssignment AssignmentDt at index {0} is not valid", i+1));
                 }
 
-                if (request.getCrownAssignment().get(i).getAssignmentEndDt() == null ||
-                    checkDateTimeTypeForErrors(request.getCrownAssignment().get(i).getAssignmentEndDt().toString())) {
+                if (checkDateTimeTypeForErrors(request.getCrownAssignment().get(i).getAssignmentEndDt())) {
                     errors.add(MessageFormat.format("CrownAssignment AssignmentEndDt at index {0} is not valid", i+1));
                 }
 
@@ -153,23 +154,23 @@ public class CrownValidatorImpl implements CrownValidator {
                     errors.add(MessageFormat.format("CrownAssignment OperationModeCd at index {0} is not valid", i+1));
                 }
 
-                if (checkAgencyIdentifierTypeForErrors(request.getCrownAssignment().get(i).getPaasAgencyId())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getPaasAgencyId()) && checkAgencyIdentifierTypeForErrors(request.getCrownAssignment().get(i).getPaasAgencyId())) {
                     errors.add(MessageFormat.format("CrownAssignment PaasAgencyId at index {0} is not valid", i+1));
                 }
 
-                if (checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getPaasPartId())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getPaasPartId()) && checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getPaasPartId())) {
                     errors.add(MessageFormat.format("CrownAssignment PaasPartId at index {0} is not valid", i+1));
                 }
 
-                if (checkSystemSeqNoTypeForErrors(request.getCrownAssignment().get(i).getPaasSeqNo())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getPaasSeqNo()) && checkSystemSeqNoTypeForErrors(request.getCrownAssignment().get(i).getPaasSeqNo())) {
                     errors.add(MessageFormat.format("CrownAssignment PaasSeqNo at index {0} is not valid", i+1));
                 }
 
-                if (checkConcurrencyControlTypeForErrors(request.getCrownAssignment().get(i).getWorkAssignmentCcn())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getWorkAssignmentCcn()) && checkConcurrencyControlTypeForErrors(request.getCrownAssignment().get(i).getWorkAssignmentCcn())) {
                     errors.add(MessageFormat.format("CrownAssignment WorkAssignmentCcn at index {0} is not valid", i+1));
                 }
 
-                if (checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getWorkAssignmentId())) {
+                if (StringUtils.isNoneEmpty(request.getCrownAssignment().get(i).getWorkAssignmentId()) && checkSystemIdTypeForErrors(request.getCrownAssignment().get(i).getWorkAssignmentId())) {
                     errors.add(MessageFormat.format("CrownAssignment WorkAssignmentId at index {0} is not valid", i+1));
                 }
 
@@ -196,19 +197,18 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if (StringUtils.isBlank(request.getRequestDtm()) || checkDateTimeTypeForErrors(request.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if (request.getJustinNo() != null && checkJustinNoTypeForErrors(request.getJustinNo())) {
+        if (StringUtils.isBlank(request.getJustinNo()) || checkJustinNoTypeForErrors(request.getJustinNo())) {
             errors.add("JustinNo is not valid");
         }
 
-        if (checkConcurrencyControlTypeForErrors(request.getMdocCcn())) {
+        if (StringUtils.isBlank(request.getMdocCcn()) || checkConcurrencyControlTypeForErrors(request.getMdocCcn())) {
             errors.add("MdocCcn is not valid");
         }
 
-        //TODO: Check all enum types
 
         return errors;
 

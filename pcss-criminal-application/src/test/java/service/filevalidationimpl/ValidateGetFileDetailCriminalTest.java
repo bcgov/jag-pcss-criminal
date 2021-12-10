@@ -32,7 +32,7 @@ public class ValidateGetFileDetailCriminalTest {
 
         GetFileDetailCriminalRequest getFileDetailCriminalRequest = new GetFileDetailCriminalRequest();
 
-        getFileDetailCriminalRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getFileDetailCriminalRequest.setRequestDtm(DATE);
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         getFileDetailCriminalRequest.setRequestPartId(VALUE);
         getFileDetailCriminalRequest.setApplicationCd(VALUE);
@@ -50,7 +50,7 @@ public class ValidateGetFileDetailCriminalTest {
 
         GetFileDetailCriminalRequest getFileDetailCriminalRequest = new GetFileDetailCriminalRequest();
 
-        getFileDetailCriminalRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getFileDetailCriminalRequest.setRequestDtm(BAD_DATE);
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getFileDetailCriminalRequest.setRequestPartId(LONG_STRING);
         getFileDetailCriminalRequest.setApplicationCd(LONG_STRING);

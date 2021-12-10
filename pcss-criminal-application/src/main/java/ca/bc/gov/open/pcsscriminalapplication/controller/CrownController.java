@@ -1,15 +1,12 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
+import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse2;
@@ -37,6 +34,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @Endpoint
@@ -111,6 +109,14 @@ public class CrownController {
 
     private GetCrownAssignmentResponse buildGetCrownAssignmentResponse(ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse getCrownAssignmentResponseInner) {
 
+        if (getCrownAssignmentResponseInner.getCrownAssignment() != null) {
+            getCrownAssignmentResponseInner.getCrownAssignment()
+                    .forEach(
+                            ((Consumer<CrownAssignment>) crownAssignment -> crownAssignment.setAssignmentDt(DateUtils.formatDate(crownAssignment.getAssignmentDt())))
+                            .andThen(crownAssignment -> crownAssignment.setAssignmentEndDt(DateUtils.formatDate(crownAssignment.getAssignmentEndDt())))
+                    );
+        }
+
         GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
         GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();
         getCrownAssignmentResponse2.setGetCrownAssignmentResponse(getCrownAssignmentResponseInner);
@@ -181,7 +187,7 @@ public class CrownController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT)
     @ResponsePayload
-    public SetCrownAssignmentResponse setCrownAssignment(@RequestPayload SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
+    public SetCrownAssignmentResponse setCrownAssignment(@RequestPayload SetCrownAssignment setCrownAssignment) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
 
@@ -246,7 +252,7 @@ public class CrownController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_FILE_DETAIL)
     @ResponsePayload
-    public SetCrownFileDetailResponse setCrownFileDetail(@RequestPayload SetCrownFileDetail setCrownFileDetail) throws BadDateException, JsonProcessingException {
+    public SetCrownFileDetailResponse setCrownFileDetail(@RequestPayload SetCrownFileDetail setCrownFileDetail) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 

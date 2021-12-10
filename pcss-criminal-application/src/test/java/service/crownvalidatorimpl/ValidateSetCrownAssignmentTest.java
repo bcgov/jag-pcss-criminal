@@ -2,9 +2,7 @@ package service.crownvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
-import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
-import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +36,7 @@ public class ValidateSetCrownAssignmentTest {
         SetCrownAssignmentRequest getCrownAssignmentRequest = new SetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId(VALUE);
         getCrownAssignmentRequest.setRequestPartId(VALUE);
-        getCrownAssignmentRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getCrownAssignmentRequest.setRequestDtm(DATE);
         getCrownAssignmentRequest.setJustinNo(VALUE);
 
         CrownAssignment2 crownAssignment = new CrownAssignment2();
@@ -46,8 +44,8 @@ public class ValidateSetCrownAssignmentTest {
         crownAssignment.setAssigningPaasPartId(VALUE);
         crownAssignment.setAssigningPaasSeqNo(VALUE);
         crownAssignment.setAssignmentCd(VALUE);
-        crownAssignment.setAssignmentDt(InstantUtils.parse(DATE));
-        crownAssignment.setAssignmentEndDt(InstantUtils.parse(DATE));
+        crownAssignment.setAssignmentDt(DATE);
+        crownAssignment.setAssignmentEndDt(DATE);
         crownAssignment.setOperationModeCd(OperationModeType.F_ADD);
         crownAssignment.setPaasAgencyId(VALUE);
         crownAssignment.setPaasPartId(VALUE);
@@ -69,7 +67,7 @@ public class ValidateSetCrownAssignmentTest {
         SetCrownAssignmentRequest getCrownAssignmentRequest = new SetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId(VALUE);
         getCrownAssignmentRequest.setRequestPartId(VALUE);
-        getCrownAssignmentRequest.setRequestDtm(InstantUtils.parse(DATE));
+        getCrownAssignmentRequest.setRequestDtm(DATE);
         getCrownAssignmentRequest.setJustinNo(VALUE);
 
         List<String> validationErrors = sut.validateSetCrownAssignment(getCrownAssignmentRequest);
@@ -86,7 +84,7 @@ public class ValidateSetCrownAssignmentTest {
         SetCrownAssignmentRequest getCrownAssignmentRequest = new SetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getCrownAssignmentRequest.setRequestPartId(LONG_STRING);
-        getCrownAssignmentRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        getCrownAssignmentRequest.setRequestDtm(BAD_DATE);
         getCrownAssignmentRequest.setJustinNo(LONG_STRING);
 
         CrownAssignment2 crownAssignment = new CrownAssignment2();
@@ -94,8 +92,8 @@ public class ValidateSetCrownAssignmentTest {
         crownAssignment.setAssigningPaasPartId(LONG_STRING);
         crownAssignment.setAssigningPaasSeqNo(LONG_STRING);
         crownAssignment.setAssignmentCd(null);
-        crownAssignment.setAssignmentDt(InstantUtils.parse(BAD_DATE));
-        crownAssignment.setAssignmentEndDt(InstantUtils.parse(BAD_DATE));
+        crownAssignment.setAssignmentDt(BAD_DATE);
+        crownAssignment.setAssignmentEndDt(BAD_DATE);
         crownAssignment.setOperationModeCd(null);
         crownAssignment.setPaasAgencyId(LONG_STRING);
         crownAssignment.setPaasPartId(LONG_STRING);

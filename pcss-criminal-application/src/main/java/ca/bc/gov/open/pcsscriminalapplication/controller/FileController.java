@@ -1,10 +1,10 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
@@ -104,6 +104,13 @@ public class FileController {
     }
 
     private GetClosedFileResponse buildClosedFileResponse(ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponseInner) {
+
+        if (getClosedFileResponseInner.getCourtFile() != null) {
+            getClosedFileResponseInner.getCourtFile()
+                .forEach(
+                    (courtFile -> courtFile.setApprDt(DateUtils.formatDate(courtFile.getApprDt())))
+                );
+        }
 
         GetClosedFileResponse getClosedFileResponse = new GetClosedFileResponse();
         GetClosedFileResponce getClosedFileResponce = new GetClosedFileResponce();
@@ -214,7 +221,7 @@ public class FileController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SECURE_FILE_DETAIL)
                         .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getFileDetailCriminalRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getFileDetailCriminalRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getFileDetailCriminalRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getFileDetailCriminalRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_JUSTIN_NO, getFileDetailCriminalRequest.getJustinNo())
                         .queryParam(Keys.QUERY_APPLICATION_CD, getFileDetailCriminalRequest.getApplicationCd());
 

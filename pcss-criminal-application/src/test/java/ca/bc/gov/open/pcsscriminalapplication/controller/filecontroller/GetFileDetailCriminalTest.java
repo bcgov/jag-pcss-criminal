@@ -1,12 +1,10 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.filecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -55,7 +52,7 @@ public class GetFileDetailCriminalTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse();
         response.setResponseMessageTxt("TEST");
@@ -107,7 +104,7 @@ public class GetFileDetailCriminalTest {
 
         getClosedFileRequest1.setApplicationCd("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm(Instant.now());
+        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getClosedFileRequest1.setRequestPartId("TEST");
         getClosedFileRequest1.setJustinNo("TEST");
 

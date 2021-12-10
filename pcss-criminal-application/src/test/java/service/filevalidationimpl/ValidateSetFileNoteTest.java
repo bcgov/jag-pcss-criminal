@@ -33,7 +33,7 @@ public class ValidateSetFileNoteTest {
 
         SetFileNoteRequest setFileNoteRequest = new SetFileNoteRequest();
 
-        setFileNoteRequest.setRequestDtm(InstantUtils.parse(DATE));
+        setFileNoteRequest.setRequestDtm(DATE);
         setFileNoteRequest.setRequestAgencyIdentifierId(VALUE);
         setFileNoteRequest.setRequestPartId(VALUE);
         setFileNoteRequest.setFileNoteTypeCd(FileNoteType.FILE);
@@ -52,7 +52,7 @@ public class ValidateSetFileNoteTest {
 
         SetFileNoteRequest setFileNoteRequest = new SetFileNoteRequest();
 
-        setFileNoteRequest.setRequestDtm(InstantUtils.parse(BAD_DATE));
+        setFileNoteRequest.setRequestDtm(BAD_DATE);
         setFileNoteRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setFileNoteRequest.setRequestPartId(LONG_STRING);
         setFileNoteRequest.setFileNoteTypeCd(FileNoteType.FILE);

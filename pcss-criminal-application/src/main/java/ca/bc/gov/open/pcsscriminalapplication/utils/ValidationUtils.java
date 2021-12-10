@@ -25,7 +25,7 @@ public class ValidationUtils {
     }
 
     public static boolean checkDateTimeTypeForErrors(String dateTime) {
-        return (dateTime == null || dateTime.length() != 24);
+        return (dateTime.length() != 21);
     }
 
     public static boolean checkConcurrencyControlTypeForErrors(String concurrencyControlNo) {

@@ -35,7 +35,7 @@ public class ValidateGetAppearanceCriminalTest {
         getAppearanceCriminalRequest.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest.setHistoryYN(YesNoType.Y);
         getAppearanceCriminalRequest.setJustinNo(VALUE);
-        getAppearanceCriminalRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getAppearanceCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalRequest.setRequestPartId(VALUE);
 
@@ -54,7 +54,7 @@ public class ValidateGetAppearanceCriminalTest {
         getAppearanceCriminalRequest.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest.setHistoryYN(YesNoType.Y);
         getAppearanceCriminalRequest.setJustinNo(LONG_STRING);
-        getAppearanceCriminalRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getAppearanceCriminalRequest.setRequestDtm("2013-03-25");
         getAppearanceCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalRequest.setRequestPartId(LONG_STRING);
 

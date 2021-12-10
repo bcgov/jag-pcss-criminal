@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;

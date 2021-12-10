@@ -43,13 +43,13 @@ public class Keys {
     //Query Params
     public static final String QUERY_AGENT_ID = "rqstagenid";
     public static final String QUERY_PART_ID = "rqstpartid";
+    public static final String QUERY_PART_ID_SIMPLE = "partid";
     public static final String QUERY_REQUEST_DATE = "requestdtm";
     public static final String QUERY_JUSTIN_NO = "justinno";
     public static final String QUERY_FUTURE_FLAG = "futureyn";
     public static final String QUERY_HISTORY_FLAG = "historyyn";
     public static final String QUERY_APPEARANCE_ID = "apprid";
-    public static final String QUERY_APPEARANCE_CD = "appearanceCd";
-    public static final String QUERY_APPLICATION_CD = "applicationCd";
+    public static final String QUERY_APPLICATION_CD = "applicationcd";
     public static final String QUERY_PERSON_CD = "parttypecd";
     public static final String QUERY_AGENCY_IDENTIFIER = "agenid";
     public static final String QUERY_FROM_DATE = "fromdate";

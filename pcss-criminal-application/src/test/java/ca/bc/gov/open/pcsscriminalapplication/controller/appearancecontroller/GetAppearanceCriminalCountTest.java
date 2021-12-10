@@ -1,13 +1,11 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.ApprCount;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalCountSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -110,7 +107,7 @@ public class GetAppearanceCriminalCountTest {
 
         getAppearanceCriminalCountRequest2.setAppearanceId("TEST");
         getAppearanceCriminalCountRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalCountRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalCountRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalCountRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalCountRequest1.setGetAppearanceCriminalCountRequest(getAppearanceCriminalCountRequest2);

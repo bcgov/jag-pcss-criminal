@@ -1,11 +1,13 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.ApprDetail;
+import ca.bc.gov.open.wsdl.pcss.one.Resource;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodResponse;
@@ -26,6 +28,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @Endpoint
@@ -89,10 +92,7 @@ public class AppearanceController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse.class);
 
-            GetAppearanceCriminalResponse getAppearanceCriminalResponse = new GetAppearanceCriminalResponse();
-            GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
-            getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
-            getAppearanceCriminalResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+            GetAppearanceCriminalResponse getAppearanceCriminalResponse = buildAppearanceResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE);
 
@@ -108,6 +108,14 @@ public class AppearanceController {
     }
 
     private GetAppearanceCriminalResponse buildAppearanceResponse(ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse getAppearanceCriminalResponseInner) {
+
+        if (getAppearanceCriminalResponseInner.getApprDetail() != null) {
+            getAppearanceCriminalResponseInner.getApprDetail()
+                .forEach(
+                    ((Consumer<ApprDetail>) apprDetail -> apprDetail.setAppearanceDt(DateUtils.formatDate(apprDetail.getAppearanceDt())))
+                        .andThen(apprDetail -> apprDetail.setAppearanceTm(DateUtils.formatDate(apprDetail.getAppearanceTm())))
+                );
+        }
 
         GetAppearanceCriminalResponse getAppearanceCriminalResponse = new GetAppearanceCriminalResponse();
         GetAppearanceCriminalResponse2 getAppearanceCriminalResponse2 = new GetAppearanceCriminalResponse2();
@@ -216,7 +224,7 @@ public class AppearanceController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalApprMethodSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalApprMethodSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalApprMethodSecureRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalApprMethodSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalApprMethodSecureRequest.getAppearanceId());
 
@@ -355,8 +363,8 @@ public class AppearanceController {
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT_SECURE)
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalCountSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalCountSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalCountSecureRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_APPEARANCE_CD, getAppearanceCriminalCountSecureRequest.getApplicationCd())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalCountSecureRequest.getRequestDtm()))
+                        .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalCountSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalCountSecureRequest.getAppearanceId());
 
         try {
@@ -454,6 +462,16 @@ public class AppearanceController {
 
     private GetAppearanceCriminalResourceResponse buildAppearanceCriminalResourceResponse(ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse getAppearanceCriminalResourceResponseInner) {
 
+        if (getAppearanceCriminalResourceResponseInner.getResource() != null) {
+            getAppearanceCriminalResourceResponseInner.getResource()
+                .forEach(
+                    ((Consumer<Resource>) resource -> resource.setBookedDt(DateUtils.formatDate(resource.getBookedDt())))
+                        .andThen(resource -> resource.setBookedFromTm(DateUtils.formatDate(resource.getBookedFromTm())))
+                        .andThen(resource -> resource.setBookedToTm(DateUtils.formatDate(resource.getBookedToTm())))
+                );
+        }
+
+
         GetAppearanceCriminalResourceResponse getAppearanceCriminalResourceResponse = new GetAppearanceCriminalResourceResponse();
         ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse2 getAppearanceCriminalResourceResponse2 = new ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse2();
         getAppearanceCriminalResourceResponse2.setGetAppearanceCriminalResourceResponse(getAppearanceCriminalResourceResponseInner);
@@ -494,7 +512,7 @@ public class AppearanceController {
                         .queryParam(Keys.QUERY_AGENT_ID, getAppearanceCriminalSecureRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_APPLICATION_CD, getAppearanceCriminalSecureRequest.getApplicationCd())
                         .queryParam(Keys.QUERY_PART_ID, getAppearanceCriminalSecureRequest.getRequestPartId())
-                        .queryParam(Keys.QUERY_REQUEST_DATE, getAppearanceCriminalSecureRequest.getRequestDtm())
+                        .queryParam(Keys.QUERY_REQUEST_DATE, DateUtils.formatORDSDate(getAppearanceCriminalSecureRequest.getRequestDtm()))
                         .queryParam(Keys.QUERY_APPEARANCE_ID, getAppearanceCriminalSecureRequest.getAppearanceId())
                         .queryParam(Keys.QUERY_JUSTIN_NO, getAppearanceCriminalSecureRequest.getJustinNo())
                         .queryParam(Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalSecureRequest.getFutureYN())
@@ -511,10 +529,7 @@ public class AppearanceController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse.class);
 
-            GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse = new GetAppearanceCriminalSecureResponse();
-            ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse getAppearanceCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse();
-            getAppearanceCriminalResponse2.setGetAppearanceCriminalResponse(response.getBody());
-            getAppearanceCriminalSecureResponse.setGetAppearanceCriminalResponse(getAppearanceCriminalResponse2);
+            GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse = buildAppearanceCriminalSecureResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_APPEARANCE_SECURE);
 
@@ -530,6 +545,14 @@ public class AppearanceController {
     }
 
     private GetAppearanceCriminalSecureResponse buildAppearanceCriminalSecureResponse(ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse getAppearanceCriminalResponseInner) {
+
+        if (getAppearanceCriminalResponseInner.getApprDetail() != null) {
+            getAppearanceCriminalResponseInner.getApprDetail()
+                .forEach(
+                    ((Consumer<ca.bc.gov.open.wsdl.pcss.secure.one.ApprDetail>) apprDetail -> apprDetail.setAppearanceDt(DateUtils.formatDate(apprDetail.getAppearanceDt())))
+                        .andThen(apprDetail -> apprDetail.setAppearanceTm(DateUtils.formatDate(apprDetail.getAppearanceTm())))
+                );
+        }
 
         GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse = new GetAppearanceCriminalSecureResponse();
         ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse getAppearanceCriminalResponse2 = new ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalResponse();

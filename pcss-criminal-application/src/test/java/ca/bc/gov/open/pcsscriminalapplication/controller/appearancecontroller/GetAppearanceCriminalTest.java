@@ -1,13 +1,11 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.ApprDetail;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.three.YesNoType;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalRequest;
@@ -23,7 +21,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -60,7 +57,7 @@ public class GetAppearanceCriminalTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminal(any())).thenReturn(new ArrayList<>());
 
@@ -121,7 +118,7 @@ public class GetAppearanceCriminalTest {
         getAppearanceCriminalRequest2.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest2.setJustinNo("TEST");
         getAppearanceCriminalRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalRequest1.setGetAppearanceCriminalRequest(getAppearanceCriminalRequest2);

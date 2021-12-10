@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.personnelcontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.PersonnelController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
@@ -20,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -57,7 +55,7 @@ public class GetPersonnelAvailDetailTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse();
         response.setResponseMessageTxt("TEST");
@@ -117,9 +115,9 @@ public class GetPersonnelAvailDetailTest {
 
         getPersonnelAvailDetailRequest1.setPaasPartId("TEST");
         getPersonnelAvailDetailRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelAvailDetailRequest1.setRequestDtm(Instant.now());
+        getPersonnelAvailDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getPersonnelAvailDetailRequest1.setRequestPartId("TEST");
-        getPersonnelAvailDetailRequest1.setAvailabilityDt(Instant.now());
+        getPersonnelAvailDetailRequest1.setAvailabilityDt("2013-03-25 13:04:22.1");
         getPersonnelAvailDetailRequest1.setPersonTypeCd(AvailablePersonType.C);
 
         getPersonnelAvailDetailRequest.setGetPersonnelAvailDetailRequest(getPersonnelAvailDetailRequest1);

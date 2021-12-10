@@ -29,16 +29,20 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (getPersonnelAvailabilityRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getRequestDtm().toString())) {
+        if (getPersonnelAvailabilityRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if (getPersonnelAvailabilityRequest.getToDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getToDt().toString())) {
+        if (getPersonnelAvailabilityRequest.getToDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getToDt())) {
             errors.add("ToDt is not valid");
         }
 
-        if (getPersonnelAvailabilityRequest.getFromDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getFromDt().toString())) {
+        if (getPersonnelAvailabilityRequest.getFromDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailabilityRequest.getFromDt())) {
             errors.add("FromDt is not valid");
+        }
+
+        if (getPersonnelAvailabilityRequest.getPersonTypeCd() == null) {
+            errors.add("PersonTypeCd is not valid");
         }
 
         return errors;
@@ -60,12 +64,16 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (getPersonnelAvailDetailRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getRequestDtm().toString())) {
+        if (getPersonnelAvailDetailRequest.getRequestDtm() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getAvailabilityDt().toString())) {
+        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null || ValidationUtils.checkDateTimeTypeForErrors(getPersonnelAvailDetailRequest.getAvailabilityDt())) {
             errors.add("AvailabilityDt is not valid");
+        }
+
+        if (getPersonnelAvailDetailRequest.getPersonTypeCd() == null) {
+            errors.add("PersonTypeCd is not valid");
         }
 
         return errors;
@@ -93,6 +101,14 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
 
         if (ValidationUtils.checkAgencyIdentifierTypeForErrors(getPersonnelSearchRequest.getAgencyId())) {
             errors.add("AgencyId is not valid");
+        }
+
+        if (getPersonnelSearchRequest.getSearchTypeCd() == null) {
+            errors.add("SearchTypeCd is not valid");
+        }
+
+        if (getPersonnelSearchRequest.getSearchTxt() == null) {
+            errors.add("SearchTxt is not valid");
         }
 
         return errors;

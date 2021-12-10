@@ -2,6 +2,7 @@ package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,46 +25,48 @@ public class HearingValidatorImpl implements HearingValidator {
 
         List<String> errors = new ArrayList<>();
 
-        if(checkAgencyIdentifierTypeForErrors(request.getRequestAgencyIdentifierId())) {
+        if (checkAgencyIdentifierTypeForErrors(request.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
         }
 
-        if(checkSystemIdTypeForErrors(request.getRequestPartId())) {
+        if (checkSystemIdTypeForErrors(request.getRequestPartId())) {
             errors.add("RequestPartId is not valid");
         }
 
-        if(request.getRequestDtm() == null || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+        if (StringUtils.isBlank(request.getRequestDtm()) || checkDateTimeTypeForErrors(request.getRequestDtm())) {
             errors.add("RequestDtm is not valid");
         }
 
-        if(request.getOperationModeCd() == null) {
+        if (request.getOperationModeCd() == null) {
             errors.add("OperationModeCd is not valid");
         }
 
-        if(request.getHearingRestrictionId() != null && checkSystemIdTypeForErrors(request.getHearingRestrictionId())) {
+        if (StringUtils.isNoneEmpty(request.getHearingRestrictionId()) && checkSystemIdTypeForErrors(request.getHearingRestrictionId())) {
             errors.add("HearingRestrictionId is not valid");
         }
 
-        if(request.getAdjudicatorPartId() != null && checkSystemIdTypeForErrors(request.getAdjudicatorPartId())) {
+        if (StringUtils.isNoneEmpty(request.getAdjudicatorPartId()) && checkSystemIdTypeForErrors(request.getAdjudicatorPartId())) {
             errors.add("AdjudicatorPartId is not valid");
         }
 
-        if(request.getJustinNo() != null && checkJustinNoTypeForErrors(request.getJustinNo())) {
+        if (StringUtils.isNoneEmpty(request.getJustinNo()) && checkJustinNoTypeForErrors(request.getJustinNo())) {
             errors.add("JustinNo is not valid");
         }
 
-        if(request.getPartId() != null && checkSystemIdTypeForErrors(request.getPartId())) {
+        if (StringUtils.isNoneEmpty(request.getPartId()) && checkSystemIdTypeForErrors(request.getPartId())) {
             errors.add("PartId is not valid");
         }
 
-        if(request.getProfSeqNo() != null && checkSystemSeqNoTypeForErrors(request.getProfSeqNo())) {
+        if (StringUtils.isNoneEmpty(request.getProfSeqNo()) && checkSystemSeqNoTypeForErrors(request.getProfSeqNo())) {
             errors.add("ProfSeqNo is not valid");
         }
 
-        if(request.getHearingRestrictionCcn() != null && checkConcurrencyControlTypeForErrors(request.getHearingRestrictionCcn())) {
+        if (StringUtils.isNoneEmpty(request.getHearingRestrictionCcn()) && checkConcurrencyControlTypeForErrors(request.getHearingRestrictionCcn())) {
             errors.add("HearingRestrictionCcn is not valid");
         }
         
         return errors;
+
     }
+
 }

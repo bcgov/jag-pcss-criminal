@@ -1,13 +1,11 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.appearancecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.AppearanceMethod;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -57,7 +54,7 @@ class GetAppearanceCriminalApprMethodTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalApprMethod(any())).thenReturn(new ArrayList<>());
 
@@ -113,7 +110,7 @@ class GetAppearanceCriminalApprMethodTest {
 
         getAppearanceCriminalApprMethodRequest2.setAppearanceId("TEST");
         getAppearanceCriminalApprMethodRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalApprMethodRequest2.setRequestDtm(Instant.now());
+        getAppearanceCriminalApprMethodRequest2.setRequestDtm("2013-03-25 13:04:22.1");
         getAppearanceCriminalApprMethodRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalApprMethodRequest1.setGetAppearanceCriminalApprMethodRequest(getAppearanceCriminalApprMethodRequest2);

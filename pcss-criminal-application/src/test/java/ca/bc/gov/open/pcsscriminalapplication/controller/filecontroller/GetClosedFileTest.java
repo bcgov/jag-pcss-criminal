@@ -1,13 +1,11 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.filecontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.CourtFile;
-import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFile;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileResponse;
@@ -21,8 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.text.DateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -59,7 +55,7 @@ public class GetClosedFileTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse();
         response.setResponseMessageTxt("TEST");
@@ -113,10 +109,10 @@ public class GetClosedFileTest {
 
         getClosedFileRequest1.setAgencyId("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm(Instant.now());
+        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getClosedFileRequest1.setRequestPartId("TEST");
-        getClosedFileRequest1.setFromApprDt(Instant.now());
-        getClosedFileRequest1.setToApprDt(Instant.now());
+        getClosedFileRequest1.setFromApprDt("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setToApprDt("2013-03-25 13:04:22.1");
 
         getClosedFileRequest.setGetClosedFileRequest(getClosedFileRequest1);
 
