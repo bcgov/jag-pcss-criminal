@@ -19,7 +19,7 @@ public class DateUtilsTest {
 
     @Test
     @DisplayName("Test invalid date format ")
-    public void testInValidFormat() {
+    public void testInvalidFormat() {
 
         Assertions.assertEquals("25-Mar-2013", DateUtils.formatDate("25-Mar-2013"));
 
