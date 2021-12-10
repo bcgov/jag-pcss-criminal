@@ -81,7 +81,7 @@ public class CrownValidatorImpl implements CrownValidator {
 
             for(int i = 0; i < request.getDetail().size(); i++) {
 
-                if(request.getDetail().get(i).getOperationModeCd() ==null) {
+                if(request.getDetail().get(i).getOperationModeCd() == null) {
                     errors.add(MessageFormat.format("Details OperationModeCd at index {0} is not valid", i+1));
                 }
 
