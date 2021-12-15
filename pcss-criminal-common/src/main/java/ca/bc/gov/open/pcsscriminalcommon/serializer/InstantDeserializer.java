@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 @Slf4j
 public class InstantDeserializer extends JsonDeserializer<Instant> {
@@ -18,10 +20,12 @@ public class InstantDeserializer extends JsonDeserializer<Instant> {
     public Instant deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         try {
-            Date d =
-                    new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US)
-                            .parse(jsonParser.getText());
-            return d.toInstant();
+
+            SimpleDateFormat d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
+            d.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
+
+            return d.parse(jsonParser.getText()).toInstant();
+
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage());
         }

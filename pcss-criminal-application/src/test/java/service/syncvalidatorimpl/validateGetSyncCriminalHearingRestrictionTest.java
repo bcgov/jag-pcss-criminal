@@ -24,8 +24,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
     public void successTestReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -40,8 +40,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
     public void successAgencyFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("000000000000000000");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -57,8 +57,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
     public void successPartIdFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("000000000000000000");
 
@@ -74,8 +74,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
     public void successRequestDtmFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm(InstantUtils.parse("2001-DEC-26"));
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25");
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -91,8 +91,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
     public void successProcessDtmFailedReturns() {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalHearingRestrictionRequest = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(InstantUtils.parse("2001-DEC-26"));
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm(InstantUtils.parse("2013-03-25 13:04:22.1"));
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25");
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 

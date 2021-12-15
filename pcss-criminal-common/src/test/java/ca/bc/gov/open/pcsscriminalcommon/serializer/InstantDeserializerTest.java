@@ -1,6 +1,5 @@
 package ca.bc.gov.open.pcsscriminalcommon.serializer;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;

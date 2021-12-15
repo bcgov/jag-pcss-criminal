@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.synccontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.SyncController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
@@ -18,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -55,7 +53,7 @@ public class GetSyncCriminalHearingRestrictionTest {
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse();
         response.setResponseMessageTxt("TEST");
@@ -77,7 +75,7 @@ public class GetSyncCriminalHearingRestrictionTest {
 
     @Test
     @DisplayName("Fail: get returns validation failure object")
-    public void failTestReturns() throws BadDateException, JsonProcessingException {
+    public void failTestReturns() throws JsonProcessingException {
 
         Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any())).thenReturn(Collections.singletonList("BAD DATA"));
 
@@ -107,9 +105,9 @@ public class GetSyncCriminalHearingRestrictionTest {
         GetSyncCriminalHearingRestrictionRequest getSyncCriminalAppearanceRequest = new GetSyncCriminalHearingRestrictionRequest();
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest getSyncCriminalAppearanceRequest1 = new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
 
-        getSyncCriminalAppearanceRequest1.setProcessUpToDtm(Instant.now());
+        getSyncCriminalAppearanceRequest1.setProcessUpToDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest1.setRequestAgencyIdentifierId("TEST");
-        getSyncCriminalAppearanceRequest1.setRequestDtm(Instant.now());
+        getSyncCriminalAppearanceRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getSyncCriminalAppearanceRequest1.setRequestPartId("TEST");
 
         getSyncCriminalAppearanceRequest.setGetSyncCriminalHearingRestrictionRequest(getSyncCriminalAppearanceRequest1);

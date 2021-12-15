@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
@@ -56,14 +55,15 @@ public class HearingController {
 
         List<String> validationErrors = hearingValidator.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
         if(!validationErrors.isEmpty()) {
+
             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse();
-            innerErrorResponse.setResponseCd("-2");
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
             innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-            SetHearingRestrictionCriminalResponse errorResponse = buildHearingResponse(innerErrorResponse);
 
-            log.warn(Keys.VALIDATION_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
-            return errorResponse;
+            return buildHearingResponse(innerErrorResponse);
+
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_HEARING);
@@ -81,11 +81,9 @@ public class HearingController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse.class);
 
-            SetHearingRestrictionCriminalResponse setHearingRestrictionCriminalResponse = buildHearingResponse(response.getBody());
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
 
-            return setHearingRestrictionCriminalResponse;
+            return buildHearingResponse(response.getBody());
 
         } catch(Exception ex) {
             log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL, setHearingRestrictionCriminalRequest, ex.getMessage()));

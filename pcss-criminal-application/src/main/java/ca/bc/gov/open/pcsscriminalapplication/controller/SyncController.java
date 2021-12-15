@@ -1,11 +1,12 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.Appearance;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -22,6 +24,7 @@ import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 @Slf4j
 @Endpoint
@@ -42,7 +45,7 @@ public class SyncController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_APPEARANCE)
     @ResponsePayload
-    public GetSyncCriminalAppearanceResponse getSyncCriminalAppearance(@RequestPayload GetSyncCriminalAppearance getSyncCriminalAppearance) throws JsonProcessingException, BadDateException {
+    public GetSyncCriminalAppearanceResponse getSyncCriminalAppearance(@RequestPayload GetSyncCriminalAppearance getSyncCriminalAppearance) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_APPEARANCE);
 
@@ -65,12 +68,12 @@ public class SyncController {
 
         }
 
-        UriComponentsBuilder builder =
+        UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_APPEARANCE)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalAppearanceRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalAppearanceRequest.getProcessUpToDtm()).build();
 
         try {
 
@@ -78,7 +81,7 @@ public class SyncController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            uriComponents.toUriString(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse.class);
@@ -99,6 +102,15 @@ public class SyncController {
 
     private  ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse buildAppearanceResponse(ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponseInner) {
 
+        if (getSyncCriminalAppearanceResponseInner.getAppearance() != null) {
+            getSyncCriminalAppearanceResponseInner.getAppearance()
+                    .forEach(
+                            ((Consumer<Appearance>) appearance -> appearance.setAppearanceDt(DateUtils.formatDate(appearance.getAppearanceDt())))
+                                    .andThen(appearance -> appearance.setAppearanceTm(DateUtils.formatDate(appearance.getAppearanceTm())))
+                                    .andThen(appearance -> appearance.setTransactionDtm(DateUtils.formatDate(appearance.getTransactionDtm())))
+                    );
+        }
+
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse getSyncCriminalAppearanceResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse();
         GetSyncCriminalAppearanceResponse2 getSyncCriminalAppearanceResponse2 = new GetSyncCriminalAppearanceResponse2();
         getSyncCriminalAppearanceResponse2.setGetSyncCriminalAppearanceResponse(getSyncCriminalAppearanceResponseInner);
@@ -110,7 +122,7 @@ public class SyncController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_HEARING)
     @ResponsePayload
-    public GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestriction(@RequestPayload GetSyncCriminalHearingRestriction getSyncCriminalHearingRestriction) throws JsonProcessingException, BadDateException {
+    public GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestriction(@RequestPayload GetSyncCriminalHearingRestriction getSyncCriminalHearingRestriction) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SYNC_HEARING);
 
@@ -133,12 +145,12 @@ public class SyncController {
 
         }
 
-        UriComponentsBuilder builder =
+        UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_HEARING)
-                        .queryParam(Keys.QUERY_AGENCY_IDENTIFIER, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
+                        .queryParam(Keys.QUERY_AGENT_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getSyncCriminalHearingRestrictionRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getSyncCriminalHearingRestrictionRequest.getRequestDtm())
-                        .queryParam(Keys.QUERY_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm());
+                        .queryParam(Keys.QUERY_SYNC_TO_DATE, getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm()).build();
 
         try {
 
@@ -146,7 +158,7 @@ public class SyncController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            uriComponents.toUriString(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse.class);
@@ -166,6 +178,13 @@ public class SyncController {
     }
 
     private ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse buildHearingResponse(ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponseInner) {
+
+        if (getSyncCriminalHearingRestrictionResponseInner.getHearingRestriction() != null) {
+            getSyncCriminalHearingRestrictionResponseInner.getHearingRestriction()
+                    .forEach(
+                            (hearingRestriction -> hearingRestriction.setTransactionDtm(DateUtils.formatDate(hearingRestriction.getTransactionDtm())))
+                    );
+        }
 
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse getSyncCriminalHearingRestrictionResponse = new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse();
         GetSyncCriminalHearingRestrictionResponse2 getSyncCriminalHearingRestrictionResponse2 = new GetSyncCriminalHearingRestrictionResponse2();

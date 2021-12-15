@@ -1,14 +1,12 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
-import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
+import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse2;
@@ -23,6 +21,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +33,9 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 @Slf4j
 @Endpoint
 @EnableConfigurationProperties(PcssProperties.class)
@@ -42,16 +44,18 @@ public class CrownController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
+    private final CrownValidator crownValidator;
 
-    public CrownController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public CrownController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder, CrownValidator crownValidator) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
+        this.crownValidator = crownValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_ASSIGNMENT)
     @ResponsePayload
-    public GetCrownAssignmentResponse getCrownAssignment(@RequestPayload GetCrownAssignment getCrownAssignment) throws BadDateException, JsonProcessingException {
+    public GetCrownAssignmentResponse getCrownAssignment(@RequestPayload GetCrownAssignment getCrownAssignment) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
 
@@ -60,11 +64,15 @@ public class CrownController {
                 ? getCrownAssignment.getGetCrownAssignmentRequest().getGetCrownAssignmentRequest()
                 : new GetCrownAssignmentRequest();
 
-        if(getCrownAssignmentRequest.getRequestDtm() == null || getCrownAssignmentRequest.getSinceDt() == null) {
+        List<String> validationErrors = crownValidator.validateGetCrownAssignment(getCrownAssignmentRequest);
+        if(!validationErrors.isEmpty()) {
+            ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
+            innerErrorResponse.setResponseCd("-2");
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_CROWN_ASSIGNMENT, getCrownAssignment, ""));
-            throw new BadDateException();
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
 
+            return buildGetCrownAssignmentResponse(innerErrorResponse);
         }
 
         UriComponentsBuilder builder =
@@ -86,14 +94,10 @@ public class CrownController {
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse.class);
 
-            GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
-            GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();
-            getCrownAssignmentResponse2.setGetCrownAssignmentResponse(response.getBody());
-            getCrownAssignmentResponse.setGetCrownAssignmentResponse(getCrownAssignmentResponse2);
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
 
-            return getCrownAssignmentResponse;
+            return buildGetCrownAssignmentResponse(response.getBody());
 
         } catch(Exception ex) {
 
@@ -103,9 +107,26 @@ public class CrownController {
         }
     }
 
+    private GetCrownAssignmentResponse buildGetCrownAssignmentResponse(ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse getCrownAssignmentResponseInner) {
+
+        if (getCrownAssignmentResponseInner.getCrownAssignment() != null) {
+            getCrownAssignmentResponseInner.getCrownAssignment()
+                    .forEach(
+                            ((Consumer<CrownAssignment>) crownAssignment -> crownAssignment.setAssignmentDt(DateUtils.formatDate(crownAssignment.getAssignmentDt())))
+                            .andThen(crownAssignment -> crownAssignment.setAssignmentEndDt(DateUtils.formatDate(crownAssignment.getAssignmentEndDt())))
+                    );
+        }
+
+        GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
+        GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();
+        getCrownAssignmentResponse2.setGetCrownAssignmentResponse(getCrownAssignmentResponseInner);
+        getCrownAssignmentResponse.setGetCrownAssignmentResponse(getCrownAssignmentResponse2);
+        return getCrownAssignmentResponse;
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL)
     @ResponsePayload
-    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws BadDateException, JsonProcessingException {
+    public SetCounselDetailCriminalResponse setCounselDetailCriminal(@RequestPayload SetCounselDetailCriminal setCounselDetailCriminal) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
@@ -114,11 +135,16 @@ public class CrownController {
                 ? setCounselDetailCriminal.getSetCounselDetailCriminalRequest().getSetCounselDetailCriminalRequest()
                 : new SetCounselDetailCriminalRequest();
 
-        if(setCounselDetailCriminalRequest.getRequestDtm() == null) {
+        List<String> validationErrors = crownValidator.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        if(!validationErrors.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL, setCounselDetailCriminal, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
 
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
+
+            return buildSetCounselDetailCriminalResponse(innerErrorResponse);
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
@@ -136,12 +162,9 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse.class);
 
-            SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
-            SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
-            setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(response.getBody());
-            setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
 
-            return setCounselDetailCriminalResponse;
+            return buildSetCounselDetailCriminalResponse(response.getBody());
 
         } catch(Exception ex) {
 
@@ -149,13 +172,22 @@ public class CrownController {
             throw new ORDSException();
 
         }
+    }
 
+    private SetCounselDetailCriminalResponse buildSetCounselDetailCriminalResponse(ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerResponse) {
+
+        SetCounselDetailCriminalResponse setCounselDetailCriminalResponse = new SetCounselDetailCriminalResponse();
+        SetCounselDetailCriminalResponse2 setCounselDetailCriminalResponse2 = new SetCounselDetailCriminalResponse2();
+        setCounselDetailCriminalResponse2.setSetCounselDetailCriminalResponse(innerResponse);
+        setCounselDetailCriminalResponse.setSetCounselDetailCriminalResponse(setCounselDetailCriminalResponse2);
+
+        return setCounselDetailCriminalResponse;
 
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT)
     @ResponsePayload
-    public SetCrownAssignmentResponse setCrownAssignment(@RequestPayload SetCrownAssignment setCrownAssignment) throws BadDateException, JsonProcessingException {
+    public SetCrownAssignmentResponse setCrownAssignment(@RequestPayload SetCrownAssignment setCrownAssignment) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
 
@@ -164,10 +196,16 @@ public class CrownController {
                 ? setCrownAssignment.getSetCrownAssignmentRequest().getSetCrownAssignmentRequest()
                 : new SetCrownAssignmentRequest();
 
-        if(setCrownAssignmentRequest.getRequestDtm() == null) {
+        List<String> validationErrors = crownValidator.validateSetCrownAssignment(setCrownAssignmentRequest);
+        if(!validationErrors.isEmpty()) {
 
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT, setCrownAssignment, ""));
-            throw new BadDateException();
+            ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
+
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+            return buildSetCrownAssignmentResponse(innerErrorResponse);
 
         }
 
@@ -186,10 +224,9 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse.class);
 
-            SetCrownAssignmentResponse setCrownAssignmentResponse = new SetCrownAssignmentResponse();
-            SetCrownAssignmentResponse2 setCrownAssignmentResponse2 = new SetCrownAssignmentResponse2();
-            setCrownAssignmentResponse2.setSetCrownAssignmentResponse(response.getBody());
-            setCrownAssignmentResponse.setSetCrownAssignmentResponse(setCrownAssignmentResponse2);
+            SetCrownAssignmentResponse setCrownAssignmentResponse = buildSetCrownAssignmentResponse(response.getBody());
+
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 
             return setCrownAssignmentResponse;
 
@@ -202,9 +239,20 @@ public class CrownController {
 
     }
 
+    private SetCrownAssignmentResponse buildSetCrownAssignmentResponse(ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse innerResponse) {
+
+        SetCrownAssignmentResponse setCrownAssignmentResponse = new SetCrownAssignmentResponse();
+        SetCrownAssignmentResponse2 setCrownAssignmentResponse2 = new SetCrownAssignmentResponse2();
+        setCrownAssignmentResponse2.setSetCrownAssignmentResponse(innerResponse);
+        setCrownAssignmentResponse.setSetCrownAssignmentResponse(setCrownAssignmentResponse2);
+
+        return setCrownAssignmentResponse;
+
+    }
+
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_FILE_DETAIL)
     @ResponsePayload
-    public SetCrownFileDetailResponse setCrownFileDetail(@RequestPayload SetCrownFileDetail setCrownFileDetail) throws BadDateException, JsonProcessingException {
+    public SetCrownFileDetailResponse setCrownFileDetail(@RequestPayload SetCrownFileDetail setCrownFileDetail) throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 
@@ -213,9 +261,17 @@ public class CrownController {
                 ? setCrownFileDetail.getSetCrownFileDetailRequest().getSetCrownFileDetailRequest()
                 : new SetCrownFileDetailRequest();
 
-        if(setCrownFileDetailRequest.getRequestDtm() == null) {
-            log.warn(logBuilder.writeLogMessage(Keys.DATE_ERROR_MESSAGE, Keys.SOAP_METHOD_CROWN_FILE_DETAIL, setCrownFileDetail, ""));
-            throw new BadDateException();
+        List<String> validationErrors = crownValidator.validateSetCrownFileDetail(setCrownFileDetailRequest);
+        if(!validationErrors.isEmpty()) {
+
+            ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerErrorResponse = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
+            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
+            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
+
+            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
+
+            return buildSetCrownFileDetailResponse(innerErrorResponse);
+
         }
 
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CROWN_FILE_DETAIL);
@@ -233,10 +289,7 @@ public class CrownController {
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse.class);
 
-            SetCrownFileDetailResponse setCrownFileDetailResponse = new SetCrownFileDetailResponse();
-            SetCrownFileDetailResponse2 setCrownFileDetailResponse2 = new SetCrownFileDetailResponse2();
-            setCrownFileDetailResponse2.setSetCrownFileDetailResponse(response.getBody());
-            setCrownFileDetailResponse.setSetCrownFileDetailResponse(setCrownFileDetailResponse2);
+            SetCrownFileDetailResponse setCrownFileDetailResponse = buildSetCrownFileDetailResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
 
@@ -248,4 +301,16 @@ public class CrownController {
         }
 
     }
+
+    private SetCrownFileDetailResponse buildSetCrownFileDetailResponse(ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerResponse) {
+
+        SetCrownFileDetailResponse setCrownFileDetailResponse = new SetCrownFileDetailResponse();
+        SetCrownFileDetailResponse2 setCrownFileDetailResponse2 = new SetCrownFileDetailResponse2();
+        setCrownFileDetailResponse2.setSetCrownFileDetailResponse(innerResponse);
+        setCrownFileDetailResponse.setSetCrownFileDetailResponse(setCrownFileDetailResponse2);
+
+        return setCrownFileDetailResponse;
+
+    }
+
 }

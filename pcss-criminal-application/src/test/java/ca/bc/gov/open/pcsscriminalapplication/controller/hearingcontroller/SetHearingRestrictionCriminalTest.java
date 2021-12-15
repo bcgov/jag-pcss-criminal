@@ -1,7 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.hearingcontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.HearingController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
@@ -25,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -61,7 +59,7 @@ public class SetHearingRestrictionCriminalTest {
 
     @Test
     @DisplayName("Success: post returns expected object")
-    public void successTestReturns() throws JsonProcessingException, BadDateException {
+    public void successTestReturns() throws JsonProcessingException {
 
         SetHearingRestrictionCriminalResponse response = new SetHearingRestrictionCriminalResponse();
         response.setHearingRestrictionCcn("Test");
@@ -116,7 +114,7 @@ public class SetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest1.setHearingRestrictionCcn("Test");
         setHearingRestrictionCriminalRequest1.setHearingRestrictionCd(HearingRestrictionType.A);
         setHearingRestrictionCriminalRequest1.setHearingRestrictionId("Test");
-        setHearingRestrictionCriminalRequest1.setRequestDtm(Instant.now());
+        setHearingRestrictionCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest1.setRequestPartId("Test");
         setHearingRestrictionCriminalRequest1.setAdjudicatorPartId("Test");
         setHearingRestrictionCriminalRequest1.setJustinNo("Test");

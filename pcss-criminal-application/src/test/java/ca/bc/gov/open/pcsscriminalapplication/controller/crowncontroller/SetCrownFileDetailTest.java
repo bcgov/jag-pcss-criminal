@@ -1,5 +1,5 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
 import ca.bc.gov.open.wsdl.pcss.three.FileComplexityType;
@@ -20,13 +20,13 @@ import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
 
-import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -42,6 +42,9 @@ public class SetCrownFileDetailTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private CrownValidator crownValidatorMock;
+
     private CrownController sut;
 
     @BeforeAll
@@ -51,18 +54,20 @@ public class SetCrownFileDetailTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), crownValidatorMock);
 
     }
 
     @Test
     @DisplayName("Success: post returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse response = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
         response.setResponseCd("Test");
         response.setMdocCcn("Test");
         response.setResponseMessageTxt("Test");
+
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
@@ -76,10 +81,16 @@ public class SetCrownFileDetailTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void errorBadDateException() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, ()-> sut.setCrownFileDetail(new SetCrownFileDetail()));
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getSetCrownFileDetailResponse().getSetCrownFileDetailResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getSetCrownFileDetailResponse().getSetCrownFileDetailResponse().getResponseCd());
 
     }
 
@@ -87,7 +98,10 @@ public class SetCrownFileDetailTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+
         Assertions.assertThrows(ORDSException.class, () -> sut.setCrownFileDetail(createTestRequest()));
 
     }
@@ -98,7 +112,7 @@ public class SetCrownFileDetailTest {
         ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest setCrownFileDetailRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
         setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
         setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
+        setCrownFileDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         setCrownFileDetailRequest1.setJustinNo("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);

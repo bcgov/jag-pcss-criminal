@@ -1,9 +1,9 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.personnelcontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.PersonnelController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Assignment;
 import ca.bc.gov.open.wsdl.pcss.one.Commitment;
@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -37,6 +37,9 @@ public class GetPersonnelAvailDetailTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private PersonnelValidator personnelValidatorMock;
+
     private PersonnelController sut;
 
     @BeforeAll
@@ -46,13 +49,13 @@ public class GetPersonnelAvailDetailTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new PersonnelController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new PersonnelController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), personnelValidatorMock);
 
     }
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse();
         response.setResponseMessageTxt("TEST");
@@ -61,6 +64,8 @@ public class GetPersonnelAvailDetailTest {
         response.setShiftLadderDsc("TEST");
         response.setAssignment(Collections.singletonList(new Assignment()));
         response.setCommitment(Collections.singletonList(new Commitment()));
+
+        Mockito.when(personnelValidatorMock.validateGetPersonnelAvailDetail(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
@@ -80,6 +85,8 @@ public class GetPersonnelAvailDetailTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(personnelValidatorMock.validateGetPersonnelAvailDetail(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getPersonnelAvailDetail(createTestRequest()));
@@ -87,10 +94,16 @@ public class GetPersonnelAvailDetailTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void whenBadDateExceptionThrown() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, () -> sut.getPersonnelAvailDetail(new GetPersonnelAvailDetail()));
+        Mockito.when(personnelValidatorMock.validateGetPersonnelAvailDetail(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        GetPersonnelAvailDetailResponse result = sut.getPersonnelAvailDetail(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getGetPersonnelAvailDetailResponse().getGetPersonnelAvailDetailResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getGetPersonnelAvailDetailResponse().getGetPersonnelAvailDetailResponse().getResponseCd());
 
     }
 
@@ -102,9 +115,9 @@ public class GetPersonnelAvailDetailTest {
 
         getPersonnelAvailDetailRequest1.setPaasPartId("TEST");
         getPersonnelAvailDetailRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelAvailDetailRequest1.setRequestDtm(Instant.now());
+        getPersonnelAvailDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getPersonnelAvailDetailRequest1.setRequestPartId("TEST");
-        getPersonnelAvailDetailRequest1.setAvailabilityDt(Instant.now());
+        getPersonnelAvailDetailRequest1.setAvailabilityDt("2013-03-25 13:04:22.1");
         getPersonnelAvailDetailRequest1.setPersonTypeCd(AvailablePersonType.C);
 
         getPersonnelAvailDetailRequest.setGetPersonnelAvailDetailRequest(getPersonnelAvailDetailRequest1);

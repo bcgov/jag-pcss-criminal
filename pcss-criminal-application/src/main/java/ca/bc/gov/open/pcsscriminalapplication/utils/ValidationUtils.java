@@ -8,8 +8,8 @@ public class ValidationUtils {
         //empty constructor
     }
 
-    public static boolean checkRequestAgencyIdentifierIdForErrors(String requestAgencyIdentifierId) {
-        return (StringUtils.isEmpty(requestAgencyIdentifierId) || requestAgencyIdentifierId.length() > 16);
+    public static boolean checkAgencyIdentifierTypeForErrors(String agencyIdentifierId) {
+        return (StringUtils.isEmpty(agencyIdentifierId) || agencyIdentifierId.length() > 16);
     }
 
     public static boolean checkSystemIdTypeForErrors(String systemId) {
@@ -25,11 +25,19 @@ public class ValidationUtils {
     }
 
     public static boolean checkDateTimeTypeForErrors(String dateTime) {
-        return (dateTime == null || dateTime.length() != 24);
+        return (dateTime.length() != 21);
     }
 
     public static boolean checkConcurrencyControlTypeForErrors(String concurrencyControlNo) {
         return (concurrencyControlNo == null || concurrencyControlNo.length() > 12);
+    }
+
+    public static boolean checkAppearanceReasonCriminalTypeForErrors(String appearanceReasonType) {
+        return (appearanceReasonType == null || appearanceReasonType.length() > 3);
+    }
+
+    public static boolean checkCourtRoomTypeForErrors(String courtRoomType) {
+        return (courtRoomType == null || courtRoomType.length() > 6);
     }
 
 }

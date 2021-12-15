@@ -1,9 +1,9 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.personnelcontroller;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.PersonnelController;
-import ca.bc.gov.open.pcsscriminalapplication.exception.BadDateException;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Personnel2;
 import ca.bc.gov.open.wsdl.pcss.three.OfficerSearchType;
@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -36,6 +36,9 @@ public class GetPersonnelSearchTest {
     @Mock
     private ObjectMapper objectMapperMock;
 
+    @Mock
+    private PersonnelValidator personnelValidatorMock;
+
     private PersonnelController sut;
 
     @BeforeAll
@@ -45,18 +48,20 @@ public class GetPersonnelSearchTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new PersonnelController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
+        sut = new PersonnelController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), personnelValidatorMock);
 
     }
 
     @Test
     @DisplayName("Success: get returns expected object")
-    public void successTestReturns() throws BadDateException, JsonProcessingException {
+    public void successTestReturns() throws JsonProcessingException {
 
         ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse response = new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
         response.setPersonnel(Collections.singletonList(new Personnel2()));
+
+        Mockito.when(personnelValidatorMock.validateGetPersonnelSearch(any())).thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
 
@@ -73,6 +78,8 @@ public class GetPersonnelSearchTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
+        Mockito.when(personnelValidatorMock.validateGetPersonnelSearch(any())).thenReturn(new ArrayList<>());
+
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getPersonnelSearch(createTestRequest()));
@@ -80,10 +87,16 @@ public class GetPersonnelSearchTest {
     }
 
     @Test
-    @DisplayName("Error: with a bad date throw exception")
-    public void whenBadDateExceptionThrown() {
+    @DisplayName("Fail: post returns validation failure object")
+    public void failTestReturns() throws JsonProcessingException {
 
-        Assertions.assertThrows(BadDateException.class, () -> sut.getPersonnelSearch(new GetPersonnelSearch()));
+        Mockito.when(personnelValidatorMock.validateGetPersonnelSearch(any())).thenReturn(Collections.singletonList("BAD DATA"));
+
+        GetPersonnelSearchResponse result = sut.getPersonnelSearch(createTestRequest());
+
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals("BAD DATA", result.getGetPersonnelSearchResponse().getGetPersonnelSearchResponse().getResponseMessageTxt());
+        Assertions.assertEquals("-2", result.getGetPersonnelSearchResponse().getGetPersonnelSearchResponse().getResponseCd());
 
     }
 
@@ -95,7 +108,7 @@ public class GetPersonnelSearchTest {
 
         getPersonnelSearchRequest1.setAgencyId("TEST");
         getPersonnelSearchRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelSearchRequest1.setRequestDtm(Instant.now());
+        getPersonnelSearchRequest1.setRequestDtm("2013-03-25 13:04:22.1");
         getPersonnelSearchRequest1.setRequestPartId("TEST");
         getPersonnelSearchRequest1.setSearchTxt("TEST");
         getPersonnelSearchRequest1.setSearchTypeCd(OfficerSearchType.PIN);
