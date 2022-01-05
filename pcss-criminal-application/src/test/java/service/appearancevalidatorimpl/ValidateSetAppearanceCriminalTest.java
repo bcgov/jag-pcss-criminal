@@ -1,14 +1,12 @@
 package service.appearancevalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.Detail;
 import ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.*;
-
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateSetAppearanceCriminal Test")
@@ -23,15 +21,25 @@ public class ValidateSetAppearanceCriminalTest {
     public void BeforeAll() {
 
         sut = new AppearanceValidatorImpl();
-
     }
 
+    @Test
+    @DisplayName("Success: null returns empty")
+    public void nullTestReturnsEmpty() {
+
+        List<String> result = sut.validateSetAppearanceCriminal(null);
+
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("Empty request is invalid", result.get(0));
+
+    }
 
     @Test
     @DisplayName("Success: all validations succeed")
     public void successTestReturns() {
 
-        SetAppearanceCriminalRequest setAppearanceCriminalRequest = new SetAppearanceCriminalRequest();
+        SetAppearanceCriminalRequest setAppearanceCriminalRequest =
+                new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
         detail.setAppearanceDt("2013-03-25 13:04:22.1");
@@ -57,15 +65,14 @@ public class ValidateSetAppearanceCriminalTest {
         List<String> result = sut.validateSetAppearanceCriminal(setAppearanceCriminalRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
     @DisplayName("Fail: all validations fail")
     public void failTestReturns() {
 
-
-        SetAppearanceCriminalRequest setAppearanceCriminalRequest = new SetAppearanceCriminalRequest();
+        SetAppearanceCriminalRequest setAppearanceCriminalRequest =
+                new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
         detail.setAppearanceDt("2013-03-25");
@@ -91,8 +98,8 @@ public class ValidateSetAppearanceCriminalTest {
         List<String> result = sut.validateSetAppearanceCriminal(setAppearanceCriminalRequest);
 
         Assertions.assertEquals(12, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details ProfSeqNo at index 1 is not valid,Details AppearanceDt at index 1 is not valid,Details AppearanceTm at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid,Details CourtAgencyId at index 1 is not valid,Details CourtRoomCd at index 1 is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,Details PcssAppearanceId at index 1 is not valid,Details JustinNo at index 1 is not valid,Details PartId at index 1 is not valid,Details ProfSeqNo at index 1 is not valid,Details AppearanceDt at index 1 is not valid,Details AppearanceTm at index 1 is not valid,Details AppearanceReasonCd at index 1 is not valid,Details CourtAgencyId at index 1 is not valid,Details CourtRoomCd at index 1 is not valid",
+                StringUtils.join(result, ","));
     }
-
 }

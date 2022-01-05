@@ -1,19 +1,21 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.crowncontroller;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
-import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import static org.mockito.ArgumentMatchers.any;
 
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.Collections;
+import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -25,24 +27,16 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.ws.http.HTTPException;
-
-import static org.mockito.ArgumentMatchers.any;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SetCounselDetailCriminal Test")
 public class SetCounselDetailCriminalTest {
-    @Mock
-    private RestTemplate restTemplateMock;
+    @Mock private RestTemplate restTemplateMock;
 
-    @Mock
-    private PcssProperties pcssPropertiesMock;
+    @Mock private PcssProperties pcssPropertiesMock;
 
-    @Mock
-    private ObjectMapper objectMapperMock;
+    @Mock private ObjectMapper objectMapperMock;
 
-    @Mock
-    private CrownValidator crownValidatorMock;
+    @Mock private CrownValidator crownValidatorMock;
 
     private CrownController sut;
 
@@ -53,8 +47,12 @@ public class SetCounselDetailCriminalTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new CrownController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), crownValidatorMock);
-
+        sut =
+                new CrownController(
+                        restTemplateMock,
+                        pcssPropertiesMock,
+                        new LogBuilder(objectMapperMock),
+                        crownValidatorMock);
     }
 
     @Test
@@ -65,13 +63,17 @@ public class SetCounselDetailCriminalTest {
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
 
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(new ArrayList<>());
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
+                .thenReturn(new ArrayList<>());
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+                .thenReturn(ResponseEntity.ok(response));
 
-        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result = sut.setCounselDetailCriminal(createTestRequest());
+        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result =
+                sut.setCounselDetailCriminal(createTestRequest());
 
-        SetCounselDetailCriminalResponse innerResult = result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse();
+        SetCounselDetailCriminalResponse innerResult =
+                result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse();
         Assertions.assertEquals("Test", innerResult.getResponseCd());
         Assertions.assertEquals("Test", innerResult.getResponseMessageTxt());
     }
@@ -80,31 +82,45 @@ public class SetCounselDetailCriminalTest {
     @DisplayName("Fail: post returns validation failure object")
     public void failTestReturns() throws JsonProcessingException {
 
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(Collections.singletonList("BAD DATA"));
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
+                .thenReturn(Collections.singletonList("BAD DATA"));
 
-        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result = sut.setCounselDetailCriminal(createTestRequest());
+        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result =
+                sut.setCounselDetailCriminal(createTestRequest());
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("BAD DATA", result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse().getResponseMessageTxt());
-        Assertions.assertEquals("-2", result.getSetCounselDetailCriminalResponse().getSetCounselDetailCriminalResponse().getResponseCd());
-
+        Assertions.assertEquals(
+                "BAD DATA",
+                result.getSetCounselDetailCriminalResponse()
+                        .getSetCounselDetailCriminalResponse()
+                        .getResponseMessageTxt());
+        Assertions.assertEquals(
+                "-2",
+                result.getSetCounselDetailCriminalResponse()
+                        .getSetCounselDetailCriminalResponse()
+                        .getResponseCd());
     }
 
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any())).thenReturn(new ArrayList<>());
+        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
+                .thenReturn(new ArrayList<>());
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
-        Assertions.assertThrows(ORDSException.class, () -> sut.setCounselDetailCriminal(createTestRequest()));
-
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+                .thenThrow(new HTTPException(400));
+        Assertions.assertThrows(
+                ORDSException.class, () -> sut.setCounselDetailCriminal(createTestRequest()));
     }
 
     private SetCounselDetailCriminal createTestRequest() {
         SetCounselDetailCriminal setCounselDetailCriminal = new SetCounselDetailCriminal();
-        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
-        ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest setCounselDetailCriminalRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest();
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest =
+                new SetCounselDetailCriminalRequest();
+        ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest
+                setCounselDetailCriminalRequest1 =
+                        new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest1.setRequestAgencyIdentifierId("Test");
         setCounselDetailCriminalRequest1.setRequestPartId("Test");
         setCounselDetailCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
@@ -112,8 +128,10 @@ public class SetCounselDetailCriminalTest {
         setCounselDetailCriminalRequest1.setProfSeqNo("Test");
         setCounselDetailCriminalRequest1.setDetail(Collections.singletonList(new Detail4()));
 
-        setCounselDetailCriminalRequest.setSetCounselDetailCriminalRequest(setCounselDetailCriminalRequest1);
-        setCounselDetailCriminal.setSetCounselDetailCriminalRequest(setCounselDetailCriminalRequest);
+        setCounselDetailCriminalRequest.setSetCounselDetailCriminalRequest(
+                setCounselDetailCriminalRequest1);
+        setCounselDetailCriminal.setSetCounselDetailCriminalRequest(
+                setCounselDetailCriminalRequest);
         return setCounselDetailCriminal;
     }
 }

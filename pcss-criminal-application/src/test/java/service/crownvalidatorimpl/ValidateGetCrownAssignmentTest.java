@@ -1,9 +1,8 @@
 package service.crownvalidatorimpl;
-import java.util.List;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +19,6 @@ public class ValidateGetCrownAssignmentTest {
     public void BeforeAll() {
 
         sut = new CrownValidatorImpl();
-
     }
 
     @Test
@@ -37,7 +35,6 @@ public class ValidateGetCrownAssignmentTest {
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
-
     }
 
     @Test
@@ -52,7 +49,6 @@ public class ValidateGetCrownAssignmentTest {
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
-
     }
 
     @Test

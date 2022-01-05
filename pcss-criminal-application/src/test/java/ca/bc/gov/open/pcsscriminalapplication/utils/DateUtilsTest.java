@@ -13,8 +13,9 @@ public class DateUtilsTest {
     @DisplayName("Test date format valid")
     public void testValidFormat() {
 
-        Assertions.assertEquals("2001-11-26 12:00:00.0", DateUtils.formatDate("26-NOV-01 12.00.00.0000000 PM -08:00"));
-
+        Assertions.assertEquals(
+                "2001-11-26 12:00:00.0",
+                DateUtils.formatDate("26-NOV-01 12.00.00.0000000 PM -08:00"));
     }
 
     @Test
@@ -22,7 +23,6 @@ public class DateUtilsTest {
     public void testInvalidFormat() {
 
         Assertions.assertEquals("25-Mar-2013", DateUtils.formatDate("25-Mar-2013"));
-
     }
 
     @Test
@@ -30,7 +30,6 @@ public class DateUtilsTest {
     public void testOrdsValidFormat() {
 
         Assertions.assertEquals("25-Mar-2013", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
-
     }
 
     @Test
@@ -38,7 +37,5 @@ public class DateUtilsTest {
     public void testOrdsInValidFormat() {
 
         Assertions.assertEquals("2013-03-25", DateUtils.formatORDSDate("2013-03-25"));
-
     }
-
 }

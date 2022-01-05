@@ -11,5 +11,4 @@ public class PcssProperties {
 
     private String host;
     private String namespace;
-
 }

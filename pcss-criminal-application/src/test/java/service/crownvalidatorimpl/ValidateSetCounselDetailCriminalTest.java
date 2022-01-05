@@ -1,13 +1,11 @@
 package service.crownvalidatorimpl;
-import ca.bc.gov.open.wsdl.pcss.three.OperationMode2Type;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
-import ca.bc.gov.open.wsdl.pcss.one.Detail4;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
+import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
+import ca.bc.gov.open.wsdl.pcss.three.OperationMode2Type;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,14 +26,14 @@ public class ValidateSetCounselDetailCriminalTest {
     public void BeforeAll() {
 
         sut = new CrownValidatorImpl();
-
     }
 
     @Test
     @DisplayName("Success: all validation succeed")
     public void successTestReturns() {
 
-        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest =
+                new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
         setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -55,16 +53,17 @@ public class ValidateSetCounselDetailCriminalTest {
 
         setCounselDetailCriminalRequest.setDetail(detailList);
 
-        List<String> validationErrors = sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
-
     }
 
     @Test
     @DisplayName("Success: optional properties set to null")
     public void successNullOptionalPropertiesReturns() {
-        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest =
+                new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
         setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -80,7 +79,8 @@ public class ValidateSetCounselDetailCriminalTest {
 
         setCounselDetailCriminalRequest.setDetail(detailList);
 
-        List<String> validationErrors = sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
     }
@@ -88,7 +88,8 @@ public class ValidateSetCounselDetailCriminalTest {
     @Test
     @DisplayName("Fail: all validations fail, except for having no detail object")
     public void failInvalidFieldValuesReturns() {
-        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest =
+                new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setCounselDetailCriminalRequest.setRequestPartId(LONG_STRING);
         setCounselDetailCriminalRequest.setRequestDtm("2020-SEP-05");
@@ -108,30 +109,31 @@ public class ValidateSetCounselDetailCriminalTest {
 
         setCounselDetailCriminalRequest.setDetail(detailList);
 
-        List<String> validationErrors = sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
 
         Assertions.assertEquals(8, validationErrors.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,ProfPartId is not valid,ProfSeqNo is not valid,Details OperationModeCd at index 1 is not valid,Details CounselLastNm at index 1 is not valid,Details CounselFirstNm at index 1 is not valid", StringUtils.join(validationErrors, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,ProfPartId is not valid,ProfSeqNo is not valid,Details OperationModeCd at index 1 is not valid,Details CounselLastNm at index 1 is not valid,Details CounselFirstNm at index 1 is not valid",
+                StringUtils.join(validationErrors, ","));
     }
 
     @Test
     @DisplayName("Fail: no detail object provided")
     public void failNoDetailObjectReturns() {
 
-        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest = new SetCounselDetailCriminalRequest();
+        SetCounselDetailCriminalRequest setCounselDetailCriminalRequest =
+                new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
         setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 
-        List<String> validationErrors = sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("Detail is not valid", StringUtils.join(validationErrors, ","));
-
     }
-
-
 }

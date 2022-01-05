@@ -1,14 +1,9 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
-import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
-import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.soap.SOAPMessage;
@@ -50,7 +45,6 @@ public class SoapConfig extends WsConfigurerAdapter {
 
     private MappingJackson2HttpMessageConverter createMappingJacksonHttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-
 
         converter.setObjectMapper(objectMapper());
         return converter;

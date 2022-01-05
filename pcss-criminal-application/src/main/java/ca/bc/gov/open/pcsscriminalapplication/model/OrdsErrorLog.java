@@ -11,5 +11,4 @@ public class OrdsErrorLog {
     private String method;
     private String exception;
     private Object request;
-
 }

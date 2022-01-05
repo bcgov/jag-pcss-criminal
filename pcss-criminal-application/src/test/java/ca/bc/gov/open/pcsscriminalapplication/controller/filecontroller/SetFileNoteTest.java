@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller.filecontroller;
 
+import static org.mockito.ArgumentMatchers.any;
+
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
@@ -9,6 +11,9 @@ import ca.bc.gov.open.wsdl.pcss.three.FileNoteType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.Collections;
+import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,28 +21,17 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import javax.xml.ws.http.HTTPException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
-
-import static org.mockito.ArgumentMatchers.any;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("SetFileNoteTest Test")
 public class SetFileNoteTest {
 
-    @Mock
-    private RestTemplate restTemplateMock;
+    @Mock private RestTemplate restTemplateMock;
 
-    @Mock
-    private PcssProperties pcssPropertiesMock;
+    @Mock private PcssProperties pcssPropertiesMock;
 
-    @Mock
-    private ObjectMapper objectMapperMock;
+    @Mock private ObjectMapper objectMapperMock;
 
-    @Mock
-    private FileValidator fileValidatorMock;
+    @Mock private FileValidator fileValidatorMock;
 
     private FileController sut;
 
@@ -48,42 +42,53 @@ public class SetFileNoteTest {
 
         Mockito.when(pcssPropertiesMock.getHost()).thenReturn("http://localhost/");
 
-        sut = new FileController(restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock), fileValidatorMock);
-
+        sut =
+                new FileController(
+                        restTemplateMock,
+                        pcssPropertiesMock,
+                        new LogBuilder(objectMapperMock),
+                        fileValidatorMock);
     }
 
     @Test
     @DisplayName("Success: post returns expected object")
     public void successTestReturns() throws JsonProcessingException {
 
-        ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse response = new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse();
+        ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse response =
+                new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse();
         response.setResponseCd("TEST");
         response.setResponseMessageTxt("TEST");
 
         Mockito.when(fileValidatorMock.validateSetFileNote(any())).thenReturn(new ArrayList<>());
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenReturn(ResponseEntity.ok(response));
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+                .thenReturn(ResponseEntity.ok(response));
 
         SetFileNoteResponse result = sut.setFileNote(createTestRequest());
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("TEST", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseMessageTxt());
-        Assertions.assertEquals("TEST", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseCd());
-
+        Assertions.assertEquals(
+                "TEST",
+                result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseMessageTxt());
+        Assertions.assertEquals(
+                "TEST", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseCd());
     }
 
     @Test
     @DisplayName("Fail: post returns validation failure object")
     public void failTestReturns() throws JsonProcessingException {
 
-        Mockito.when(fileValidatorMock.validateSetFileNote(any())).thenReturn(Collections.singletonList("BAD DATA"));
+        Mockito.when(fileValidatorMock.validateSetFileNote(any()))
+                .thenReturn(Collections.singletonList("BAD DATA"));
 
         SetFileNoteResponse result = sut.setFileNote(createTestRequest());
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("BAD DATA", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseMessageTxt());
-        Assertions.assertEquals("-2", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseCd());
-
+        Assertions.assertEquals(
+                "BAD DATA",
+                result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseMessageTxt());
+        Assertions.assertEquals(
+                "-2", result.getSetFileNoteResponse().getSetFileNoteResponse().getResponseCd());
     }
 
     @Test
@@ -92,17 +97,18 @@ public class SetFileNoteTest {
 
         Mockito.when(fileValidatorMock.validateSetFileNote(any())).thenReturn(new ArrayList<>());
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class))).thenThrow(new HTTPException(400));
+        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+                .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.setFileNote(createTestRequest()));
-
     }
 
     private SetFileNote createTestRequest() {
 
         SetFileNote setAppearanceCriminal = new SetFileNote();
         SetFileNoteRequest setAppearanceCriminalRequest = new SetFileNoteRequest();
-        ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest setAppearanceCriminalRequest1 = new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
+        ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest setAppearanceCriminalRequest1 =
+                new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
 
         setAppearanceCriminalRequest1.setRequestAgencyIdentifierId("TEST");
         setAppearanceCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
@@ -116,7 +122,5 @@ public class SetFileNoteTest {
         setAppearanceCriminal.setSetFileNoteRequest(setAppearanceCriminalRequest);
 
         return setAppearanceCriminal;
-
     }
-
 }

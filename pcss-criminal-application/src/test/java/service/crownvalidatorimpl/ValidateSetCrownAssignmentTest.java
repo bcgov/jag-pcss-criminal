@@ -1,15 +1,13 @@
 package service.crownvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
-import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.*;
-
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateSetCrownAssignment Test")
@@ -26,7 +24,6 @@ public class ValidateSetCrownAssignmentTest {
     public void BeforeAll() {
 
         sut = new CrownValidatorImpl();
-
     }
 
     @Test
@@ -57,7 +54,6 @@ public class ValidateSetCrownAssignmentTest {
         List<String> validationErrors = sut.validateSetCrownAssignment(getCrownAssignmentRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
-
     }
 
     @Test
@@ -73,8 +69,8 @@ public class ValidateSetCrownAssignmentTest {
         List<String> validationErrors = sut.validateSetCrownAssignment(getCrownAssignmentRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
-        Assertions.assertEquals("CrownAssignment is not valid", StringUtils.join(validationErrors, ","));
-
+        Assertions.assertEquals(
+                "CrownAssignment is not valid", StringUtils.join(validationErrors, ","));
     }
 
     @Test
@@ -105,8 +101,8 @@ public class ValidateSetCrownAssignmentTest {
         List<String> validationErrors = sut.validateSetCrownAssignment(getCrownAssignmentRequest);
 
         Assertions.assertEquals(15, validationErrors.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid,CrownAssignment AssigningPaasAgencyId at index 1 is not valid,CrownAssignment AssigningPaasPartId at index 1 is not valid,CrownAssignment AssigningPaasSeqNo at index 1 is not valid,CrownAssignment AssignmentDt at index 1 is not valid,CrownAssignment AssignmentEndDt at index 1 is not valid,CrownAssignment OperationModeCd at index 1 is not valid,CrownAssignment PaasAgencyId at index 1 is not valid,CrownAssignment PaasPartId at index 1 is not valid,CrownAssignment PaasSeqNo at index 1 is not valid,CrownAssignment WorkAssignmentCcn at index 1 is not valid,CrownAssignment WorkAssignmentId at index 1 is not valid", StringUtils.join(validationErrors, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid,CrownAssignment AssigningPaasAgencyId at index 1 is not valid,CrownAssignment AssigningPaasPartId at index 1 is not valid,CrownAssignment AssigningPaasSeqNo at index 1 is not valid,CrownAssignment AssignmentDt at index 1 is not valid,CrownAssignment AssignmentEndDt at index 1 is not valid,CrownAssignment OperationModeCd at index 1 is not valid,CrownAssignment PaasAgencyId at index 1 is not valid,CrownAssignment PaasPartId at index 1 is not valid,CrownAssignment PaasSeqNo at index 1 is not valid,CrownAssignment WorkAssignmentCcn at index 1 is not valid,CrownAssignment WorkAssignmentId at index 1 is not valid",
+                StringUtils.join(validationErrors, ","));
     }
-
 }
