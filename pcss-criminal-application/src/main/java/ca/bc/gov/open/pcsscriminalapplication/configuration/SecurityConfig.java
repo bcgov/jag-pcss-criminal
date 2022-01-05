@@ -20,7 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final SecurityProperties securityProperties;
     private final MyBasicAuthenticationEntryPoint authenticationEntryPoint;
 
-    public SecurityConfig(SecurityProperties securityProperties, MyBasicAuthenticationEntryPoint authenticationEntryPoint) {
+    public SecurityConfig(
+            SecurityProperties securityProperties,
+            MyBasicAuthenticationEntryPoint authenticationEntryPoint) {
         this.securityProperties = securityProperties;
         this.authenticationEntryPoint = authenticationEntryPoint;
     }

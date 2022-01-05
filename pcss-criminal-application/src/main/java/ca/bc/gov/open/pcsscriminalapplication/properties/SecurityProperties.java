@@ -11,5 +11,4 @@ public class SecurityProperties {
 
     private String username;
     private String password;
-
 }

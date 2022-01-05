@@ -1,12 +1,10 @@
 package service.filevalidationimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalRequest;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateGetFileDetailCriminal Test")
@@ -23,6 +21,16 @@ public class ValidateGetFileDetailCriminalTest {
     public void BeforeAll() {
 
         sut = new FileValidatorImpl();
+    }
+
+    @Test
+    @DisplayName("Success: null returns empty")
+    public void nullTestReturnsEmpty() {
+
+        List<String> result = sut.validateGetFileDetailCriminal(null);
+
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("Empty request is invalid", result.get(0));
 
     }
 
@@ -30,7 +38,8 @@ public class ValidateGetFileDetailCriminalTest {
     @DisplayName("Success: all validations succeed")
     public void successTestReturns() {
 
-        GetFileDetailCriminalRequest getFileDetailCriminalRequest = new GetFileDetailCriminalRequest();
+        GetFileDetailCriminalRequest getFileDetailCriminalRequest =
+                new GetFileDetailCriminalRequest();
 
         getFileDetailCriminalRequest.setRequestDtm(DATE);
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
@@ -41,14 +50,14 @@ public class ValidateGetFileDetailCriminalTest {
         List<String> result = sut.validateGetFileDetailCriminal(getFileDetailCriminalRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
     @DisplayName("Fail: all validations fail")
     public void failTestReturns() {
 
-        GetFileDetailCriminalRequest getFileDetailCriminalRequest = new GetFileDetailCriminalRequest();
+        GetFileDetailCriminalRequest getFileDetailCriminalRequest =
+                new GetFileDetailCriminalRequest();
 
         getFileDetailCriminalRequest.setRequestDtm(BAD_DATE);
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
@@ -59,8 +68,8 @@ public class ValidateGetFileDetailCriminalTest {
         List<String> result = sut.validateGetFileDetailCriminal(getFileDetailCriminalRequest);
 
         Assertions.assertEquals(4, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid",
+                StringUtils.join(result, ","));
     }
-
 }
