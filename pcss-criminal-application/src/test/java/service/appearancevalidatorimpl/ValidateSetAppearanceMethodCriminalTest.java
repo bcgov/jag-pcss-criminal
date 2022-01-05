@@ -24,7 +24,6 @@ public class ValidateSetAppearanceMethodCriminalTest {
         sut = new AppearanceValidatorImpl();
     }
 
-
     @Test
     @DisplayName("Success: null returns empty")
     public void nullTestReturnsEmpty() {
@@ -33,7 +32,6 @@ public class ValidateSetAppearanceMethodCriminalTest {
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("Empty request is invalid", result.get(0));
-
     }
 
     @Test

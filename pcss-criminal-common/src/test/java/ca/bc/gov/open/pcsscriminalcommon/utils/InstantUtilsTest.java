@@ -1,24 +1,21 @@
 package ca.bc.gov.open.pcsscriminalcommon.utils;
 
 import com.fasterxml.jackson.core.JsonParser;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.TimeZone;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.TimeZone;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Instant Utils Test Suite")
 public class InstantUtilsTest {
 
-    @Mock
-    JsonParser jsonParserMock;
+    @Mock JsonParser jsonParserMock;
 
     @BeforeAll
     public void beforeAll() {
@@ -26,7 +23,6 @@ public class InstantUtilsTest {
         MockitoAnnotations.openMocks(this);
 
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-
     }
 
     @Test
@@ -39,7 +35,6 @@ public class InstantUtilsTest {
         String result = InstantUtils.convert(testDateTime.toInstant(ZoneOffset.UTC));
 
         Assertions.assertEquals("16-Apr-2021", result);
-
     }
 
     @Test
@@ -49,7 +44,6 @@ public class InstantUtilsTest {
         Mockito.when(jsonParserMock.getText()).thenReturn("GARBAGE");
 
         Assertions.assertNull(InstantUtils.convert(null));
-
     }
 
     @Test
@@ -62,9 +56,5 @@ public class InstantUtilsTest {
         String result = InstantUtils.print(testDateTime.toInstant(ZoneOffset.UTC));
 
         Assertions.assertEquals("2021-04-17T00:00:00", result);
-
     }
-
-
-
 }
