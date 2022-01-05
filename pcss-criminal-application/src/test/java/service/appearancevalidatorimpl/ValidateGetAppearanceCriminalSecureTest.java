@@ -1,14 +1,11 @@
 package service.appearancevalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
-import ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.three.YesNoType;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateGetAppearanceCriminalSecure Test")
@@ -23,15 +20,14 @@ public class ValidateGetAppearanceCriminalSecureTest {
     public void BeforeAll() {
 
         sut = new AppearanceValidatorImpl();
-
     }
-
 
     @Test
     @DisplayName("Success: all validations succeed")
     public void successTestReturns() {
 
-        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest = new GetAppearanceCriminalSecureRequest();
+        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest =
+                new GetAppearanceCriminalSecureRequest();
         getAppearanceCriminalSecureRequest.setAppearanceId(VALUE);
         getAppearanceCriminalSecureRequest.setApplicationCd(VALUE);
         getAppearanceCriminalSecureRequest.setFutureYN(YesNoType.Y);
@@ -41,17 +37,18 @@ public class ValidateGetAppearanceCriminalSecureTest {
         getAppearanceCriminalSecureRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalSecureRequest.setRequestPartId(VALUE);
 
-        List<String> result = sut.validateGetAppearanceCriminalSecure(getAppearanceCriminalSecureRequest);
+        List<String> result =
+                sut.validateGetAppearanceCriminalSecure(getAppearanceCriminalSecureRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
     @DisplayName("Fail: all validations fail")
     public void failTestReturns() {
 
-        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest = new GetAppearanceCriminalSecureRequest();
+        GetAppearanceCriminalSecureRequest getAppearanceCriminalSecureRequest =
+                new GetAppearanceCriminalSecureRequest();
         getAppearanceCriminalSecureRequest.setAppearanceId(LONG_STRING);
         getAppearanceCriminalSecureRequest.setApplicationCd(VALUE);
         getAppearanceCriminalSecureRequest.setFutureYN(YesNoType.Y);
@@ -61,11 +58,12 @@ public class ValidateGetAppearanceCriminalSecureTest {
         getAppearanceCriminalSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalSecureRequest.setRequestPartId(LONG_STRING);
 
-        List<String> result = sut.validateGetAppearanceCriminalSecure(getAppearanceCriminalSecureRequest);
+        List<String> result =
+                sut.validateGetAppearanceCriminalSecure(getAppearanceCriminalSecureRequest);
 
         Assertions.assertEquals(5, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AppearanceId is not valid,JustinNo is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AppearanceId is not valid,JustinNo is not valid",
+                StringUtils.join(result, ","));
     }
-
 }

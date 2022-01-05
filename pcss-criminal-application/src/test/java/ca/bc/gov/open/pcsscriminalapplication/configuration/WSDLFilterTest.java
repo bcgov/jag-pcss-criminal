@@ -1,15 +1,14 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
-import org.junit.jupiter.api.*;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
+import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("WSDL Filter Test Suite")
@@ -17,14 +16,11 @@ public class WSDLFilterTest {
 
     private WSDLFilter sut;
 
-    @Mock
-    HttpServletRequest requestMock;
+    @Mock HttpServletRequest requestMock;
 
-    @Mock
-    ServletResponse responseMock;
+    @Mock ServletResponse responseMock;
 
-    @Mock
-    FilterChain chainMock;
+    @Mock FilterChain chainMock;
 
     @BeforeAll
     public void beforeAll() {

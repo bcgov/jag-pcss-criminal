@@ -1,13 +1,11 @@
 package service.filevalidationimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest;
 import ca.bc.gov.open.wsdl.pcss.three.FileNoteType;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateSetFileNoteTest Test")
@@ -24,7 +22,6 @@ public class ValidateSetFileNoteTest {
     public void BeforeAll() {
 
         sut = new FileValidatorImpl();
-
     }
 
     @Test
@@ -43,7 +40,6 @@ public class ValidateSetFileNoteTest {
         List<String> result = sut.validateSetFileNote(setFileNoteRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
@@ -62,8 +58,8 @@ public class ValidateSetFileNoteTest {
         List<String> result = sut.validateSetFileNote(setFileNoteRequest);
 
         Assertions.assertEquals(4, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,JustinNo is not valid",
+                StringUtils.join(result, ","));
     }
-
 }

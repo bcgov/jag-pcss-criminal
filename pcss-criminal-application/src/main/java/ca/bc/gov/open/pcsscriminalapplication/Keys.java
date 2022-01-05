@@ -3,26 +3,30 @@ package ca.bc.gov.open.pcsscriminalapplication;
 public class Keys {
 
     private Keys() {
-        //Empty Constructor
+        // Empty Constructor
     }
 
     public static final String SOAP_NAMESPACE = "http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1";
 
-    //Methods
+    // Methods
     public static final String SOAP_METHOD_APPEARANCE = "getAppearanceCriminal";
     public static final String SOAP_METHOD_APPEARANCE_SECURE = "getAppearanceCriminalSecure";
-    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD = "getAppearanceCriminalApprMethod";
-    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE = "getAppearanceCriminalApprMethodSecure";
+    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD =
+            "getAppearanceCriminalApprMethod";
+    public static final String SOAP_METHOD_APPEARANCE_APPR_METHOD_SECURE =
+            "getAppearanceCriminalApprMethodSecure";
     public static final String SOAP_METHOD_APPEARANCE_RESOURCE = "getAppearanceCriminalResource";
     public static final String SOAP_METHOD_APPEARANCE_COUNT = "getAppearanceCriminalCount";
-    public static final String SOAP_METHOD_APPEARANCE_COUNT_SECURE = "getAppearanceCriminalCountSecure";
+    public static final String SOAP_METHOD_APPEARANCE_COUNT_SECURE =
+            "getAppearanceCriminalCountSecure";
     public static final String SOAP_METHOD_SET_APPEARANCE = "setAppearanceCriminal";
     public static final String SOAP_METHOD_SET_APPEARANCE_METHOD = "setAppearanceMethodCriminal";
     public static final String SOAP_METHOD_FILE_CLOSED = "getClosedFile";
     public static final String SOAP_METHOD_FILE_DETAIL = "getFileDetailCriminal";
     public static final String SOAP_METHOD_FILE_DETAIL_SECURE = "getFileDetailCriminalSecure";
     public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
-    public static final String SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL = "setHearingRestrictionCriminal";
+    public static final String SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL =
+            "setHearingRestrictionCriminal";
     public static final String SOAP_METHOD_HEALTH = "getHealth";
     public static final String SOAP_METHOD_PING = "getPing";
     public static final String SOAP_METHOD_PERSONNEL_AVAILABILITY = "getPersonnelAvailability";
@@ -35,12 +39,12 @@ public class Keys {
     public static final String SOAP_METHOD_SET_CROWN_ASSIGNMENT = "setCrownAssignment";
     public static final String SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL = "setCounselDetailCriminal";
 
-    //Messages
+    // Messages
     public static final String DATE_ERROR_MESSAGE = "Bad date format or missing date received";
     public static final String ORDS_ERROR_MESSAGE = "Error received from ORDS";
     public static final String VALIDATION_ERROR_MESSAGE = "Invalid data received";
 
-    //Query Params
+    // Query Params
     public static final String QUERY_AGENT_ID = "rqstagenid";
     public static final String QUERY_PART_ID = "rqstpartid";
     public static final String QUERY_PART_ID_SIMPLE = "partid";
@@ -62,7 +66,7 @@ public class Keys {
     public static final String QUERY_PART_ID_LIST = "partidlist";
     public static final String QUERY_SYNC_TO_DATE = "procuptodtm";
 
-    //Endpoints
+    // Endpoints
     public static final String ORDS_APPEARANCE = "appearance";
     public static final String ORDS_APPEARANCE_SECURE = "secure/appearance";
     public static final String ORDS_APPEARANCE_METHOD = "appearance/method";
@@ -86,13 +90,12 @@ public class Keys {
     public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
     public static final String ORDS_FILE_NOTE = "file/note";
 
-    //Logs
+    // Logs
     public static final String LOG_RECEIVED = "{}: received";
     public static final String LOG_ORDS = "{}: making ORDS request";
     public static final String LOG_SUCCESS = "{}: successful";
     public static final String LOG_FAILED_VALIDATION = "{}: request object validation failed";
 
-    //Response Codes
+    // Response Codes
     public static final Integer FAILED_VALIDATION = -2;
-
 }

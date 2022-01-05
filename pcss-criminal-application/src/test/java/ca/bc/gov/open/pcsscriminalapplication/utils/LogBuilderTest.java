@@ -14,7 +14,6 @@ public class LogBuilderTest {
     public void beforeAll() {
 
         sut = new LogBuilder(new ObjectMapper());
-
     }
 
     @Test
@@ -23,9 +22,8 @@ public class LogBuilderTest {
 
         String result = sut.writeLogMessage("TEST", "TEST", null, "TEST");
 
-        Assertions.assertEquals("{\"message\":\"TEST\",\"method\":\"TEST\",\"exception\":\"TEST\",\"request\":null}", result);
-
+        Assertions.assertEquals(
+                "{\"message\":\"TEST\",\"method\":\"TEST\",\"exception\":\"TEST\",\"request\":null}",
+                result);
     }
-
-
 }

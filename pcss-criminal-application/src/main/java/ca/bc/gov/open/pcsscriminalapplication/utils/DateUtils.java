@@ -1,17 +1,16 @@
 package ca.bc.gov.open.pcsscriminalapplication.utils;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 public class DateUtils {
 
     private DateUtils() {
-        //empty constructor
+        // empty constructor
     }
 
     public static String formatDate(String inDate) {
@@ -28,7 +27,6 @@ public class DateUtils {
         }
 
         return inDate;
-
     }
 
     public static String formatORDSDate(String inDate) {
@@ -45,7 +43,5 @@ public class DateUtils {
         }
 
         return inDate;
-
     }
-
 }

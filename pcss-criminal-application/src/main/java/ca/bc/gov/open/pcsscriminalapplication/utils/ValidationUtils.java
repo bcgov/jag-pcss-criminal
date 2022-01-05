@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ValidationUtils {
 
     private ValidationUtils() {
-        //empty constructor
+        // empty constructor
     }
 
     public static boolean checkAgencyIdentifierTypeForErrors(String agencyIdentifierId) {
@@ -39,5 +39,4 @@ public class ValidationUtils {
     public static boolean checkCourtRoomTypeForErrors(String courtRoomType) {
         return (courtRoomType == null || courtRoomType.length() > 6);
     }
-
 }

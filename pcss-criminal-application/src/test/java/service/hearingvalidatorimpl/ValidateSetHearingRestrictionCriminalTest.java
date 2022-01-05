@@ -1,12 +1,10 @@
 package service.hearingvalidatorimpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
-import ca.bc.gov.open.wsdl.pcss.three.HearingRestrictionType;
-import java.util.List;
-
-import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.HearingValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
+import ca.bc.gov.open.wsdl.pcss.three.HearingRestrictionType;
+import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -23,14 +21,14 @@ public class ValidateSetHearingRestrictionCriminalTest {
     public void BeforeAll() {
 
         sut = new HearingValidatorImpl();
-
     }
 
     @Test
     @DisplayName("Success: all validations succeed")
     public void successTestReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -43,33 +41,36 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
-
     }
 
     @Test
     @DisplayName("Success: optional properties set to null")
     public void successNullOptionalPropertiesReturns() {
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertTrue(validationErrors.isEmpty());
     }
-
 
     @Test
     @DisplayName("Fail: agency identifier id failed")
     public void failAgencyIdentifierIdFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
-        setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("000000000000000000000000");
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
+        setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId(
+                "000000000000000000000000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
         setHearingRestrictionCriminalRequest.setOperationModeCd(OperationModeType.ADD);
@@ -81,18 +82,19 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("RequestAgencyIdentifierId is not valid", validationErrors.get(0));
-
     }
 
     @Test
     @DisplayName("Fail: request part id failed")
     public void failRequestPartIdFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000000000000000000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -105,18 +107,19 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("RequestPartId is not valid", validationErrors.get(0));
-
     }
 
     @Test
     @DisplayName("Fail: request dtm failed")
     public void failRequestDtmFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2001-DEC-26");
@@ -129,18 +132,19 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("RequestDtm is not valid", validationErrors.get(0));
-
     }
 
     @Test
     @DisplayName("Fail: hearing restriction id failed")
     public void failHearingRestrictionIdFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -153,18 +157,19 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("HearingRestrictionId is not valid", validationErrors.get(0));
-
     }
 
     @Test
     @DisplayName("Fail: adjudicator part id failed")
     public void failAdjudicatorPartIdFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -177,7 +182,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("AdjudicatorPartId is not valid", validationErrors.get(0));
@@ -187,7 +193,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
     @DisplayName("Fail: justin no failed")
     public void failJustinNoFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -200,7 +207,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("JustinNo is not valid", validationErrors.get(0));
@@ -210,7 +218,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
     @DisplayName("Fail: part id failed")
     public void failPartIdFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -223,7 +232,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("PartId is not valid", validationErrors.get(0));
@@ -233,7 +243,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
     @DisplayName("Fail: prof seq no failed")
     public void failProfSeqNoFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -246,7 +257,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("00000000000000000000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("ProfSeqNo is not valid", validationErrors.get(0));
@@ -256,7 +268,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
     @DisplayName("Fail: hearing restriction ccn failed")
     public void failHearingRestrictionCcnFailedReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -269,7 +282,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000000000000000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("HearingRestrictionCcn is not valid", validationErrors.get(0));
@@ -279,7 +293,8 @@ public class ValidateSetHearingRestrictionCriminalTest {
     @DisplayName("Fail: operation mode cd required")
     public void failOperationModeCdRequiredReturns() {
 
-        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest = new SetHearingRestrictionCriminalRequest();
+        SetHearingRestrictionCriminalRequest setHearingRestrictionCriminalRequest =
+                new SetHearingRestrictionCriminalRequest();
         setHearingRestrictionCriminalRequest.setRequestAgencyIdentifierId("0000");
         setHearingRestrictionCriminalRequest.setRequestPartId("0000");
         setHearingRestrictionCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
@@ -291,11 +306,10 @@ public class ValidateSetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest.setProfSeqNo("000");
         setHearingRestrictionCriminalRequest.setHearingRestrictionCcn("000");
 
-        List<String> validationErrors = sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
+        List<String> validationErrors =
+                sut.validateSetHearingRestrictionCriminal(setHearingRestrictionCriminalRequest);
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("OperationModeCd is not valid", validationErrors.get(0));
-
     }
-
 }

@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PcssCriminalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PcssCriminalApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(PcssCriminalApplication.class, args);
+    }
 }

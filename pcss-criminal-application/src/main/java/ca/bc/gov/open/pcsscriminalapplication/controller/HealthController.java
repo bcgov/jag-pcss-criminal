@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
+import static ca.bc.gov.open.pcsscriminalapplication.Keys.*;
+
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
@@ -21,9 +23,6 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import static ca.bc.gov.open.pcsscriminalapplication.Keys.*;
-
-
 @Endpoint
 @Slf4j
 @EnableConfigurationProperties(PcssProperties.class)
@@ -33,7 +32,8 @@ public class HealthController {
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
 
-    public HealthController(RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
+    public HealthController(
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
@@ -43,7 +43,8 @@ public class HealthController {
     @ResponsePayload
     public GetHealthResponse getHealth(@RequestPayload GetHealth getHealth)
             throws JsonProcessingException, ORDSException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + ORDS_HEALTH);
+        UriComponentsBuilder builder =
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + ORDS_HEALTH);
 
         try {
             HttpEntity<GetHealthResponse> resp =
@@ -55,7 +56,12 @@ public class HealthController {
 
             return resp.getBody();
         } catch (Exception ex) {
-            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, SOAP_METHOD_HEALTH, getHealth, ex.getMessage()));
+            log.error(
+                    logBuilder.writeLogMessage(
+                            Keys.ORDS_ERROR_MESSAGE,
+                            SOAP_METHOD_HEALTH,
+                            getHealth,
+                            ex.getMessage()));
             throw new ORDSException();
         }
     }
@@ -63,7 +69,8 @@ public class HealthController {
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_PING)
     @ResponsePayload
     public GetPingResponse getPing(@RequestPayload GetPing getPing) throws JsonProcessingException {
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PING);
+        UriComponentsBuilder builder =
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PING);
         try {
             HttpEntity<GetPingResponse> resp =
                     restTemplate.exchange(
@@ -74,7 +81,12 @@ public class HealthController {
 
             return resp.getBody();
         } catch (Exception ex) {
-            log.error(logBuilder.writeLogMessage(Keys.ORDS_ERROR_MESSAGE, Keys.SOAP_METHOD_PING, getPing, ex.getMessage()));
+            log.error(
+                    logBuilder.writeLogMessage(
+                            Keys.ORDS_ERROR_MESSAGE,
+                            Keys.SOAP_METHOD_PING,
+                            getPing,
+                            ex.getMessage()));
             throw new ORDSException();
         }
     }

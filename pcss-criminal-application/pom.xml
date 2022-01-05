@@ -15,7 +15,7 @@
 	<description>PCSS Criminal Application</description>
 	<properties>
 		<java.version>11</java.version>
-		<log4j2.version>2.17.0</log4j2.version>
+		<log4j2.version>2.17.1</log4j2.version>
 	</properties>
 
 	<repositories>
@@ -115,7 +115,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-core</artifactId>
-			<version>1.2.3</version>
+			<version>1.2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -283,7 +283,7 @@
 					<!-- define a language-specific format -->
 					<java>
 						<googleJavaFormat>
-							<version>11</version>
+							<version>1.8</version>
 							<style>AOSP</style>
 						</googleJavaFormat>
 					</java>

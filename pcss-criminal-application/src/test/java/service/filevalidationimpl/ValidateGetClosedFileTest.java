@@ -1,17 +1,10 @@
 package service.filevalidationimpl;
 
-
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
-import ca.bc.gov.open.wsdl.pcss.one.Detail3;
-import ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest;
-import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
 import ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
-
-import java.util.Collections;
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateGetClosedFile Test")
@@ -28,9 +21,7 @@ public class ValidateGetClosedFileTest {
     public void BeforeAll() {
 
         sut = new FileValidatorImpl();
-
     }
-
 
     @Test
     @DisplayName("Success: all validations succeed")
@@ -48,7 +39,6 @@ public class ValidateGetClosedFileTest {
         List<String> result = sut.validateGetClosedFile(getClosedFileRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
@@ -67,8 +57,8 @@ public class ValidateGetClosedFileTest {
         List<String> result = sut.validateGetClosedFile(getClosedFileRequest);
 
         Assertions.assertEquals(6, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid,FromApprDt is not valid,ToApprDt is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid,FromApprDt is not valid,ToApprDt is not valid",
+                StringUtils.join(result, ","));
     }
-
 }

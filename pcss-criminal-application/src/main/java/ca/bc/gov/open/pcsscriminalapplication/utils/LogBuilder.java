@@ -14,15 +14,11 @@ public class LogBuilder {
         this.objectMapper = objectMapper;
     }
 
-    public String writeLogMessage(String errorMessage, String method, Object requestObject, String exception) throws JsonProcessingException {
+    public String writeLogMessage(
+            String errorMessage, String method, Object requestObject, String exception)
+            throws JsonProcessingException {
 
         return objectMapper.writeValueAsString(
-                new OrdsErrorLog(
-                        errorMessage,
-                        method,
-                        exception,
-                        requestObject));
-
+                new OrdsErrorLog(errorMessage, method, exception, requestObject));
     }
-
 }

@@ -1,13 +1,11 @@
 package service.personnelvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.PersonnelValidatorImpl;
-import ca.bc.gov.open.pcsscriminalcommon.utils.InstantUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OfficerSearchType;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("ValidateGetPersonnelSearch Test")
@@ -24,7 +22,6 @@ public class ValidateGetPersonnelSearchTest {
     public void BeforeAll() {
 
         sut = new PersonnelValidatorImpl();
-
     }
 
     @Test
@@ -42,7 +39,6 @@ public class ValidateGetPersonnelSearchTest {
         List<String> result = sut.validateGetPersonnelSearch(getPersonnelSearchRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
@@ -58,8 +54,8 @@ public class ValidateGetPersonnelSearchTest {
         List<String> result = sut.validateGetPersonnelSearch(getPersonnelSearchRequest);
 
         Assertions.assertEquals(6, result.size());
-        Assertions.assertEquals("RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid,SearchTypeCd is not valid,SearchTxt is not valid", StringUtils.join(result, ","));
-
+        Assertions.assertEquals(
+                "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AgencyId is not valid,SearchTypeCd is not valid,SearchTxt is not valid",
+                StringUtils.join(result, ","));
     }
-
 }
