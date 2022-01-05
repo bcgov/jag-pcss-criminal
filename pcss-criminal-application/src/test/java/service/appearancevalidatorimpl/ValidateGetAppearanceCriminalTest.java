@@ -20,7 +20,6 @@ public class ValidateGetAppearanceCriminalTest {
     public void BeforeAll() {
 
         sut = new AppearanceValidatorImpl();
-
     }
 
     @Test
@@ -31,7 +30,6 @@ public class ValidateGetAppearanceCriminalTest {
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("Empty request is invalid", result.get(0));
-
     }
 
     @Test
@@ -51,7 +49,6 @@ public class ValidateGetAppearanceCriminalTest {
         List<String> result = sut.validateGetAppearanceCriminal(getAppearanceCriminalRequest);
 
         Assertions.assertTrue(result.isEmpty());
-
     }
 
     @Test
@@ -74,6 +71,5 @@ public class ValidateGetAppearanceCriminalTest {
         Assertions.assertEquals(
                 "RequestAgencyIdentifierId is not valid,RequestPartId is not valid,RequestDtm is not valid,AppearanceId is not valid,JustinNo is not valid",
                 StringUtils.join(result, ","));
-
     }
 }

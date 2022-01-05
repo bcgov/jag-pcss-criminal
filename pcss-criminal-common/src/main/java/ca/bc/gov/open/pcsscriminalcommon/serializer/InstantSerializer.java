@@ -3,13 +3,12 @@ package ca.bc.gov.open.pcsscriminalcommon.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class InstantSerializer extends JsonSerializer<Instant> {
@@ -23,5 +22,4 @@ public class InstantSerializer extends JsonSerializer<Instant> {
                         .format(value);
         gen.writeString(out);
     }
-
 }

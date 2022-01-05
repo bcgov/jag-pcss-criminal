@@ -30,7 +30,6 @@ public class ValidateGetAppearanceCriminalSecureTest {
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("Empty request is invalid", result.get(0));
-
     }
 
     @Test

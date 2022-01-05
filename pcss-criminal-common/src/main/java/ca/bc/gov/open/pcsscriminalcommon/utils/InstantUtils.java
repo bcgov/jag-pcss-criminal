@@ -1,15 +1,10 @@
 package ca.bc.gov.open.pcsscriminalcommon.utils;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class InstantUtils {
@@ -28,5 +23,4 @@ public class InstantUtils {
         String first = xml.toString();
         return first.substring(0, first.length() - 1);
     }
-
 }
