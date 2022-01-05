@@ -24,6 +24,18 @@ public class ValidateSetAppearanceMethodCriminalTest {
         sut = new AppearanceValidatorImpl();
     }
 
+
+    @Test
+    @DisplayName("Success: null returns empty")
+    public void nullTestReturnsEmpty() {
+
+        List<String> result = sut.validateSetAppearanceMethodCriminal(null);
+
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("Empty request is invalid", result.get(0));
+
+    }
+
     @Test
     @DisplayName("Success: all validations succeed")
     public void successTestReturns() {
