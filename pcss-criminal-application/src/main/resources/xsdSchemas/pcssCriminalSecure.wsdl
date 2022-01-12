@@ -599,7 +599,7 @@
   </wsdl:binding>
   <wsdl:service name="JusticePCSSCriminal.wsProvider.pcssCriminalSecure">
     <wsdl:port name="JusticePCSSCriminal_wsProvider_pcssCriminalSecure_Port" binding="tns1:JusticePCSSCriminal_wsProvider_pcssCriminalSecure_Binder">
-      <soap12:address location="http://reeks.bcgov:5555/criminal/JusticePCSSCriminal.wsProvider.pcssCriminalSecure/JusticePCSSCriminal_wsProvider_pcssCriminalSecure_Port"/>
+      <soap12:address location="http://reeks.bcgov:5555/ws/JusticePCSSCriminal.wsProvider.pcssCriminalSecure/JusticePCSSCriminal_wsProvider_pcssCriminalSecure_Port"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
