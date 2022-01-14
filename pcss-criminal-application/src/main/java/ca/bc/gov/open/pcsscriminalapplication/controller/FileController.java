@@ -76,9 +76,10 @@ public class FileController {
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CLOSED_FILE)
                         .queryParam(
-                                Keys.QUERY_AGENCY_IDENTIFIER,
-                                getClosedFileRequest.getAgencyId())
-                        .queryParam(Keys.QUERY_AGENT_ID, getClosedFileRequest.getRequestAgencyIdentifierId())
+                                Keys.QUERY_AGENCY_IDENTIFIER, getClosedFileRequest.getAgencyId())
+                        .queryParam(
+                                Keys.QUERY_AGENT_ID,
+                                getClosedFileRequest.getRequestAgencyIdentifierId())
                         .queryParam(Keys.QUERY_PART_ID, getClosedFileRequest.getRequestPartId())
                         .queryParam(Keys.QUERY_REQUEST_DATE, getClosedFileRequest.getRequestDtm())
                         .queryParam(Keys.QUERY_FROM_DATE, getClosedFileRequest.getFromApprDt())
