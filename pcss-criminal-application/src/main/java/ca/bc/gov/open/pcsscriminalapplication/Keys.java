@@ -45,7 +45,7 @@ public class Keys {
     public static final String VALIDATION_ERROR_MESSAGE = "Invalid data received";
 
     // Query Params
-    public static final String QUERY_AGENT_ID = "agenid";
+    public static final String QUERY_AGENT_ID = "rqstagenid";
     public static final String QUERY_PART_ID = "rqstpartid";
     public static final String QUERY_PART_ID_SIMPLE = "partid";
     public static final String QUERY_REQUEST_DATE = "requestdtm";
@@ -55,7 +55,7 @@ public class Keys {
     public static final String QUERY_APPEARANCE_ID = "apprid";
     public static final String QUERY_APPLICATION_CD = "applicationcd";
     public static final String QUERY_PERSON_CD = "parttypecd";
-    public static final String QUERY_AGENCY_IDENTIFIER = "rqstagenid";
+    public static final String QUERY_AGENCY_IDENTIFIER = "agenid";
     public static final String QUERY_FROM_DATE = "fromdate";
     public static final String QUERY_TO_DATE = "todate";
     public static final String QUERY_AVAILABILITY_DATE = "shiftdt";
