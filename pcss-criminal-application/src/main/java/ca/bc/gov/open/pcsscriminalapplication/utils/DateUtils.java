@@ -17,13 +17,20 @@ public class DateUtils {
 
         if (StringUtils.isBlank(inDate)) return null;
 
-        SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
         try {
+            SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
             Date date = dt.parse(inDate);
             SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
             return dt1.format(date);
         } catch (Exception e) {
-            log.error("Invalid date returned from ords");
+            try {
+                SimpleDateFormat dt = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+                Date date1 = dt.parse(inDate);
+                SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+                return dt1.format(date1);
+            } catch (Exception e1) {
+                log.error("Invalid date returned from ords");
+            }
         }
 
         return inDate;
