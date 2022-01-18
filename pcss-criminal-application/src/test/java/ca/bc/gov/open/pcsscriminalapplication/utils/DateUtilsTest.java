@@ -30,7 +30,7 @@ public class DateUtilsTest {
     public void testOrdsValidFormat() {
 
         Assertions.assertEquals(
-                "2013-03-25 13:04:22.1", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
+                "2013-03-25 13:04:22", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
     }
 
     @Test
