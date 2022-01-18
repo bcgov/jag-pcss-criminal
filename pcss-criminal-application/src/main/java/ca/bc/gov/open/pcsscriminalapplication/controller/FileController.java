@@ -305,7 +305,7 @@ public class FileController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse> response =
                     restTemplate.exchange(
-                            builder.build().encode().toUri(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse
