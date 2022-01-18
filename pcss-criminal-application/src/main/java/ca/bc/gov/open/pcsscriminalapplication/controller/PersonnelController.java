@@ -296,10 +296,10 @@ public class PersonnelController {
                     .getAssignment()
                     .forEach(
                             ((Consumer<Assignment>)
-                                    assignment ->
-                                            assignment.setCreateDt(
-                                                    DateUtils.formatDate(
-                                                            assignment.getStartDt())))
+                                            assignment ->
+                                                    assignment.setCreateDt(
+                                                            DateUtils.formatDate(
+                                                                    assignment.getStartDt())))
                                     .andThen(
                                             assignment ->
                                                     assignment.setStartDt(
