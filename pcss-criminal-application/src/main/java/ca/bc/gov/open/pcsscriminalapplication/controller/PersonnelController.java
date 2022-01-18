@@ -6,6 +6,7 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.wsdl.pcss.one.Assignment;
 import ca.bc.gov.open.wsdl.pcss.one.Commitment;
 import ca.bc.gov.open.wsdl.pcss.one.Personnel;
 import ca.bc.gov.open.wsdl.pcss.two.*;
@@ -288,6 +289,27 @@ public class PersonnelController {
                                                     personnel.setCreatedDt(
                                                             DateUtils.formatDate(
                                                                     personnel.getCreatedDt()))));
+        }
+
+        if (getPersonnelAvailDetailResponseInner.getAssignment() != null) {
+            getPersonnelAvailDetailResponseInner
+                    .getAssignment()
+                    .forEach(
+                            ((Consumer<Assignment>)
+                                    assignment ->
+                                            assignment.setCreateDt(
+                                                    DateUtils.formatDate(
+                                                            assignment.getStartDt())))
+                                    .andThen(
+                                            assignment ->
+                                                    assignment.setStartDt(
+                                                            DateUtils.formatDate(
+                                                                    assignment.getStartDt())))
+                                    .andThen(
+                                            assignment ->
+                                                    assignment.setEndDt(
+                                                            DateUtils.formatDate(
+                                                                    assignment.getEndDt()))));
         }
 
         GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse =
