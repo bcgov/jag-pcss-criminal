@@ -338,7 +338,7 @@ public class AppearanceController {
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse>
                     response =
                             restTemplate.exchange(
-                                    builder.toUriString(),
+                                    builder.build().toUri(),
                                     HttpMethod.GET,
                                     new HttpEntity<>(new HttpHeaders()),
                                     ca.bc.gov.open.wsdl.pcss.secure.one
@@ -549,7 +549,7 @@ public class AppearanceController {
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse>
                     response =
                             restTemplate.exchange(
-                                    builder.toUriString(),
+                                    builder.build().toUri(),
                                     HttpMethod.GET,
                                     new HttpEntity<>(new HttpHeaders()),
                                     ca.bc.gov.open.wsdl.pcss.secure.one
@@ -784,7 +784,7 @@ public class AppearanceController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse

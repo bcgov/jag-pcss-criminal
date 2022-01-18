@@ -11,6 +11,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.one.ApprCount;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -63,7 +64,7 @@ public class GetAppearanceCriminalCountSecureTest {
         response.setResponseCd("TEST");
         response.setApprCount(Collections.singletonList(new ApprCount()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetAppearanceCriminalCountSecureResponse result =

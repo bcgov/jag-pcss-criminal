@@ -29,13 +29,15 @@ public class DateUtilsTest {
     @DisplayName("Test ORDs date format valid")
     public void testOrdsValidFormat() {
 
-        Assertions.assertEquals("25-Mar-2013", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
+        Assertions.assertEquals(
+                "2013-03-25 13:04:22", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
     }
 
     @Test
     @DisplayName("Test invalid date format ")
     public void testOrdsInValidFormat() {
 
-        Assertions.assertEquals("2013-03-25", DateUtils.formatORDSDate("2013-03-25"));
+        Assertions.assertEquals(
+                "25-Mar-2013 00:00:00.0", DateUtils.formatORDSDate("25-Mar-2013 00:00:00.0"));
     }
 }

@@ -10,6 +10,7 @@ import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -61,7 +62,7 @@ public class GetFileDetailCriminalSecureTest {
         Mockito.when(fileValidatorMock.validateGetFileDetailCriminalSecure(any()))
                 .thenReturn(new ArrayList<>());
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetFileDetailCriminalSecureResponse result =

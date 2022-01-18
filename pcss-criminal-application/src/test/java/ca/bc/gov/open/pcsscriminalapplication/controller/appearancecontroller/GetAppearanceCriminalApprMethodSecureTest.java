@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecure
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetAppearanceCriminalApprMethodSecureResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -65,7 +66,7 @@ public class GetAppearanceCriminalApprMethodSecureTest {
         response.setResponseCd("TEST");
         response.setAppearanceMethod(Collections.singletonList(new AppearanceMethod()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetAppearanceCriminalApprMethodSecureResponse result =
