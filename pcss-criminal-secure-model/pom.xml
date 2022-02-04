@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>pcss-criminal-secure-model</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>pcss-criminal-secure-model</name>
 	<description>Model Project</description>
 	<properties>
@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>ca.bc.gov.open</groupId>
 			<artifactId>pcss-criminal-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 

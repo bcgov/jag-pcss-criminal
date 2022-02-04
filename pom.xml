@@ -11,7 +11,7 @@
     </parent>
     <groupId>ca.bc.gov.open</groupId>
     <artifactId>pcss-criminal</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>pcss-criminal</name>
     <description>PCSS criminal module</description>
     <properties>
@@ -43,25 +43,25 @@
 	    <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-secure-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
 		<dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
 		        <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-application</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
