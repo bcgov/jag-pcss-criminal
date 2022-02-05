@@ -1,5 +1,8 @@
 <jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xsd="http://www.w3.org/2001/XMLSchema" jaxb:version="2.0">
         <jaxb:globalBindings>
             <jaxb:serializable uid="1" />
+            <jaxb:javaType name="java.time.Instant" xmlType="xsd:dateTime"
+                   parseMethod="ca.bc.gov.open.pcsscriminalcommon.utils.InstantSoapConverter.parse"
+                 printMethod="ca.bc.gov.open.pcsscriminalcommon.utils.InstantSoapConverter.print" />
         </jaxb:globalBindings>
 </jaxb:bindings>

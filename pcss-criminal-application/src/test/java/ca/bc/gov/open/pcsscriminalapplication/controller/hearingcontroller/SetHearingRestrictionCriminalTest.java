@@ -14,6 +14,8 @@ import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -134,7 +136,7 @@ public class SetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest1.setHearingRestrictionCcn("Test");
         setHearingRestrictionCriminalRequest1.setHearingRestrictionCd(HearingRestrictionType.A);
         setHearingRestrictionCriminalRequest1.setHearingRestrictionId("Test");
-        setHearingRestrictionCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setHearingRestrictionCriminalRequest1.setRequestDtm(Instant.now());
         setHearingRestrictionCriminalRequest1.setRequestPartId("Test");
         setHearingRestrictionCriminalRequest1.setAdjudicatorPartId("Test");
         setHearingRestrictionCriminalRequest1.setJustinNo("Test");

@@ -12,6 +12,8 @@ import ca.bc.gov.open.wsdl.pcss.three.OfficerSearchType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -133,7 +135,7 @@ public class GetPersonnelSearchTest {
 
         getPersonnelSearchRequest1.setAgencyId("TEST");
         getPersonnelSearchRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelSearchRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getPersonnelSearchRequest1.setRequestDtm(Instant.now());
         getPersonnelSearchRequest1.setRequestPartId("TEST");
         getPersonnelSearchRequest1.setSearchTxt("TEST");
         getPersonnelSearchRequest1.setSearchTypeCd(OfficerSearchType.PIN);

@@ -131,24 +131,6 @@ public class CrownController {
             ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse
                     getCrownAssignmentResponseInner) {
 
-        if (getCrownAssignmentResponseInner.getCrownAssignment() != null) {
-            getCrownAssignmentResponseInner
-                    .getCrownAssignment()
-                    .forEach(
-                            ((Consumer<CrownAssignment>)
-                                            crownAssignment ->
-                                                    crownAssignment.setAssignmentDt(
-                                                            DateUtils.formatDate(
-                                                                    crownAssignment
-                                                                            .getAssignmentDt())))
-                                    .andThen(
-                                            crownAssignment ->
-                                                    crownAssignment.setAssignmentEndDt(
-                                                            DateUtils.formatDate(
-                                                                    crownAssignment
-                                                                            .getAssignmentEndDt()))));
-        }
-
         GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
         GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();
         getCrownAssignmentResponse2.setGetCrownAssignmentResponse(getCrownAssignmentResponseInner);

@@ -3,6 +3,8 @@ package service.appearancevalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.three.YesNoType;
+
+import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -42,7 +44,7 @@ public class ValidateGetAppearanceCriminalTest {
         getAppearanceCriminalRequest.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest.setHistoryYN(YesNoType.Y);
         getAppearanceCriminalRequest.setJustinNo(VALUE);
-        getAppearanceCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getAppearanceCriminalRequest.setRequestDtm(Instant.now());
         getAppearanceCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalRequest.setRequestPartId(VALUE);
 
@@ -61,7 +63,7 @@ public class ValidateGetAppearanceCriminalTest {
         getAppearanceCriminalRequest.setFutureYN(YesNoType.Y);
         getAppearanceCriminalRequest.setHistoryYN(YesNoType.Y);
         getAppearanceCriminalRequest.setJustinNo(LONG_STRING);
-        getAppearanceCriminalRequest.setRequestDtm("2013-03-25");
+        getAppearanceCriminalRequest.setRequestDtm(Instant.now());
         getAppearanceCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalRequest.setRequestPartId(LONG_STRING);
 

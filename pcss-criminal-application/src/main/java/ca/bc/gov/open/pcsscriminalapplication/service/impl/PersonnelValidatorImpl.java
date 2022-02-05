@@ -32,23 +32,23 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (getPersonnelAvailabilityRequest.getRequestDtm() == null
-                || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getRequestDtm())) {
-            errors.add("RequestDtm is not valid");
-        }
-
-        if (getPersonnelAvailabilityRequest.getToDt() == null
-                || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getToDt())) {
-            errors.add("ToDt is not valid");
-        }
-
-        if (getPersonnelAvailabilityRequest.getFromDt() == null
-                || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getFromDt())) {
-            errors.add("FromDt is not valid");
-        }
+//        if (getPersonnelAvailabilityRequest.getRequestDtm() == null
+//                || ValidationUtils.checkDateTimeTypeForErrors(
+//                        getPersonnelAvailabilityRequest.getRequestDtm())) {
+//            errors.add("RequestDtm is not valid");
+//        }
+//
+//        if (getPersonnelAvailabilityRequest.getToDt() == null
+//                || ValidationUtils.checkDateTimeTypeForErrors(
+//                        getPersonnelAvailabilityRequest.getToDt())) {
+//            errors.add("ToDt is not valid");
+//        }
+//
+//        if (getPersonnelAvailabilityRequest.getFromDt() == null
+//                || ValidationUtils.checkDateTimeTypeForErrors(
+//                        getPersonnelAvailabilityRequest.getFromDt())) {
+//            errors.add("FromDt is not valid");
+//        }
 
         if (getPersonnelAvailabilityRequest.getPersonTypeCd() == null) {
             errors.add("PersonTypeCd is not valid");
@@ -76,17 +76,17 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (getPersonnelAvailDetailRequest.getRequestDtm() == null
-                || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailDetailRequest.getRequestDtm())) {
-            errors.add("RequestDtm is not valid");
-        }
-
-        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null
-                || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailDetailRequest.getAvailabilityDt())) {
-            errors.add("AvailabilityDt is not valid");
-        }
+//        if (getPersonnelAvailDetailRequest.getRequestDtm() == null
+//                || ValidationUtils.checkDateTimeTypeForErrors(
+//                        getPersonnelAvailDetailRequest.getRequestDtm())) {
+//            errors.add("RequestDtm is not valid");
+//        }
+//
+//        if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null
+//                || ValidationUtils.checkDateTimeTypeForErrors(
+//                        getPersonnelAvailDetailRequest.getAvailabilityDt())) {
+//            errors.add("AvailabilityDt is not valid");
+//        }
 
         if (getPersonnelAvailDetailRequest.getPersonTypeCd() == null) {
             errors.add("PersonTypeCd is not valid");

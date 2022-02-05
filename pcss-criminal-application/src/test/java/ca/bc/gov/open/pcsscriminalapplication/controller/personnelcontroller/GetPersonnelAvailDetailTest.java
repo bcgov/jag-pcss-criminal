@@ -13,6 +13,8 @@ import ca.bc.gov.open.wsdl.pcss.three.AvailablePersonType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -155,9 +157,9 @@ public class GetPersonnelAvailDetailTest {
 
         getPersonnelAvailDetailRequest1.setPaasPartId("TEST");
         getPersonnelAvailDetailRequest1.setRequestAgencyIdentifierId("TEST");
-        getPersonnelAvailDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getPersonnelAvailDetailRequest1.setRequestDtm(Instant.now());
         getPersonnelAvailDetailRequest1.setRequestPartId("TEST");
-        getPersonnelAvailDetailRequest1.setAvailabilityDt("2013-03-25 13:04:22.1");
+        getPersonnelAvailDetailRequest1.setAvailabilityDt(Instant.now());
         getPersonnelAvailDetailRequest1.setPersonTypeCd(AvailablePersonType.C);
 
         getPersonnelAvailDetailRequest.setGetPersonnelAvailDetailRequest(

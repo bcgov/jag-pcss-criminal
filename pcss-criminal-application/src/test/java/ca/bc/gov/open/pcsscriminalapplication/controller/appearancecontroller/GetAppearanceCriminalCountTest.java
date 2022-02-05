@@ -11,6 +11,8 @@ import ca.bc.gov.open.wsdl.pcss.one.ApprCount;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -137,7 +139,7 @@ public class GetAppearanceCriminalCountTest {
 
         getAppearanceCriminalCountRequest2.setAppearanceId("TEST");
         getAppearanceCriminalCountRequest2.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalCountRequest2.setRequestDtm("2013-03-25 13:04:22.1");
+        getAppearanceCriminalCountRequest2.setRequestDtm(Instant.now());
         getAppearanceCriminalCountRequest2.setRequestPartId("TEST");
 
         getAppearanceCriminalCountRequest1.setGetAppearanceCriminalCountRequest(

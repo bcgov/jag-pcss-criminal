@@ -11,6 +11,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -129,7 +130,7 @@ public class GetFileDetailCriminalSecureTest {
 
         getFileDetailCriminalRequest.setApplicationCd("TEST");
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId("TEST");
-        getFileDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getFileDetailCriminalRequest.setRequestDtm(Instant.now());
         getFileDetailCriminalRequest.setRequestPartId("TEST");
         getFileDetailCriminalRequest.setJustinNo("TEST");
 

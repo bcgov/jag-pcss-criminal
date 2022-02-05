@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.utils;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
@@ -36,19 +37,17 @@ public class DateUtils {
         return inDate;
     }
 
-    public static String formatORDSDate(String inDate) {
+    public static String formatORDSDate(Instant inDate) {
 
-        if (StringUtils.isBlank(inDate)) return null;
 
         SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
         try {
-            Date date = dt.parse(inDate);
             SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-            return dt1.format(date);
+            return dt1.format(inDate);
         } catch (Exception e) {
             log.error("Invalid date returned from ords");
         }
 
-        return inDate;
+        return inDate.toString();
     }
 }

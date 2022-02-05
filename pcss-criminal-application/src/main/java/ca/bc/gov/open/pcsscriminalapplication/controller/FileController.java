@@ -120,14 +120,6 @@ public class FileController {
     private GetClosedFileResponse buildClosedFileResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponseInner) {
 
-        if (getClosedFileResponseInner.getCourtFile() != null) {
-            getClosedFileResponseInner
-                    .getCourtFile()
-                    .forEach(
-                            (courtFile ->
-                                    courtFile.setApprDt(
-                                            DateUtils.formatDate(courtFile.getApprDt()))));
-        }
 
         GetClosedFileResponse getClosedFileResponse = new GetClosedFileResponse();
         GetClosedFileResponce getClosedFileResponce = new GetClosedFileResponce();
@@ -220,17 +212,6 @@ public class FileController {
     private GetFileDetailCriminalResponse buildFileDetailCriminalResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse
                     getFileDetailCriminalResponseInner) {
-
-        if (getFileDetailCriminalResponseInner.getParticipant() != null) {
-            getFileDetailCriminalResponseInner
-                    .getParticipant()
-                    .forEach(
-                            ((Consumer<Participant>)
-                                    participant ->
-                                            participant.setBirthDt(
-                                                    DateUtils.formatDate(
-                                                            participant.getBirthDt()))));
-        }
 
         GetFileDetailCriminalResponse getFileDetailCriminalResponse =
                 new GetFileDetailCriminalResponse();

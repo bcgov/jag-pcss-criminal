@@ -316,19 +316,19 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
                         MessageFormat.format("Details ProfSeqNo at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(
-                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceDt())) {
-                errors.add(
-                        MessageFormat.format(
-                                "Details AppearanceDt at index {0} is not valid", i + 1));
-            }
-
-            if (ValidationUtils.checkDateTimeTypeForErrors(
-                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceTm())) {
-                errors.add(
-                        MessageFormat.format(
-                                "Details AppearanceTm at index {0} is not valid", i + 1));
-            }
+//            if (ValidationUtils.checkDateTimeTypeForErrors(
+//                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceDt())) {
+//                errors.add(
+//                        MessageFormat.format(
+//                                "Details AppearanceDt at index {0} is not valid", i + 1));
+//            }
+//
+//            if (ValidationUtils.checkDateTimeTypeForErrors(
+//                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceTm())) {
+//                errors.add(
+//                        MessageFormat.format(
+//                                "Details AppearanceTm at index {0} is not valid", i + 1));
+//            }
 
             if (StringUtils.isBlank(
                             setAppearanceCriminalRequest.getDetail().get(i).getAppearanceReasonCd())

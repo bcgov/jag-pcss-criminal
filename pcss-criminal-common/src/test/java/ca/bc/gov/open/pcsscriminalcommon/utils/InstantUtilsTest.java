@@ -32,7 +32,7 @@ public class InstantUtilsTest {
         LocalDate testDate = LocalDate.parse("2021-04-17");
         LocalDateTime testDateTime = testDate.atStartOfDay();
 
-        String result = InstantUtils.convert(testDateTime.toInstant(ZoneOffset.UTC));
+        String result = InstantSoapConverter.convert(testDateTime.toInstant(ZoneOffset.UTC));
 
         Assertions.assertEquals("16-Apr-2021", result);
     }
@@ -43,7 +43,7 @@ public class InstantUtilsTest {
 
         Mockito.when(jsonParserMock.getText()).thenReturn("GARBAGE");
 
-        Assertions.assertNull(InstantUtils.convert(null));
+        Assertions.assertNull(InstantSoapConverter.convert(null));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class InstantUtilsTest {
         LocalDate testDate = LocalDate.parse("2021-04-17");
         LocalDateTime testDateTime = testDate.atStartOfDay();
 
-        String result = InstantUtils.print(testDateTime.toInstant(ZoneOffset.UTC));
+        String result = InstantSoapConverter.print(testDateTime.toInstant(ZoneOffset.UTC));
 
         Assertions.assertEquals("2021-04-17T00:00:00", result);
     }

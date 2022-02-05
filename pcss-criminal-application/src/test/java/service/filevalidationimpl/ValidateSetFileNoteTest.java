@@ -3,6 +3,8 @@ package service.filevalidationimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest;
 import ca.bc.gov.open.wsdl.pcss.three.FileNoteType;
+
+import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -13,8 +15,8 @@ public class ValidateSetFileNoteTest {
 
     private static final String LONG_STRING = "VERYLONGSTRINGTOTESTTHELENGTHRESTRICTION";
     private static final String VALUE = "TEST";
-    private static final String DATE = "2013-03-25 13:04:22.1";
-    private static final String BAD_DATE = "2001-DEC-26";
+    private static final Instant DATE = Instant.now();
+    private static final Instant BAD_DATE = null;
 
     FileValidatorImpl sut;
 

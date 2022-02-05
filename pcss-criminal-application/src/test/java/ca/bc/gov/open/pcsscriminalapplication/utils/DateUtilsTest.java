@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
+import java.time.Instant;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DateUtils Test")
 public class DateUtilsTest {
@@ -30,14 +32,7 @@ public class DateUtilsTest {
     public void testOrdsValidFormat() {
 
         Assertions.assertEquals(
-                "2013-03-25 13:04:22", DateUtils.formatORDSDate("2013-03-25 13:04:22.1"));
+                "2013-03-25 13:04:22", DateUtils.formatORDSDate(Instant.now()));
     }
 
-    @Test
-    @DisplayName("Test invalid date format ")
-    public void testOrdsInValidFormat() {
-
-        Assertions.assertEquals(
-                "25-Mar-2013 00:00:00.0", DateUtils.formatORDSDate("25-Mar-2013 00:00:00.0"));
-    }
 }

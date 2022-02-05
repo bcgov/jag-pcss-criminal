@@ -10,6 +10,8 @@ import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -125,7 +127,7 @@ public class GetFileDetailCriminalTest {
 
         getClosedFileRequest1.setApplicationCd("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setRequestDtm(Instant.now());
         getClosedFileRequest1.setRequestPartId("TEST");
         getClosedFileRequest1.setJustinNo("TEST");
 

@@ -4,6 +4,8 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorIm
 import ca.bc.gov.open.wsdl.pcss.one.Detail3;
 import ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
+
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -52,7 +54,7 @@ public class ValidateSetAppearanceMethodCriminalTest {
         detail.setRoleCd(VALUE);
 
         setAppearanceMethodCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceMethodCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        setAppearanceMethodCriminalRequest.setRequestDtm(Instant.now());
         setAppearanceMethodCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setAppearanceMethodCriminalRequest.setRequestPartId(VALUE);
 
@@ -79,7 +81,7 @@ public class ValidateSetAppearanceMethodCriminalTest {
         detail.setRoleCd(LONG_STRING);
 
         setAppearanceMethodCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceMethodCriminalRequest.setRequestDtm("2013-03-25");
+        setAppearanceMethodCriminalRequest.setRequestDtm(Instant.now());
         setAppearanceMethodCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setAppearanceMethodCriminalRequest.setRequestPartId(LONG_STRING);
 

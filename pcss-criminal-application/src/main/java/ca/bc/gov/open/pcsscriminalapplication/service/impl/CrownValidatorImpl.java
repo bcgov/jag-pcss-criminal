@@ -32,8 +32,7 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (request.getRequestDtm() == null
-                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
+        if (request.getRequestDtm() == null) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -41,10 +40,10 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("JustinNo is not valid");
         }
 
-        if (!StringUtils.isEmpty(request.getSinceDt())
-                && checkDateTimeTypeForErrors(request.getSinceDt())) {
-            errors.add("SinceDt is not valid");
-        }
+//        if (!StringUtils.isEmpty(request.getSinceDt())
+//                && checkDateTimeTypeForErrors(request.getSinceDt())) {
+//            errors.add("SinceDt is not valid");
+//        }
 
         return errors;
     }
@@ -121,10 +120,10 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (request.getRequestDtm() == null
-                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
-            errors.add("RequestDtm is not valid");
-        }
+//        if (request.getRequestDtm() == null
+//                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
+//            errors.add("RequestDtm is not valid");
+//        }
 
         if (StringUtils.isBlank(request.getJustinNo())
                 || checkJustinNoTypeForErrors(request.getJustinNo())) {
@@ -167,21 +166,21 @@ public class CrownValidatorImpl implements CrownValidator {
                                     i + 1));
                 }
 
-                if (checkDateTimeTypeForErrors(
-                        request.getCrownAssignment().get(i).getAssignmentDt())) {
-                    errors.add(
-                            MessageFormat.format(
-                                    "CrownAssignment AssignmentDt at index {0} is not valid",
-                                    i + 1));
-                }
-
-                if (checkDateTimeTypeForErrors(
-                        request.getCrownAssignment().get(i).getAssignmentEndDt())) {
-                    errors.add(
-                            MessageFormat.format(
-                                    "CrownAssignment AssignmentEndDt at index {0} is not valid",
-                                    i + 1));
-                }
+//                if (checkDateTimeTypeForErrors(
+//                        request.getCrownAssignment().get(i).getAssignmentDt())) {
+//                    errors.add(
+//                            MessageFormat.format(
+//                                    "CrownAssignment AssignmentDt at index {0} is not valid",
+//                                    i + 1));
+//                }
+//
+//                if (checkDateTimeTypeForErrors(
+//                        request.getCrownAssignment().get(i).getAssignmentEndDt())) {
+//                    errors.add(
+//                            MessageFormat.format(
+//                                    "CrownAssignment AssignmentEndDt at index {0} is not valid",
+//                                    i + 1));
+//                }
 
                 if (request.getCrownAssignment().get(i).getOperationModeCd() == null) {
                     errors.add(
@@ -254,11 +253,11 @@ public class CrownValidatorImpl implements CrownValidator {
         if (checkSystemIdTypeForErrors(request.getRequestPartId())) {
             errors.add("RequestPartId is not valid");
         }
-
-        if (StringUtils.isBlank(request.getRequestDtm())
-                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
-            errors.add("RequestDtm is not valid");
-        }
+//
+//        if (StringUtils.isBlank(request.getRequestDtm())
+//                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
+//            errors.add("RequestDtm is not valid");
+//        }
 
         if (StringUtils.isBlank(request.getJustinNo())
                 || checkJustinNoTypeForErrors(request.getJustinNo())) {

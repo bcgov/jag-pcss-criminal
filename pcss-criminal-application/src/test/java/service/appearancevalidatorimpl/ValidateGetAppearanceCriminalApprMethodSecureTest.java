@@ -2,6 +2,8 @@ package service.appearancevalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest;
+
+import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.*;
@@ -39,7 +41,7 @@ public class ValidateGetAppearanceCriminalApprMethodSecureTest {
                 new GetAppearanceCriminalApprMethodSecureRequest();
         getAppearanceCriminalApprMethodSecureRequest.setApplicationCd(VALUE);
         getAppearanceCriminalApprMethodSecureRequest.setAppearanceId(VALUE);
-        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(Instant.now());
         getAppearanceCriminalApprMethodSecureRequest.setRequestAgencyIdentifierId(VALUE);
         getAppearanceCriminalApprMethodSecureRequest.setRequestPartId(VALUE);
 
@@ -58,7 +60,7 @@ public class ValidateGetAppearanceCriminalApprMethodSecureTest {
                 new GetAppearanceCriminalApprMethodSecureRequest();
         getAppearanceCriminalApprMethodSecureRequest.setApplicationCd("TEST");
         getAppearanceCriminalApprMethodSecureRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm("2013-03-25");
+        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(Instant.now());
         getAppearanceCriminalApprMethodSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalApprMethodSecureRequest.setRequestPartId(LONG_STRING);
 

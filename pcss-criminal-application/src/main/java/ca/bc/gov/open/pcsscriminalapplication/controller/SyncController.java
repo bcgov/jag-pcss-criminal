@@ -134,28 +134,6 @@ public class SyncController {
             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse
                     getSyncCriminalAppearanceResponseInner) {
 
-        if (getSyncCriminalAppearanceResponseInner.getAppearance() != null) {
-            getSyncCriminalAppearanceResponseInner
-                    .getAppearance()
-                    .forEach(
-                            ((Consumer<Appearance>)
-                                            appearance ->
-                                                    appearance.setAppearanceDt(
-                                                            DateUtils.formatDate(
-                                                                    appearance.getAppearanceDt())))
-                                    .andThen(
-                                            appearance ->
-                                                    appearance.setAppearanceTm(
-                                                            DateUtils.formatDate(
-                                                                    appearance.getAppearanceTm())))
-                                    .andThen(
-                                            appearance ->
-                                                    appearance.setTransactionDtm(
-                                                            DateUtils.formatDate(
-                                                                    appearance
-                                                                            .getTransactionDtm()))));
-        }
-
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse
                 getSyncCriminalAppearanceResponse =
                         new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse();
@@ -265,16 +243,6 @@ public class SyncController {
             buildHearingResponse(
                     ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse
                             getSyncCriminalHearingRestrictionResponseInner) {
-
-        if (getSyncCriminalHearingRestrictionResponseInner.getHearingRestriction() != null) {
-            getSyncCriminalHearingRestrictionResponseInner
-                    .getHearingRestriction()
-                    .forEach(
-                            (hearingRestriction ->
-                                    hearingRestriction.setTransactionDtm(
-                                            DateUtils.formatDate(
-                                                    hearingRestriction.getTransactionDtm()))));
-        }
 
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse
                 getSyncCriminalHearingRestrictionResponse =

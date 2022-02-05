@@ -14,6 +14,8 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -124,7 +126,7 @@ public class SetCrownFileDetailTest {
                 new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
         setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
         setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
         setCrownFileDetailRequest1.setJustinNo("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);

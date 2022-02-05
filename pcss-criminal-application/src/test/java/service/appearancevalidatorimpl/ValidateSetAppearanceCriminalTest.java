@@ -3,6 +3,8 @@ package service.appearancevalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.Detail;
 import ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest;
+
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -41,9 +43,9 @@ public class ValidateSetAppearanceCriminalTest {
                 new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
-        detail.setAppearanceDt("2013-03-25 13:04:22.1");
+        detail.setAppearanceDt(Instant.now());
         detail.setAppearanceReasonCd("AAA");
-        detail.setAppearanceTm("2013-03-25 13:04:22.1");
+        detail.setAppearanceTm(Instant.now());
         detail.setCourtAgencyId(VALUE);
         detail.setCourtRoomCd(VALUE);
         detail.setEstimatedTimeHour(VALUE);
@@ -57,7 +59,7 @@ public class ValidateSetAppearanceCriminalTest {
         detail.setSupplementalEquipmentTxt(VALUE);
 
         setAppearanceCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        setAppearanceCriminalRequest.setRequestDtm(Instant.now());
         setAppearanceCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setAppearanceCriminalRequest.setRequestPartId(VALUE);
 
@@ -74,9 +76,9 @@ public class ValidateSetAppearanceCriminalTest {
                 new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
-        detail.setAppearanceDt("2013-03-25");
+        detail.setAppearanceDt(Instant.now());
         detail.setAppearanceReasonCd(LONG_STRING);
-        detail.setAppearanceTm(LONG_STRING);
+        detail.setAppearanceTm(Instant.now());
         detail.setCourtAgencyId(LONG_STRING);
         detail.setCourtRoomCd(LONG_STRING);
         detail.setEstimatedTimeHour(LONG_STRING);
@@ -90,7 +92,7 @@ public class ValidateSetAppearanceCriminalTest {
         detail.setSupplementalEquipmentTxt(LONG_STRING);
 
         setAppearanceCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceCriminalRequest.setRequestDtm("2013-03-25");
+        setAppearanceCriminalRequest.setRequestDtm(Instant.now());
         setAppearanceCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setAppearanceCriminalRequest.setRequestPartId(LONG_STRING);
 

@@ -13,6 +13,8 @@ import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -123,9 +125,9 @@ public class GetCrownAssignmentTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest();
         getCrownAssignmentRequest1.setRequestAgencyIdentifierId("Test");
         getCrownAssignmentRequest1.setRequestPartId("Test");
-        getCrownAssignmentRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest1.setRequestDtm(Instant.now());
         getCrownAssignmentRequest1.setJustinNo("Test");
-        getCrownAssignmentRequest1.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest1.setSinceDt(Instant.now());
 
         getCrownAssignmentRequest.setGetCrownAssignmentRequest(getCrownAssignmentRequest1);
         getCrownAssignment.setGetCrownAssignmentRequest(getCrownAssignmentRequest);

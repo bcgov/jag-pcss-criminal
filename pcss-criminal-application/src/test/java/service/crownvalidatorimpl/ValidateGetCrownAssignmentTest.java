@@ -2,6 +2,8 @@ package service.crownvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
+
+import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,9 +30,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -44,7 +46,7 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -57,9 +59,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000000000000000000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -73,9 +75,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("00000000000000000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -89,9 +91,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2020-SEP-5");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -105,9 +107,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("000000000000000000000000");
-        getCrownAssignmentRequest.setSinceDt("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
@@ -121,9 +123,9 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getCrownAssignmentRequest.setRequestDtm(Instant.now());
         getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt("2020-SEP-5");
+        getCrownAssignmentRequest.setSinceDt(Instant.now());
 
         List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
 
