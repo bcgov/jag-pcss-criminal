@@ -8,18 +8,27 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class InstantSerializer extends JsonSerializer<Instant> {
     @Override
     public void serialize(Instant value, JsonGenerator gen, SerializerProvider serializers)
             throws IOException {
         String out =
-                DateTimeFormatter.ofPattern("dd-MMM-yyyy")
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                         .withZone(ZoneId.of("GMT-7"))
                         .withLocale(Locale.US)
                         .format(value);
         gen.writeString(out);
+    }
+
+    public static String convert(Instant value) {
+        if (value == null) {
+            return null;
+        }
+
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneId.of("GMT-7"))
+                .withLocale(Locale.US)
+                .format(value);
     }
 }
