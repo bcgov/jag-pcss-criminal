@@ -3,6 +3,7 @@ package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.*;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
@@ -20,9 +21,11 @@ public class CrownValidatorImpl implements CrownValidator {
     @Override
     public List<String> validateGetCrownAssignment(GetCrownAssignmentRequest request) {
 
-        if (request == null) return Collections.singletonList("Empty request is invalid");
+        if (request == null) {
+            return Collections.singletonList("Empty request is invalid");
+        }
 
-        List<String> errors = new ArrayList<String>();
+        List<String> errors = new ArrayList<>();
 
         if (checkAgencyIdentifierTypeForErrors(request.getRequestAgencyIdentifierId())) {
             errors.add("RequestAgencyIdentifierId is not valid");
@@ -40,18 +43,15 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("JustinNo is not valid");
         }
 
-//        if (!StringUtils.isEmpty(request.getSinceDt())
-//                && checkDateTimeTypeForErrors(request.getSinceDt())) {
-//            errors.add("SinceDt is not valid");
-//        }
-
         return errors;
     }
 
     @Override
     public List<String> validateSetCounselDetailCriminal(SetCounselDetailCriminalRequest request) {
 
-        if (request == null) return Collections.singletonList("Empty request is invalid");
+        if (request == null) {
+            return Collections.singletonList("Empty request is invalid");
+        }
 
         List<String> errors = new ArrayList<>();
 
@@ -64,7 +64,8 @@ public class CrownValidatorImpl implements CrownValidator {
         }
 
         if (request.getRequestDtm() == null
-                || checkDateTimeTypeForErrors(request.getRequestDtm().toString())) {
+                || checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(request.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -108,7 +109,9 @@ public class CrownValidatorImpl implements CrownValidator {
     @Override
     public List<String> validateSetCrownAssignment(SetCrownAssignmentRequest request) {
 
-        if (request == null) return Collections.singletonList("Empty request is invalid");
+        if (request == null) {
+            return Collections.singletonList("Empty request is invalid");
+        }
 
         List<String> errors = new ArrayList<>();
 
@@ -120,10 +123,11 @@ public class CrownValidatorImpl implements CrownValidator {
             errors.add("RequestPartId is not valid");
         }
 
-//        if (request.getRequestDtm() == null
-//                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
-//            errors.add("RequestDtm is not valid");
-//        }
+        if (request.getRequestDtm() == null
+                || checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(request.getRequestDtm()))) {
+            errors.add("RequestDtm is not valid");
+        }
 
         if (StringUtils.isBlank(request.getJustinNo())
                 || checkJustinNoTypeForErrors(request.getJustinNo())) {
@@ -166,21 +170,27 @@ public class CrownValidatorImpl implements CrownValidator {
                                     i + 1));
                 }
 
-//                if (checkDateTimeTypeForErrors(
-//                        request.getCrownAssignment().get(i).getAssignmentDt())) {
-//                    errors.add(
-//                            MessageFormat.format(
-//                                    "CrownAssignment AssignmentDt at index {0} is not valid",
-//                                    i + 1));
-//                }
-//
-//                if (checkDateTimeTypeForErrors(
-//                        request.getCrownAssignment().get(i).getAssignmentEndDt())) {
-//                    errors.add(
-//                            MessageFormat.format(
-//                                    "CrownAssignment AssignmentEndDt at index {0} is not valid",
-//                                    i + 1));
-//                }
+                if (request.getCrownAssignment().get(i).getAssignmentDt() == null
+                        || checkDateTimeTypeForErrors(
+                                DateUtils.formatTo21Length(
+                                        request.getCrownAssignment().get(i).getAssignmentDt()))) {
+                    errors.add(
+                            MessageFormat.format(
+                                    "CrownAssignment AssignmentDt at index {0} is not valid",
+                                    i + 1));
+                }
+
+                if (request.getCrownAssignment().get(i).getAssignmentEndDt() == null
+                        || checkDateTimeTypeForErrors(
+                                DateUtils.formatTo21Length(
+                                        request.getCrownAssignment()
+                                                .get(i)
+                                                .getAssignmentEndDt()))) {
+                    errors.add(
+                            MessageFormat.format(
+                                    "CrownAssignment AssignmentEndDt at index {0} is not valid",
+                                    i + 1));
+                }
 
                 if (request.getCrownAssignment().get(i).getOperationModeCd() == null) {
                     errors.add(
@@ -242,7 +252,9 @@ public class CrownValidatorImpl implements CrownValidator {
     @Override
     public List<String> validateSetCrownFileDetail(SetCrownFileDetailRequest request) {
 
-        if (request == null) return Collections.singletonList("Empty request is invalid");
+        if (request == null) {
+            return Collections.singletonList("Empty request is invalid");
+        }
 
         List<String> errors = new ArrayList<>();
 
@@ -253,11 +265,12 @@ public class CrownValidatorImpl implements CrownValidator {
         if (checkSystemIdTypeForErrors(request.getRequestPartId())) {
             errors.add("RequestPartId is not valid");
         }
-//
-//        if (StringUtils.isBlank(request.getRequestDtm())
-//                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
-//            errors.add("RequestDtm is not valid");
-//        }
+
+        if (request.getRequestDtm() == null
+                || checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(request.getRequestDtm()))) {
+            errors.add("RequestDtm is not valid");
+        }
 
         if (StringUtils.isBlank(request.getJustinNo())
                 || checkJustinNoTypeForErrors(request.getJustinNo())) {

@@ -2,7 +2,6 @@ package service.appearancevalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -60,7 +59,7 @@ public class ValidateGetAppearanceCriminalApprMethodSecureTest {
                 new GetAppearanceCriminalApprMethodSecureRequest();
         getAppearanceCriminalApprMethodSecureRequest.setApplicationCd("TEST");
         getAppearanceCriminalApprMethodSecureRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(Instant.now());
+        getAppearanceCriminalApprMethodSecureRequest.setRequestDtm(null);
         getAppearanceCriminalApprMethodSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalApprMethodSecureRequest.setRequestPartId(LONG_STRING);
 

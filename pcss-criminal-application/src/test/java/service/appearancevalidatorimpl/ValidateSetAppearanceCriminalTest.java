@@ -3,7 +3,6 @@ package service.appearancevalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.Detail;
 import ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest;
-
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -76,9 +75,9 @@ public class ValidateSetAppearanceCriminalTest {
                 new SetAppearanceCriminalRequest();
         Detail detail = new Detail();
 
-        detail.setAppearanceDt(Instant.now());
+        detail.setAppearanceDt(null);
         detail.setAppearanceReasonCd(LONG_STRING);
-        detail.setAppearanceTm(Instant.now());
+        detail.setAppearanceTm(null);
         detail.setCourtAgencyId(LONG_STRING);
         detail.setCourtRoomCd(LONG_STRING);
         detail.setEstimatedTimeHour(LONG_STRING);
@@ -92,7 +91,7 @@ public class ValidateSetAppearanceCriminalTest {
         detail.setSupplementalEquipmentTxt(LONG_STRING);
 
         setAppearanceCriminalRequest.setDetail(Collections.singletonList(detail));
-        setAppearanceCriminalRequest.setRequestDtm(Instant.now());
+        setAppearanceCriminalRequest.setRequestDtm(null);
         setAppearanceCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setAppearanceCriminalRequest.setRequestPartId(LONG_STRING);
 

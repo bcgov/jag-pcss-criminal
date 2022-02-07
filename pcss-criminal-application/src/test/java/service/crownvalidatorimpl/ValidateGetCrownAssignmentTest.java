@@ -2,7 +2,6 @@ package service.crownvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentRequest;
-
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -91,7 +90,7 @@ public class ValidateGetCrownAssignmentTest {
         GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
         getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
         getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm(Instant.now());
+        getCrownAssignmentRequest.setRequestDtm(null);
         getCrownAssignmentRequest.setJustinNo("0000");
         getCrownAssignmentRequest.setSinceDt(Instant.now());
 
@@ -115,21 +114,5 @@ public class ValidateGetCrownAssignmentTest {
 
         Assertions.assertEquals(1, validationErrors.size());
         Assertions.assertEquals("JustinNo is not valid", validationErrors.get(0));
-    }
-
-    @Test
-    @DisplayName("Fail: since dt failed")
-    public void failSinceDtFailedReturns() {
-        GetCrownAssignmentRequest getCrownAssignmentRequest = new GetCrownAssignmentRequest();
-        getCrownAssignmentRequest.setRequestAgencyIdentifierId("0000");
-        getCrownAssignmentRequest.setRequestPartId("0000");
-        getCrownAssignmentRequest.setRequestDtm(Instant.now());
-        getCrownAssignmentRequest.setJustinNo("0000");
-        getCrownAssignmentRequest.setSinceDt(Instant.now());
-
-        List<String> validationErrors = sut.validateGetCrownAssignment(getCrownAssignmentRequest);
-
-        Assertions.assertEquals(1, validationErrors.size());
-        Assertions.assertEquals("SinceDt is not valid", validationErrors.get(0));
     }
 }

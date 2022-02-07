@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest;
 import ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalRequest;
@@ -32,7 +33,7 @@ public class FileValidatorImpl implements FileValidator {
 
         if (getClosedFileRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getClosedFileRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(getClosedFileRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -43,13 +44,13 @@ public class FileValidatorImpl implements FileValidator {
 
         if (getClosedFileRequest.getFromApprDt() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getClosedFileRequest.getFromApprDt().toString())) {
+                        DateUtils.formatTo21Length(getClosedFileRequest.getFromApprDt()))) {
             errors.add("FromApprDt is not valid");
         }
 
         if (getClosedFileRequest.getToApprDt() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getClosedFileRequest.getToApprDt().toString())) {
+                        DateUtils.formatTo21Length(getClosedFileRequest.getToApprDt()))) {
             errors.add("ToApprDt is not valid");
         }
 
@@ -77,7 +78,7 @@ public class FileValidatorImpl implements FileValidator {
 
         if (getFileDetailCriminalRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getFileDetailCriminalRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(getFileDetailCriminalRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -113,7 +114,7 @@ public class FileValidatorImpl implements FileValidator {
 
         if (getFileDetailCriminalRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getFileDetailCriminalRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(getFileDetailCriminalRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -146,7 +147,7 @@ public class FileValidatorImpl implements FileValidator {
 
         if (setFileNoteRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        setFileNoteRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(setFileNoteRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 

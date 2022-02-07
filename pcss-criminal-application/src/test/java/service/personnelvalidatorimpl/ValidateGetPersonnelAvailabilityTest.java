@@ -3,7 +3,6 @@ package service.personnelvalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.PersonnelValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest;
 import ca.bc.gov.open.wsdl.pcss.three.AvailablePersonType;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +15,7 @@ public class ValidateGetPersonnelAvailabilityTest {
     private static final String LONG_STRING = "VERYLONGSTRINGTOTESTTHELENGTHRESTRICTION";
     private static final String VALUE = "TEST";
     private static final Instant DATE = Instant.now();
-    private static final Instant BAD_DATE =null;
+    private static final Instant BAD_DATE = null;
 
     PersonnelValidatorImpl sut;
 

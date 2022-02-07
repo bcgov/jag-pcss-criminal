@@ -3,7 +3,6 @@ package service.personnelvalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.PersonnelValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OfficerSearchType;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

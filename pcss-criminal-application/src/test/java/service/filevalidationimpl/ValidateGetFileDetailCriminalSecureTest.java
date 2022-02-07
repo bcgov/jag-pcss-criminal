@@ -2,7 +2,6 @@ package service.filevalidationimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalRequest;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;

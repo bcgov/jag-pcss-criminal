@@ -2,6 +2,8 @@ package ca.bc.gov.open.pcsscriminalapplication.utils;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import lombok.extern.slf4j.Slf4j;
@@ -38,16 +40,24 @@ public class DateUtils {
     }
 
     public static String formatORDSDate(Instant inDate) {
-
-
-        SimpleDateFormat dt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
-        try {
-            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-            return dt1.format(inDate);
-        } catch (Exception e) {
-            log.error("Invalid date returned from ords");
+        if (inDate == null) {
+            return null;
         }
 
-        return inDate.toString();
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneId.of("UTC"))
+                .withLocale(Locale.US)
+                .format(inDate);
+    }
+
+    public static String formatTo21Length(Instant inDate) {
+        if (inDate == null) {
+            return null;
+        }
+
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.0")
+                .withZone(ZoneId.of("UTC"))
+                .withLocale(Locale.US)
+                .format(inDate);
     }
 }

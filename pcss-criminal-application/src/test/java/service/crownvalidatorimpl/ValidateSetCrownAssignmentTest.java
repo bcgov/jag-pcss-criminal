@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
-
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;

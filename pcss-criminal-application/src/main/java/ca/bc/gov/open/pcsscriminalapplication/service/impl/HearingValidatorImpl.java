@@ -8,6 +8,7 @@ import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.check
 import static ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils.checkSystemSeqNoTypeForErrors;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +34,11 @@ public class HearingValidatorImpl implements HearingValidator {
             errors.add("RequestPartId is not valid");
         }
 
-//        if (StringUtils.isBlank(request.getRequestDtm())
-//                || checkDateTimeTypeForErrors(request.getRequestDtm())) {
-//            errors.add("RequestDtm is not valid");
-//        }
+        if (request.getRequestDtm() == null
+                || checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(request.getRequestDtm()))) {
+            errors.add("RequestDtm is not valid");
+        }
 
         if (request.getOperationModeCd() == null) {
             errors.add("OperationModeCd is not valid");

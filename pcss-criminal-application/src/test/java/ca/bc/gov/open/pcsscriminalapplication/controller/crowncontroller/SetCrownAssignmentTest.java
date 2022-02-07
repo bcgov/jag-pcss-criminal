@@ -13,7 +13,6 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;

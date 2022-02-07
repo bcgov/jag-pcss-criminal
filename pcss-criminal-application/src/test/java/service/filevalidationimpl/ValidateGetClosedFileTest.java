@@ -2,7 +2,6 @@ package service.filevalidationimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.FileValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +14,7 @@ public class ValidateGetClosedFileTest {
     private static final String LONG_STRING = "VERYLONGSTRINGTOTESTTHELENGTHRESTRICTION";
     private static final String VALUE = "TEST";
     private static final Instant DATE = Instant.now();
-    private static final Instant BAD_DATE =null;
+    private static final Instant BAD_DATE = null;
 
     FileValidatorImpl sut;
 

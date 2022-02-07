@@ -1,7 +1,6 @@
 package service.syncvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.SyncValidatorImpl;
-
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.*;
@@ -82,7 +81,7 @@ public class validateGetSyncCriminalAppearanceTest {
                 getSyncCriminalAppearanceRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
         getSyncCriminalAppearanceRequest.setProcessUpToDtm(Instant.now());
-        getSyncCriminalAppearanceRequest.setRequestDtm(Instant.now());
+        getSyncCriminalAppearanceRequest.setRequestDtm(null);
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");
 
@@ -100,7 +99,7 @@ public class validateGetSyncCriminalAppearanceTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest
                 getSyncCriminalAppearanceRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
-        getSyncCriminalAppearanceRequest.setProcessUpToDtm(Instant.now());
+        getSyncCriminalAppearanceRequest.setProcessUpToDtm(null);
         getSyncCriminalAppearanceRequest.setRequestDtm(Instant.now());
         getSyncCriminalAppearanceRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalAppearanceRequest.setRequestPartId("0");

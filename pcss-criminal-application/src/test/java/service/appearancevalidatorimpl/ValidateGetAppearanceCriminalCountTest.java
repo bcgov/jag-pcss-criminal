@@ -2,7 +2,6 @@ package service.appearancevalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalCountRequest;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +56,7 @@ public class ValidateGetAppearanceCriminalCountTest {
         GetAppearanceCriminalCountRequest getAppearanceCriminalCountRequest =
                 new GetAppearanceCriminalCountRequest();
         getAppearanceCriminalCountRequest.setAppearanceId(LONG_STRING);
-        getAppearanceCriminalCountRequest.setRequestDtm(Instant.now());
+        getAppearanceCriminalCountRequest.setRequestDtm(null);
         getAppearanceCriminalCountRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalCountRequest.setRequestPartId(LONG_STRING);
 

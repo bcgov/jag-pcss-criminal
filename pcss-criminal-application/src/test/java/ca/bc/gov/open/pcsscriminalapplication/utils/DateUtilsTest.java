@@ -1,11 +1,12 @@
 package ca.bc.gov.open.pcsscriminalapplication.utils;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-
-import java.time.Instant;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("DateUtils Test")
@@ -31,8 +32,10 @@ public class DateUtilsTest {
     @DisplayName("Test ORDs date format valid")
     public void testOrdsValidFormat() {
 
+        LocalDate testDate = LocalDate.parse("2013-03-25");
+        LocalDateTime testDateTime = testDate.atTime(13, 4, 22);
         Assertions.assertEquals(
-                "2013-03-25 13:04:22", DateUtils.formatORDSDate(Instant.now()));
+                "2013-03-25 13:04:22",
+                DateUtils.formatORDSDate(testDateTime.toInstant(ZoneOffset.UTC)));
     }
-
 }

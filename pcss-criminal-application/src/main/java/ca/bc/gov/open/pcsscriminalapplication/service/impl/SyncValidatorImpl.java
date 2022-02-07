@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest;
 import ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest;
@@ -33,13 +34,15 @@ public class SyncValidatorImpl implements SyncValidator {
 
         if (getSyncCriminalAppearanceRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getSyncCriminalAppearanceRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getSyncCriminalAppearanceRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
         if (getSyncCriminalAppearanceRequest.getProcessUpToDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getSyncCriminalAppearanceRequest.getProcessUpToDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getSyncCriminalAppearanceRequest.getProcessUpToDtm()))) {
             errors.add("ProcessUpToDtm is not valid");
         }
 
@@ -65,13 +68,17 @@ public class SyncValidatorImpl implements SyncValidator {
             errors.add("RequestPartId is not valid");
         }
 
-        if (ValidationUtils.checkDateTimeTypeForErrors(
-                getSyncCriminalHearingRestrictionRequest.getRequestDtm().toString())) {
+        if (getSyncCriminalHearingRestrictionRequest.getRequestDtm() == null
+                || ValidationUtils.checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(
+                                getSyncCriminalHearingRestrictionRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
-        if (ValidationUtils.checkDateTimeTypeForErrors(
-                getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm().toString())) {
+        if (getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm() == null
+                || ValidationUtils.checkDateTimeTypeForErrors(
+                        DateUtils.formatTo21Length(
+                                getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm()))) {
             errors.add("ProcessUpToDtm is not valid");
         }
 

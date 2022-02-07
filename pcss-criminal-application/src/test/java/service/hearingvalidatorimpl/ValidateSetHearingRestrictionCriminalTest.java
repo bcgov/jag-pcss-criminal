@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.HearingValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.three.HearingRestrictionType;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
-
 import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;

@@ -3,7 +3,6 @@ package service.appearancevalidatorimpl;
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.AppearanceValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalSecureRequest;
 import ca.bc.gov.open.wsdl.pcss.secure.three.YesNoType;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -66,7 +65,7 @@ public class ValidateGetAppearanceCriminalSecureTest {
         getAppearanceCriminalSecureRequest.setFutureYN(YesNoType.Y);
         getAppearanceCriminalSecureRequest.setHistoryYN(YesNoType.Y);
         getAppearanceCriminalSecureRequest.setJustinNo(LONG_STRING);
-        getAppearanceCriminalSecureRequest.setRequestDtm(Instant.now());
+        getAppearanceCriminalSecureRequest.setRequestDtm(null);
         getAppearanceCriminalSecureRequest.setRequestAgencyIdentifierId(LONG_STRING);
         getAppearanceCriminalSecureRequest.setRequestPartId(LONG_STRING);
 

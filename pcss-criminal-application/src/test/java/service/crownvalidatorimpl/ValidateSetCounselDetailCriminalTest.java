@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationMode2Type;
-
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +93,7 @@ public class ValidateSetCounselDetailCriminalTest {
                 new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setCounselDetailCriminalRequest.setRequestPartId(LONG_STRING);
-        setCounselDetailCriminalRequest.setRequestDtm(Instant.now());
+        setCounselDetailCriminalRequest.setRequestDtm(null);
         setCounselDetailCriminalRequest.setProfPartId(LONG_STRING);
         setCounselDetailCriminalRequest.setProfSeqNo(LONG_STRING);
 

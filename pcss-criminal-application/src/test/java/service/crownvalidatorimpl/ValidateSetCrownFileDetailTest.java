@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
 import ca.bc.gov.open.wsdl.pcss.three.FileComplexityType;
-
 import java.time.Instant;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
