@@ -64,13 +64,13 @@ public class TestService {
   public void runCompares() throws IOException {
     System.out.println("INFO: PCSS Criminal Diff testing started");
 
-    //    getAppearanceCriminalCompare();
-    // getAppearanceMethodCriminalCompare();
-    //    getAppearanceCriminalCountCompare();
-    //    getAppearanceCriminalResourceCompare();
-    //    getClosedFileCompare();
-    //  getCrownAssignmentCompare();
-    getFileDetailCriminalCompare();
+        getAppearanceCriminalCompare();
+    //     getAppearanceMethodCriminalCompare();
+    //        getAppearanceCriminalCountCompare();
+    //        getAppearanceCriminalResourceCompare();
+    //        getClosedFileCompare();
+    //      getCrownAssignmentCompare();
+    //    getFileDetailCriminalCompare();
   }
 
   private void getAppearanceMethodCriminalCompare() throws IOException {
@@ -83,7 +83,7 @@ public class TestService {
 
     request.setGetAppearanceCriminalApprMethodRequest(one);
     one.setGetAppearanceCriminalApprMethodRequest(two);
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
@@ -132,7 +132,7 @@ public class TestService {
 
     request.setGetAppearanceCriminalCountRequest(one);
     one.setGetAppearanceCriminalCountRequest(two);
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
@@ -180,12 +180,12 @@ public class TestService {
 
     request.setGetClosedFileRequest(one);
     one.setGetClosedFileRequest(two);
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
-    two.setFromApprDt(InstantSoapConverter.print(ZonedDateTime.now().minusYears(20).toInstant()));
-    two.setToApprDt(InstantSoapConverter.print(ZonedDateTime.now().plusYears(20).toInstant()));
+    two.setFromApprDt(ZonedDateTime.now().minusYears(20).toInstant());
+    two.setToApprDt(ZonedDateTime.now().plusYears(20).toInstant());
 
     InputStream inputIds = getClass().getResourceAsStream("/getClosedFileCtrmAgenId.csv");
     assert inputIds != null;
@@ -229,7 +229,7 @@ public class TestService {
 
     request.setGetFileDetailCriminalRequest(one);
     one.setGetFileDetailCriminalRequest(two);
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
@@ -290,7 +290,7 @@ public class TestService {
     request.setGetCrownAssignmentRequest(one);
     one.setGetCrownAssignmentRequest(two);
 
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
@@ -310,7 +310,7 @@ public class TestService {
       }
     }
 
-    two.setSinceDt(InstantSoapConverter.print(ZonedDateTime.now().minusYears(20).toInstant()));
+    two.setSinceDt(ZonedDateTime.now().minusYears(20).toInstant());
     two.setJustinNo(null);
 
     if (!compare(new GetClosedFileResponse(), request)) {
@@ -348,7 +348,7 @@ public class TestService {
 
     request.setGetAppearanceCriminalResourceRequest(one);
     one.setGetAppearanceCriminalResourceRequest(two);
-    two.setRequestDtm(InstantSoapConverter.print(dtm));
+    two.setRequestDtm(dtm);
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
@@ -397,7 +397,7 @@ public class TestService {
     request.setGetAppearanceCriminalRequest(one);
     one.setGetAppearanceCriminalRequest(two);
 
-    two.setRequestDtm("2017-11-20 01:01:01.0");
+    two.setRequestDtm(Instant.now());
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
