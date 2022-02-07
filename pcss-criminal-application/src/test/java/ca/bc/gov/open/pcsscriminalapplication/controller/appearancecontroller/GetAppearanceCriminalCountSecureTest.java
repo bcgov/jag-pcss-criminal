@@ -12,6 +12,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -140,7 +141,7 @@ public class GetAppearanceCriminalCountSecureTest {
 
         getAppearanceCriminalCountSecureRequest1.setAppearanceId("TEST");
         getAppearanceCriminalCountSecureRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalCountSecureRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getAppearanceCriminalCountSecureRequest1.setRequestDtm(Instant.now());
         getAppearanceCriminalCountSecureRequest1.setRequestPartId("TEST");
         getAppearanceCriminalCountSecureRequest1.setApplicationCd("TEST");
 

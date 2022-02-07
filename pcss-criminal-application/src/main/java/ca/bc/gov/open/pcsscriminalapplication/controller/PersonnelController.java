@@ -4,15 +4,10 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
-import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.Assignment;
-import ca.bc.gov.open.wsdl.pcss.one.Commitment;
-import ca.bc.gov.open.wsdl.pcss.one.Personnel;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -145,27 +140,6 @@ public class PersonnelController {
             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse
                     getPersonnelAvailabilityResponseInner) {
 
-        if (getPersonnelAvailabilityResponseInner.getPersonnel() != null) {
-            getPersonnelAvailabilityResponseInner
-                    .getPersonnel()
-                    .forEach(
-                            ((Consumer<Personnel>)
-                                            personnel ->
-                                                    personnel.setAvailabilityDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getAvailabilityDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCommitmentDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCreatedDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCreatedDt()))));
-        }
-
         GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse =
                 new GetPersonnelAvailabilityResponse();
         GetPersonnelAvailabilityResponse2 getPersonnelAvailabilityResponse2 =
@@ -269,48 +243,6 @@ public class PersonnelController {
     private GetPersonnelAvailDetailResponse buildPersonnelAvailDetail(
             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse
                     getPersonnelAvailDetailResponseInner) {
-
-        if (getPersonnelAvailDetailResponseInner.getCommitment() != null) {
-            getPersonnelAvailDetailResponseInner
-                    .getCommitment()
-                    .forEach(
-                            ((Consumer<Commitment>)
-                                            personnel ->
-                                                    personnel.setCommitmentTm(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentTm())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCommitmentDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCreatedDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCreatedDt()))));
-        }
-
-        if (getPersonnelAvailDetailResponseInner.getAssignment() != null) {
-            getPersonnelAvailDetailResponseInner
-                    .getAssignment()
-                    .forEach(
-                            ((Consumer<Assignment>)
-                                            assignment ->
-                                                    assignment.setCreateDt(
-                                                            DateUtils.formatDate(
-                                                                    assignment.getStartDt())))
-                                    .andThen(
-                                            assignment ->
-                                                    assignment.setStartDt(
-                                                            DateUtils.formatDate(
-                                                                    assignment.getStartDt())))
-                                    .andThen(
-                                            assignment ->
-                                                    assignment.setEndDt(
-                                                            DateUtils.formatDate(
-                                                                    assignment.getEndDt()))));
-        }
 
         GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse =
                 new GetPersonnelAvailDetailResponse();

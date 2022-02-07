@@ -6,13 +6,11 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.Participant;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -120,15 +118,6 @@ public class FileController {
     private GetClosedFileResponse buildClosedFileResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponseInner) {
 
-        if (getClosedFileResponseInner.getCourtFile() != null) {
-            getClosedFileResponseInner
-                    .getCourtFile()
-                    .forEach(
-                            (courtFile ->
-                                    courtFile.setApprDt(
-                                            DateUtils.formatDate(courtFile.getApprDt()))));
-        }
-
         GetClosedFileResponse getClosedFileResponse = new GetClosedFileResponse();
         GetClosedFileResponce getClosedFileResponce = new GetClosedFileResponce();
         getClosedFileResponce.setGetClosedFileResponse(getClosedFileResponseInner);
@@ -220,17 +209,6 @@ public class FileController {
     private GetFileDetailCriminalResponse buildFileDetailCriminalResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse
                     getFileDetailCriminalResponseInner) {
-
-        if (getFileDetailCriminalResponseInner.getParticipant() != null) {
-            getFileDetailCriminalResponseInner
-                    .getParticipant()
-                    .forEach(
-                            ((Consumer<Participant>)
-                                    participant ->
-                                            participant.setBirthDt(
-                                                    DateUtils.formatDate(
-                                                            participant.getBirthDt()))));
-        }
 
         GetFileDetailCriminalResponse getFileDetailCriminalResponse =
                 new GetFileDetailCriminalResponse();

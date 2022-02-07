@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -123,7 +124,7 @@ public class SetCounselDetailCriminalTest {
                         new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest1.setRequestAgencyIdentifierId("Test");
         setCounselDetailCriminalRequest1.setRequestPartId("Test");
-        setCounselDetailCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setCounselDetailCriminalRequest1.setRequestDtm(Instant.now());
         setCounselDetailCriminalRequest1.setProfPartId("Test");
         setCounselDetailCriminalRequest1.setProfSeqNo("Test");
         setCounselDetailCriminalRequest1.setDetail(Collections.singletonList(new Detail4()));

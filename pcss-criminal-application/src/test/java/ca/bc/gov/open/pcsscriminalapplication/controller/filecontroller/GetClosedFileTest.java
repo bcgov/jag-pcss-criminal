@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -123,10 +124,10 @@ public class GetClosedFileTest {
 
         getClosedFileRequest1.setAgencyId("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setRequestDtm(Instant.now());
         getClosedFileRequest1.setRequestPartId("TEST");
-        getClosedFileRequest1.setFromApprDt("2013-03-25 13:04:22.1");
-        getClosedFileRequest1.setToApprDt("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setFromApprDt(Instant.now());
+        getClosedFileRequest1.setToApprDt(Instant.now());
 
         getClosedFileRequest.setGetClosedFileRequest(getClosedFileRequest1);
 

@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils;
 import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest;
@@ -34,19 +35,20 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
 
         if (getPersonnelAvailabilityRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getRequestDtm())) {
+                        DateUtils.formatTo21Length(
+                                getPersonnelAvailabilityRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
         if (getPersonnelAvailabilityRequest.getToDt() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getToDt())) {
+                        DateUtils.formatTo21Length(getPersonnelAvailabilityRequest.getToDt()))) {
             errors.add("ToDt is not valid");
         }
 
         if (getPersonnelAvailabilityRequest.getFromDt() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailabilityRequest.getFromDt())) {
+                        DateUtils.formatTo21Length(getPersonnelAvailabilityRequest.getFromDt()))) {
             errors.add("FromDt is not valid");
         }
 
@@ -78,13 +80,15 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
 
         if (getPersonnelAvailDetailRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailDetailRequest.getRequestDtm())) {
+                        DateUtils.formatTo21Length(
+                                getPersonnelAvailDetailRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
         if (getPersonnelAvailDetailRequest.getAvailabilityDt() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelAvailDetailRequest.getAvailabilityDt())) {
+                        DateUtils.formatTo21Length(
+                                getPersonnelAvailDetailRequest.getAvailabilityDt()))) {
             errors.add("AvailabilityDt is not valid");
         }
 
@@ -116,7 +120,7 @@ public class PersonnelValidatorImpl implements PersonnelValidator {
 
         if (getPersonnelSearchRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getPersonnelSearchRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(getPersonnelSearchRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
