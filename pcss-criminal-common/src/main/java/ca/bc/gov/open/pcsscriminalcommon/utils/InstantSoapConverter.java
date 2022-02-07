@@ -28,7 +28,7 @@ public class InstantSoapConverter {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                         .withZone(ZoneId.systemDefault())
                         .format(value);
-        return out;
+        return out + ".0";
     }
 
     public static Instant parse(String value) {

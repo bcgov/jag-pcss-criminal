@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.Locale;
 import java.util.TimeZone;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +17,17 @@ public class InstantDeserializer extends JsonDeserializer<Instant> {
     public Instant deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         try {
-
-            SimpleDateFormat d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
-            d.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
-
-            return d.parse(jsonParser.getText()).toInstant();
-
+            var sfd = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
+            sfd.setTimeZone(TimeZone.getTimeZone("UTC"));
+            return sfd.parse(jsonParser.getText()).toInstant();
         } catch (ParseException e) {
-            log.error(e.getLocalizedMessage());
+            try {
+                var sfd = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+                sfd.setTimeZone(TimeZone.getTimeZone("UTC"));
+                return sfd.parse(jsonParser.getText()).toInstant();
+            } catch (ParseException e2) {
+                log.error(e2.getLocalizedMessage());
+            }
         }
         return null;
     }
