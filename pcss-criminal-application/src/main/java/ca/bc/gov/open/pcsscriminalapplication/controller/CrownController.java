@@ -4,7 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
-import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
@@ -21,7 +20,6 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -130,24 +128,6 @@ public class CrownController {
     private GetCrownAssignmentResponse buildGetCrownAssignmentResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse
                     getCrownAssignmentResponseInner) {
-
-        if (getCrownAssignmentResponseInner.getCrownAssignment() != null) {
-            getCrownAssignmentResponseInner
-                    .getCrownAssignment()
-                    .forEach(
-                            ((Consumer<CrownAssignment>)
-                                            crownAssignment ->
-                                                    crownAssignment.setAssignmentDt(
-                                                            DateUtils.formatDate(
-                                                                    crownAssignment
-                                                                            .getAssignmentDt())))
-                                    .andThen(
-                                            crownAssignment ->
-                                                    crownAssignment.setAssignmentEndDt(
-                                                            DateUtils.formatDate(
-                                                                    crownAssignment
-                                                                            .getAssignmentEndDt()))));
-        }
 
         GetCrownAssignmentResponse getCrownAssignmentResponse = new GetCrownAssignmentResponse();
         GetCrownAssignmentResponse2 getCrownAssignmentResponse2 = new GetCrownAssignmentResponse2();

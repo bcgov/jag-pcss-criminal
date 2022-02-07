@@ -1,6 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.service.impl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
+import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.ValidationUtils;
 import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodSecureRequest;
@@ -37,7 +38,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(getAppearanceCriminalRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -76,7 +77,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalApprMethodRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalApprMethodRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalApprMethodRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -110,7 +112,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalApprMethodSecureRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalApprMethodSecureRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalApprMethodSecureRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -145,7 +148,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalCountRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalCountRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalCountRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -178,7 +182,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalCountSecureRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalCountSecureRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalCountSecureRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -213,7 +218,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalResourceRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalResourceRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalResourceRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -246,7 +252,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (getAppearanceCriminalSecureRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        getAppearanceCriminalSecureRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                getAppearanceCriminalSecureRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -286,7 +293,7 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (setAppearanceCriminalRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        setAppearanceCriminalRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(setAppearanceCriminalRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 
@@ -316,15 +323,25 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
                         MessageFormat.format("Details ProfSeqNo at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(
-                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceDt())) {
+            if (setAppearanceCriminalRequest.getDetail().get(i).getAppearanceDt() == null
+                    || ValidationUtils.checkDateTimeTypeForErrors(
+                            DateUtils.formatTo21Length(
+                                    setAppearanceCriminalRequest
+                                            .getDetail()
+                                            .get(i)
+                                            .getAppearanceDt()))) {
                 errors.add(
                         MessageFormat.format(
                                 "Details AppearanceDt at index {0} is not valid", i + 1));
             }
 
-            if (ValidationUtils.checkDateTimeTypeForErrors(
-                    setAppearanceCriminalRequest.getDetail().get(i).getAppearanceTm())) {
+            if (setAppearanceCriminalRequest.getDetail().get(i).getAppearanceTm() == null
+                    || ValidationUtils.checkDateTimeTypeForErrors(
+                            DateUtils.formatTo21Length(
+                                    setAppearanceCriminalRequest
+                                            .getDetail()
+                                            .get(i)
+                                            .getAppearanceTm()))) {
                 errors.add(
                         MessageFormat.format(
                                 "Details AppearanceTm at index {0} is not valid", i + 1));
@@ -381,7 +398,8 @@ public class AppearanceValidatorImpl implements AppearanceValidator {
 
         if (setAppearanceMethodCriminalRequest.getRequestDtm() == null
                 || ValidationUtils.checkDateTimeTypeForErrors(
-                        setAppearanceMethodCriminalRequest.getRequestDtm().toString())) {
+                        DateUtils.formatTo21Length(
+                                setAppearanceMethodCriminalRequest.getRequestDtm()))) {
             errors.add("RequestDtm is not valid");
         }
 

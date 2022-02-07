@@ -1,6 +1,7 @@
 package service.syncvalidatorimpl;
 
 import ca.bc.gov.open.pcsscriminalapplication.service.impl.SyncValidatorImpl;
+import java.time.Instant;
 import java.util.List;
 import org.junit.jupiter.api.*;
 
@@ -23,8 +24,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest
                 getSyncCriminalHearingRestrictionRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(Instant.now());
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm(Instant.now());
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -42,8 +43,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest
                 getSyncCriminalHearingRestrictionRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(Instant.now());
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm(Instant.now());
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("000000000000000000");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -62,8 +63,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest
                 getSyncCriminalHearingRestrictionRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(Instant.now());
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm(Instant.now());
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("000000000000000000");
 
@@ -82,8 +83,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest
                 getSyncCriminalHearingRestrictionRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25 13:04:22.1");
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25");
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(Instant.now());
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm(null);
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 
@@ -102,8 +103,8 @@ public class validateGetSyncCriminalHearingRestrictionTest {
         ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest
                 getSyncCriminalHearingRestrictionRequest =
                         new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
-        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm("2013-03-25");
-        getSyncCriminalHearingRestrictionRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getSyncCriminalHearingRestrictionRequest.setProcessUpToDtm(null);
+        getSyncCriminalHearingRestrictionRequest.setRequestDtm(Instant.now());
         getSyncCriminalHearingRestrictionRequest.setRequestAgencyIdentifierId("0");
         getSyncCriminalHearingRestrictionRequest.setRequestPartId("0");
 

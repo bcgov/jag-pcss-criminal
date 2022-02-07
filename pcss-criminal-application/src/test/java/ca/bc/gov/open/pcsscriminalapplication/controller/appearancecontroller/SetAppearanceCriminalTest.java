@@ -14,6 +14,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -135,7 +136,7 @@ public class SetAppearanceCriminalTest {
                 new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest();
 
         setAppearanceCriminalRequest1.setRequestAgencyIdentifierId("TEST");
-        setAppearanceCriminalRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setAppearanceCriminalRequest1.setRequestDtm(Instant.now());
         setAppearanceCriminalRequest1.setRequestPartId("TEST");
         setAppearanceCriminalRequest1.setDetail(Collections.singletonList(new Detail()));
 

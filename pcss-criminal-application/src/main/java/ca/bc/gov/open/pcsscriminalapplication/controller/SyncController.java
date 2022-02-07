@@ -4,13 +4,10 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
-import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.Appearance;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -134,28 +131,6 @@ public class SyncController {
             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse
                     getSyncCriminalAppearanceResponseInner) {
 
-        if (getSyncCriminalAppearanceResponseInner.getAppearance() != null) {
-            getSyncCriminalAppearanceResponseInner
-                    .getAppearance()
-                    .forEach(
-                            ((Consumer<Appearance>)
-                                            appearance ->
-                                                    appearance.setAppearanceDt(
-                                                            DateUtils.formatDate(
-                                                                    appearance.getAppearanceDt())))
-                                    .andThen(
-                                            appearance ->
-                                                    appearance.setAppearanceTm(
-                                                            DateUtils.formatDate(
-                                                                    appearance.getAppearanceTm())))
-                                    .andThen(
-                                            appearance ->
-                                                    appearance.setTransactionDtm(
-                                                            DateUtils.formatDate(
-                                                                    appearance
-                                                                            .getTransactionDtm()))));
-        }
-
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse
                 getSyncCriminalAppearanceResponse =
                         new ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalAppearanceResponse();
@@ -265,16 +240,6 @@ public class SyncController {
             buildHearingResponse(
                     ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse
                             getSyncCriminalHearingRestrictionResponseInner) {
-
-        if (getSyncCriminalHearingRestrictionResponseInner.getHearingRestriction() != null) {
-            getSyncCriminalHearingRestrictionResponseInner
-                    .getHearingRestriction()
-                    .forEach(
-                            (hearingRestriction ->
-                                    hearingRestriction.setTransactionDtm(
-                                            DateUtils.formatDate(
-                                                    hearingRestriction.getTransactionDtm()))));
-        }
 
         ca.bc.gov.open.wsdl.pcss.two.GetSyncCriminalHearingRestrictionResponse
                 getSyncCriminalHearingRestrictionResponse =

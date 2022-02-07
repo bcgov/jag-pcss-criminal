@@ -6,8 +6,6 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.ApprDetail;
-import ca.bc.gov.open.wsdl.pcss.one.Resource;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodResponse;
@@ -15,7 +13,6 @@ import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -133,23 +130,6 @@ public class AppearanceController {
     private GetAppearanceCriminalResponse buildAppearanceResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse
                     getAppearanceCriminalResponseInner) {
-
-        if (getAppearanceCriminalResponseInner.getApprDetail() != null) {
-            getAppearanceCriminalResponseInner
-                    .getApprDetail()
-                    .forEach(
-                            ((Consumer<ApprDetail>)
-                                            apprDetail ->
-                                                    apprDetail.setAppearanceDt(
-                                                            DateUtils.formatDate(
-                                                                    apprDetail.getAppearanceDt())))
-                                    .andThen(
-                                            apprDetail ->
-                                                    apprDetail.setAppearanceTm(
-                                                            DateUtils.formatDate(
-                                                                    apprDetail
-                                                                            .getAppearanceTm()))));
-        }
 
         GetAppearanceCriminalResponse getAppearanceCriminalResponse =
                 new GetAppearanceCriminalResponse();
@@ -676,27 +656,6 @@ public class AppearanceController {
             ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse
                     getAppearanceCriminalResourceResponseInner) {
 
-        if (getAppearanceCriminalResourceResponseInner.getResource() != null) {
-            getAppearanceCriminalResourceResponseInner
-                    .getResource()
-                    .forEach(
-                            ((Consumer<Resource>)
-                                            resource ->
-                                                    resource.setBookedDt(
-                                                            DateUtils.formatDate(
-                                                                    resource.getBookedDt())))
-                                    .andThen(
-                                            resource ->
-                                                    resource.setBookedFromTm(
-                                                            DateUtils.formatDate(
-                                                                    resource.getBookedFromTm())))
-                                    .andThen(
-                                            resource ->
-                                                    resource.setBookedToTm(
-                                                            DateUtils.formatDate(
-                                                                    resource.getBookedToTm()))));
-        }
-
         GetAppearanceCriminalResourceResponse getAppearanceCriminalResourceResponse =
                 new GetAppearanceCriminalResourceResponse();
         ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResourceResponse2
@@ -812,23 +771,6 @@ public class AppearanceController {
     private GetAppearanceCriminalSecureResponse buildAppearanceCriminalSecureResponse(
             ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse
                     getAppearanceCriminalResponseInner) {
-
-        if (getAppearanceCriminalResponseInner.getApprDetail() != null) {
-            getAppearanceCriminalResponseInner
-                    .getApprDetail()
-                    .forEach(
-                            ((Consumer<ca.bc.gov.open.wsdl.pcss.secure.one.ApprDetail>)
-                                            apprDetail ->
-                                                    apprDetail.setAppearanceDt(
-                                                            DateUtils.formatDate(
-                                                                    apprDetail.getAppearanceDt())))
-                                    .andThen(
-                                            apprDetail ->
-                                                    apprDetail.setAppearanceTm(
-                                                            DateUtils.formatDate(
-                                                                    apprDetail
-                                                                            .getAppearanceTm()))));
-        }
 
         GetAppearanceCriminalSecureResponse getAppearanceCriminalSecureResponse =
                 new GetAppearanceCriminalSecureResponse();

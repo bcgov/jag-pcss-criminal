@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationMode2Type;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -36,7 +37,7 @@ public class ValidateSetCounselDetailCriminalTest {
                 new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        setCounselDetailCriminalRequest.setRequestDtm(Instant.now());
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 
@@ -66,7 +67,7 @@ public class ValidateSetCounselDetailCriminalTest {
                 new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        setCounselDetailCriminalRequest.setRequestDtm(Instant.now());
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 
@@ -92,7 +93,7 @@ public class ValidateSetCounselDetailCriminalTest {
                 new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(LONG_STRING);
         setCounselDetailCriminalRequest.setRequestPartId(LONG_STRING);
-        setCounselDetailCriminalRequest.setRequestDtm("2020-SEP-05");
+        setCounselDetailCriminalRequest.setRequestDtm(null);
         setCounselDetailCriminalRequest.setProfPartId(LONG_STRING);
         setCounselDetailCriminalRequest.setProfSeqNo(LONG_STRING);
 
@@ -126,7 +127,7 @@ public class ValidateSetCounselDetailCriminalTest {
                 new SetCounselDetailCriminalRequest();
         setCounselDetailCriminalRequest.setRequestAgencyIdentifierId(VALUE);
         setCounselDetailCriminalRequest.setRequestPartId(VALUE);
-        setCounselDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        setCounselDetailCriminalRequest.setRequestDtm(Instant.now());
         setCounselDetailCriminalRequest.setProfPartId(VALUE);
         setCounselDetailCriminalRequest.setProfSeqNo(VALUE);
 

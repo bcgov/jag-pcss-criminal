@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.service.impl.CrownValidatorImpl;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
+import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
@@ -15,8 +16,8 @@ public class ValidateSetCrownAssignmentTest {
 
     private static final String LONG_STRING = "000000000000000000000000000000000000";
     private static final String VALUE = "0000";
-    private static final String DATE = "2013-03-25 13:04:22.1";
-    private static final String BAD_DATE = "2020-SEP-05";
+    private static final Instant DATE = Instant.now();
+    private static final Instant BAD_DATE = null;
 
     private CrownValidatorImpl sut;
 
