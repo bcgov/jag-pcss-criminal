@@ -9,6 +9,7 @@ import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
@@ -51,7 +52,7 @@ public class GetFileDetailCriminalTest {
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetFileDetailCriminalResponse result = sut.getFileDetailCriminal(createTestRequest());
@@ -73,7 +74,7 @@ public class GetFileDetailCriminalTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

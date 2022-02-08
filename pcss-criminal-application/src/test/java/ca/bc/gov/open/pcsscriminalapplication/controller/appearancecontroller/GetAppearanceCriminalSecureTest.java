@@ -84,7 +84,7 @@ public class GetAppearanceCriminalSecureTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

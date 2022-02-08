@@ -12,6 +12,7 @@ import ca.bc.gov.open.wsdl.pcss.three.AvailablePersonType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -59,7 +60,7 @@ public class GetPersonnelAvailDetailTest {
         response.setAssignment(Collections.singletonList(new Assignment()));
         response.setCommitment(Collections.singletonList(new Commitment()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetPersonnelAvailDetailResponse result = sut.getPersonnelAvailDetail(createTestRequest());
@@ -103,7 +104,7 @@ public class GetPersonnelAvailDetailTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

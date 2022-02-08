@@ -10,6 +10,7 @@ import ca.bc.gov.open.wsdl.pcss.one.AppearanceMethod;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -56,7 +57,7 @@ class GetAppearanceCriminalApprMethodTest {
         AppearanceMethod apearanceMethod = new AppearanceMethod();
         response.setAppearanceMethod(Collections.singletonList(apearanceMethod));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetAppearanceCriminalApprMethodResponse result =
@@ -85,7 +86,7 @@ class GetAppearanceCriminalApprMethodTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

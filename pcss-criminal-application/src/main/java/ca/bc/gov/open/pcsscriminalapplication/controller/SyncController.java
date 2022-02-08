@@ -82,7 +82,7 @@ public class SyncController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse> response =
                     restTemplate.exchange(
-                            uriComponents.toUriString(),
+                            uriComponents.toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse.class);
@@ -173,7 +173,7 @@ public class SyncController {
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse>
                     response =
                             restTemplate.exchange(
-                                    uriComponents.toUriString(),
+                                    uriComponents.toUri(),
                                     HttpMethod.GET,
                                     new HttpEntity<>(new HttpHeaders()),
                                     ca.bc.gov.open.wsdl.pcss.one

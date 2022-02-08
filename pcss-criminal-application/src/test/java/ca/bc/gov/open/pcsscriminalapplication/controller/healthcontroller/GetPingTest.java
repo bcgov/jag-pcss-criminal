@@ -10,6 +10,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetPing;
 import ca.bc.gov.open.wsdl.pcss.two.GetPingResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -53,7 +54,7 @@ public class GetPingTest {
         GetPingResponse response = new GetPingResponse();
         response.setStatus("TEST");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetPingResponse result = sut.getPing(new GetPing());
@@ -66,7 +67,7 @@ public class GetPingTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getPing(new GetPing()));
