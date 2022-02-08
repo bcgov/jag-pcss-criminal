@@ -55,6 +55,6 @@ public class InstantUtilsTest {
 
         String result = InstantSoapConverter.print(testDateTime.toInstant(ZoneOffset.UTC));
 
-        Assertions.assertEquals("2021-04-17 00:00:00.0", result);
+        Assertions.assertEquals("2021-04-16 17:00:00.0", result);
     }
 }
