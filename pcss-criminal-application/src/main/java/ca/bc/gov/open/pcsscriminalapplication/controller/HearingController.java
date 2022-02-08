@@ -94,7 +94,7 @@ public class HearingController {
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse>
                     response =
                             restTemplate.exchange(
-                                    builder.toUriString(),
+                                    builder.build().toUri(),
                                     HttpMethod.POST,
                                     body,
                                     ca.bc.gov.open.wsdl.pcss.one

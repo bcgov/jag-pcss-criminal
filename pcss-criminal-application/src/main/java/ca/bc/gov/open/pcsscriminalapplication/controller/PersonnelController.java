@@ -5,6 +5,7 @@ import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
@@ -103,8 +104,13 @@ public class PersonnelController {
                                 Keys.QUERY_PART_ID_LIST,
                                 getPersonnelAvailabilityRequest.getPartIdList())
                         .queryParam(
-                                Keys.QUERY_FROM_DATE, getPersonnelAvailabilityRequest.getFromDt())
-                        .queryParam(Keys.QUERY_TO_DATE, getPersonnelAvailabilityRequest.getToDt());
+                                Keys.QUERY_FROM_DATE,
+                                InstantSerializer.convert(
+                                        getPersonnelAvailabilityRequest.getFromDt()))
+                        .queryParam(
+                                Keys.QUERY_TO_DATE,
+                                InstantSerializer.convert(
+                                        getPersonnelAvailabilityRequest.getToDt()));
 
         try {
 
@@ -112,7 +118,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse.class);
@@ -216,7 +222,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse.class);
@@ -314,7 +320,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse.class);

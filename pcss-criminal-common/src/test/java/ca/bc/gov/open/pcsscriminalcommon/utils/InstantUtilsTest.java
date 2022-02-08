@@ -22,7 +22,7 @@ public class InstantUtilsTest {
 
         MockitoAnnotations.openMocks(this);
 
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
     }
 
     @Test

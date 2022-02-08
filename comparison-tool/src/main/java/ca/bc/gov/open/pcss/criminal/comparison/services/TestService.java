@@ -7,9 +7,12 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import ca.bc.gov.open.pcsscriminalcommon.utils.InstantSoapConverter;
+import ca.bc.gov.open.wsdl.pcss.three.AvailablePersonType;
+import ca.bc.gov.open.wsdl.pcss.three.OfficerSearchType;
 import ca.bc.gov.open.wsdl.pcss.three.YesNoType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -64,13 +67,194 @@ public class TestService {
   public void runCompares() throws IOException {
     System.out.println("INFO: PCSS Criminal Diff testing started");
 
-        getAppearanceCriminalCompare();
-    //     getAppearanceMethodCriminalCompare();
-    //        getAppearanceCriminalCountCompare();
-    //        getAppearanceCriminalResourceCompare();
-    //        getClosedFileCompare();
-    //      getCrownAssignmentCompare();
-    //    getFileDetailCriminalCompare();
+    // getAppearanceCriminalCompare();
+    //   getAppearanceMethodCriminalCompare();
+    //            getAppearanceCriminalCountCompare();
+    //           getAppearanceCriminalResourceCompare();
+    //          getClosedFileCompare();
+    //          getCrownAssignmentCompare();
+    //getFileDetailCriminalCompare();
+    //    getPersonalAvailabilityCompare();
+     getPersonnelAvailDetailCompare();
+    // getPersonnelSearchCompare();
+  }
+
+  private void getPersonnelSearchCompare() throws IOException {
+    int diffCounter = 0;
+
+    GetPersonnelSearch request = new GetPersonnelSearch();
+    GetPersonnelSearchRequest one = new GetPersonnelSearchRequest();
+    ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest two =
+        new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest();
+
+    request.setGetPersonnelSearchRequest(one);
+    one.setGetPersonnelSearchRequest(two);
+    two.setRequestDtm(dtm);
+    two.setRequestAgencyIdentifierId(RAID);
+    two.setRequestPartId(partId);
+
+    InputStream inputIds = getClass().getResourceAsStream("/getPersonnelSearchPartId.csv");
+    assert inputIds != null;
+    Scanner scanner = new Scanner(inputIds);
+
+    InputStream inputNames = getClass().getResourceAsStream("/getPersonnelSearchNames.csv");
+    assert inputNames != null;
+    Scanner scanner2 = new Scanner(inputNames);
+
+    List<String> names = new ArrayList<>();
+
+    while (scanner2.hasNextLine()) {
+      names.add(scanner2.nextLine());
+    }
+
+    fileOutput = new PrintWriter(outputDir + "getPersonnelSearch.txt", StandardCharsets.UTF_8);
+
+    two.setSearchTypeCd(OfficerSearchType.NAME);
+    Random rand = new Random();
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      int idx = rand.nextInt(names.size() + 1);
+      System.out.println(
+          "\nINFO: getPersonnelSearch with part id: " + line + " Name: " + names.get(idx));
+      two.setAgencyId(line);
+
+      two.setSearchTxt(names.get(idx));
+      if (!compare(new GetPersonnelSearchResponse(), request)) {
+        fileOutput.println(
+            "\nINFO: getPersonnelSearch with part id: " + line + "name" + names.get(idx));
+        ++diffCounter;
+      }
+    }
+
+    System.out.println(
+        "########################################################\n"
+            + "INFO: getPersonnelSearch Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    fileOutput.println(
+        "########################################################\n"
+            + "INFO: getPersonnelSearch Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    overallDiff += diffCounter;
+    fileOutput.close();
+  }
+
+  private void getPersonnelAvailDetailCompare() throws IOException {
+    GetPersonnelAvailDetail request = new GetPersonnelAvailDetail();
+    GetPersonnelAvailDetailRequest one = new GetPersonnelAvailDetailRequest();
+    ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest two =
+        new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest();
+    request.setGetPersonnelAvailDetailRequest(one);
+    one.setGetPersonnelAvailDetailRequest(two);
+
+    two.setRequestDtm(dtm);
+    two.setRequestPartId(partId);
+    two.setRequestAgencyIdentifierId(RAID);
+    two.setAvailabilityDt(Instant.now());
+
+    two.setPersonTypeCd(AvailablePersonType.O);
+    overallDiff += personTypeDetailCompare(request);
+
+    two.setPersonTypeCd(AvailablePersonType.C);
+    overallDiff += personTypeDetailCompare(request);
+
+    two.setPersonTypeCd(AvailablePersonType.D);
+    overallDiff += personTypeDetailCompare(request);
+
+    fileOutput.close();
+  }
+
+  private void getPersonalAvailabilityCompare() throws IOException {
+    int diffCounter = 0;
+
+    GetPersonnelAvailability request = new GetPersonnelAvailability();
+    GetPersonnelAvailabilityRequest one = new GetPersonnelAvailabilityRequest();
+    ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest two =
+        new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityRequest();
+    request.setGetPersonnelAvailabilityRequest(one);
+    one.setGetPersonnelAvailabilityRequest(two);
+    two.setRequestDtm(dtm);
+    two.setRequestAgencyIdentifierId(RAID);
+    two.setRequestPartId(partId);
+    two.setFromDt(ZonedDateTime.now().minusYears(1).toInstant());
+    two.setToDt(ZonedDateTime.now().plusYears(1).toInstant());
+
+    two.setPersonTypeCd(AvailablePersonType.D);
+    diffCounter += personTypeCompare(request);
+
+    two.setPersonTypeCd(AvailablePersonType.C);
+    diffCounter += personTypeCompare(request);
+
+    two.setPersonTypeCd(AvailablePersonType.O);
+    diffCounter += personTypeCompare(request);
+
+    System.out.println(
+        "########################################################\n"
+            + "INFO: getPersonnelAvailability Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    fileOutput.println(
+        "########################################################\n"
+            + "INFO: getPersonnelAvailability Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    overallDiff += diffCounter;
+    fileOutput.close();
+  }
+
+  private int personTypeCompare(GetPersonnelAvailability request) throws IOException {
+    int diffCounter = 0;
+    InputStream inputIds = getClass().getResourceAsStream("/getPersonnelAvailabilityPartId.csv");
+    assert inputIds != null;
+    Scanner scanner = new Scanner(inputIds);
+    fileOutput = new PrintWriter(outputDir + "getPersonnelAvailDetail.txt", StandardCharsets.UTF_8);
+
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      System.out.println("\nINFO: getPersonnelAvailDetail with partId: " + line);
+      request
+          .getGetPersonnelAvailabilityRequest()
+          .getGetPersonnelAvailabilityRequest()
+          .setPartIdList(line);
+      if (!compare(new GetPersonnelAvailabilityResponse(), request)) {
+        fileOutput.println("\nINFO: getPersonnelAvailDetail with partId: " + line);
+        ++diffCounter;
+      }
+    }
+    return diffCounter;
+  }
+
+  private int personTypeDetailCompare(GetPersonnelAvailDetail request) throws IOException {
+    int diffCounter = 0;
+    InputStream inputIds =
+        getClass().getResourceAsStream("/getPersonnelAvailabilityDetailPartId.csv");
+    assert inputIds != null;
+    Scanner scanner = new Scanner(inputIds);
+    fileOutput =
+        new PrintWriter(outputDir + "getPersonnelAvailability.txt", StandardCharsets.UTF_8);
+
+    while (scanner.hasNextLine()) {
+      String line = scanner.nextLine();
+      System.out.println("\nINFO: getPersonnelAvailability with partId: " + line);
+      request
+          .getGetPersonnelAvailDetailRequest()
+          .getGetPersonnelAvailDetailRequest()
+          .setPaasPartId(line);
+      if (!compare(new GetPersonnelAvailDetailResponse(), request)) {
+        fileOutput.println("\nINFO: getPersonnelAvailability with partId: " + line);
+        ++diffCounter;
+      }
+    }
+    return diffCounter;
   }
 
   private void getAppearanceMethodCriminalCompare() throws IOException {
@@ -233,7 +417,6 @@ public class TestService {
     two.setRequestAgencyIdentifierId(RAID);
     two.setRequestPartId(partId);
 
-
     InputStream inputIds = getClass().getResourceAsStream("/getFileDetailCriminalMdoc.csv");
     assert inputIds != null;
     Scanner scanner = new Scanner(inputIds);
@@ -265,14 +448,14 @@ public class TestService {
 
     System.out.println(
         "########################################################\n"
-            + "INFO: getClosedFile Completed there are "
+            + "INFO: getFileDetailCriminal Completed there are "
             + diffCounter
             + " diffs\n"
             + "########################################################");
 
     fileOutput.println(
         "########################################################\n"
-            + "INFO: getClosedFile Completed there are "
+            + "INFO: getFileDetailCriminal Completed there are "
             + diffCounter
             + " diffs\n"
             + "########################################################");
@@ -529,8 +712,21 @@ public class TestService {
   }
 
   private void printDiff(Diff diff) {
-    int diffSize = diff.getChanges().size();
+
+    List<Change> actualChanges = new ArrayList<>(diff.getChanges());
+
+    actualChanges.removeIf(c ->{
+      if (c instanceof ValueChange){
+        return ((ValueChange) c).getLeft() == null && ((ValueChange) c).getRight().toString().isBlank();
+      }
+
+      return false;
+    });
+
+    int diffSize = actualChanges.size();
+
     if (diffSize == 0) {
+      System.out.println("Only null and blank changes detected");
       return;
     }
 
@@ -539,7 +735,7 @@ public class TestService {
     table[0] = header;
 
     for (int i = 0; i < diffSize; ++i) {
-      Change ch = diff.getChanges().get(i);
+      Change ch = actualChanges.get(i);
 
       if (ch instanceof ListChange) {
         String apiVal =

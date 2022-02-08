@@ -45,7 +45,7 @@ public class DateUtils {
         }
 
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .withZone(ZoneId.of("UTC"))
+                .withZone(ZoneId.of("GMT-7"))
                 .withLocale(Locale.US)
                 .format(inDate);
     }
@@ -56,7 +56,7 @@ public class DateUtils {
         }
 
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.0")
-                .withZone(ZoneId.of("UTC"))
+                .withZone(ZoneId.of("GMT-7"))
                 .withLocale(Locale.US)
                 .format(inDate);
     }

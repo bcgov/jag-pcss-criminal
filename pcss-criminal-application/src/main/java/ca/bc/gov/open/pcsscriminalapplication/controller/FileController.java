@@ -6,6 +6,7 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
@@ -91,7 +92,7 @@ public class FileController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse.class);
@@ -170,7 +171,8 @@ public class FileController {
                                 Keys.QUERY_PART_ID, getFileDetailCriminalRequest.getRequestPartId())
                         .queryParam(
                                 Keys.QUERY_REQUEST_DATE,
-                                getFileDetailCriminalRequest.getRequestDtm())
+                                InstantSerializer.convert(
+                                        getFileDetailCriminalRequest.getRequestDtm()))
                         .queryParam(
                                 Keys.QUERY_JUSTIN_NO, getFileDetailCriminalRequest.getJustinNo())
                         .queryParam(
@@ -183,7 +185,7 @@ public class FileController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse.class);
@@ -363,7 +365,7 @@ public class FileController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.POST,
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse.class);
