@@ -3,13 +3,10 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,17 +27,12 @@ public class SyncController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final SyncValidator syncValidator;
 
     public SyncController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            SyncValidator syncValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.syncValidator = syncValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SYNC_APPEARANCE)
@@ -63,23 +55,6 @@ public class SyncController {
                                         .getGetSyncCriminalAppearanceRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetSyncCriminalAppearanceRequest();
-
-        List<String> validation =
-                syncValidator.validateGetSyncCriminalAppearance(getSyncCriminalAppearanceRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse
-                    getSyncCriminalAppearanceResponseFailed =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceResponse();
-            getSyncCriminalAppearanceResponseFailed.setResponseCd(
-                    Keys.FAILED_VALIDATION.toString());
-            getSyncCriminalAppearanceResponseFailed.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SYNC_APPEARANCE);
-
-            return buildAppearanceResponse(getSyncCriminalAppearanceResponseFailed);
-        }
 
         UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(
@@ -166,25 +141,6 @@ public class SyncController {
                                         .getGetSyncCriminalHearingRestrictionRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetSyncCriminalHearingRestrictionRequest();
-
-        List<String> validation =
-                syncValidator.validateGetSyncCriminalHearingRestriction(
-                        getSyncCriminalHearingRestrictionRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse
-                    getSyncCriminalAppearanceResponseFailed =
-                            new ca.bc.gov.open.wsdl.pcss.one
-                                    .GetSyncCriminalHearingRestrictionResponse();
-            getSyncCriminalAppearanceResponseFailed.setResponseCd(
-                    Keys.FAILED_VALIDATION.toString());
-            getSyncCriminalAppearanceResponseFailed.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SYNC_HEARING);
-
-            return buildHearingResponse(getSyncCriminalAppearanceResponseFailed);
-        }
 
         UriComponents uriComponents =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_SYNC_HEARING)

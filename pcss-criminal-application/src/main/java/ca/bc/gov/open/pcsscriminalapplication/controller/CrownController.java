@@ -3,7 +3,6 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
@@ -19,9 +18,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,17 +38,12 @@ public class CrownController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final CrownValidator crownValidator;
 
     public CrownController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            CrownValidator crownValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.crownValidator = crownValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_CROWN_ASSIGNMENT)
@@ -71,19 +63,6 @@ public class CrownController {
                                 .getGetCrownAssignmentRequest()
                                 .getGetCrownAssignmentRequest()
                         : new GetCrownAssignmentRequest();
-
-        List<String> validationErrors =
-                crownValidator.validateGetCrownAssignment(getCrownAssignmentRequest);
-        if (!validationErrors.isEmpty()) {
-            ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse innerErrorResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
-            innerErrorResponse.setResponseCd("-2");
-            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-
-            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_CROWN_ASSIGNMENT);
-
-            return buildGetCrownAssignmentResponse(innerErrorResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
@@ -157,20 +136,6 @@ public class CrownController {
                                 .getSetCounselDetailCriminalRequest()
                         : new SetCounselDetailCriminalRequest();
 
-        List<String> validationErrors =
-                crownValidator.validateSetCounselDetailCriminal(setCounselDetailCriminalRequest);
-        if (!validationErrors.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse innerErrorResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse();
-            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-
-            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL);
-
-            return buildSetCounselDetailCriminalResponse(innerErrorResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                         pcssProperties.getHost() + Keys.ORDS_COUNSEL_DETAIL_CRIMINAL);
@@ -237,20 +202,6 @@ public class CrownController {
                                 .getSetCrownAssignmentRequest()
                         : new SetCrownAssignmentRequest();
 
-        List<String> validationErrors =
-                crownValidator.validateSetCrownAssignment(setCrownAssignmentRequest);
-        if (!validationErrors.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse innerErrorResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse();
-            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-
-            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
-
-            return buildSetCrownAssignmentResponse(innerErrorResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                         pcssProperties.getHost() + Keys.ORDS_CROWN_ASSIGNMENT);
@@ -315,20 +266,6 @@ public class CrownController {
                                 .getSetCrownFileDetailRequest()
                                 .getSetCrownFileDetailRequest()
                         : new SetCrownFileDetailRequest();
-
-        List<String> validationErrors =
-                crownValidator.validateSetCrownFileDetail(setCrownFileDetailRequest);
-        if (!validationErrors.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse innerErrorResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse();
-            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-
-            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
-
-            return buildSetCrownFileDetailResponse(innerErrorResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(

@@ -5,14 +5,11 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -31,8 +28,6 @@ public class GetFileDetailCriminalTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private FileValidator fileValidatorMock;
-
     private FileController sut;
 
     @BeforeAll
@@ -44,10 +39,7 @@ public class GetFileDetailCriminalTest {
 
         sut =
                 new FileController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        fileValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -58,9 +50,6 @@ public class GetFileDetailCriminalTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
-
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminal(any()))
-                .thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
@@ -84,36 +73,11 @@ public class GetFileDetailCriminalTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminal(any()))
-                .thenReturn(new ArrayList<>());
-
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
                 ORDSException.class, () -> sut.getFileDetailCriminal(createTestRequest()));
-    }
-
-    @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminal(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetFileDetailCriminalResponse result = sut.getFileDetailCriminal(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetFileDetailCriminalResponse()
-                        .getGetFileDetailCriminalResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getGetFileDetailCriminalResponse()
-                        .getGetFileDetailCriminalResponse()
-                        .getResponseCd());
     }
 
     private GetFileDetailCriminal createTestRequest() {

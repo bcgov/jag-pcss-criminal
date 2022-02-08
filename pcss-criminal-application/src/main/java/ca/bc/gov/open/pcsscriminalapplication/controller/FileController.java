@@ -3,7 +3,6 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
@@ -11,9 +10,7 @@ import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecure;
 import ca.bc.gov.open.wsdl.pcss.secure.two.GetFileDetailCriminalSecureResponse;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,17 +30,12 @@ public class FileController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final FileValidator fileValidator;
 
     public FileController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            FileValidator fileValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.fileValidator = fileValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_CLOSED)
@@ -59,20 +51,6 @@ public class FileController {
                                         != null
                         ? getClosedFile.getGetClosedFileRequest().getGetClosedFileRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileRequest();
-
-        List<String> validation = fileValidator.validateGetClosedFile(getClosedFileRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse getClosedFileResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse();
-
-            getClosedFileResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getClosedFileResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_CLOSED);
-
-            return buildClosedFileResponse(getClosedFileResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_CLOSED_FILE)
@@ -145,22 +123,6 @@ public class FileController {
                                 .getGetFileDetailCriminalRequest()
                                 .getGetFileDetailCriminalRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalRequest();
-
-        List<String> validation =
-                fileValidator.validateGetFileDetailCriminal(getFileDetailCriminalRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse
-                    getFileDetailCriminalResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetFileDetailCriminalResponse();
-
-            getFileDetailCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getFileDetailCriminalResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_DETAIL);
-
-            return buildFileDetailCriminalResponse(getFileDetailCriminalResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_FILE_DETAIL)
@@ -245,22 +207,6 @@ public class FileController {
                                 : new ca.bc.gov.open.wsdl.pcss.secure.one
                                         .GetFileDetailCriminalRequest();
 
-        List<String> validation =
-                fileValidator.validateGetFileDetailCriminalSecure(getFileDetailCriminalRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse
-                    getFileDetailCriminalResponse =
-                            new ca.bc.gov.open.wsdl.pcss.secure.one.GetFileDetailCriminalResponse();
-
-            getFileDetailCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getFileDetailCriminalResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_FILE_DETAIL_SECURE);
-
-            return buildFileDetailCriminalSecureResponse(getFileDetailCriminalResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_SECURE_FILE_DETAIL)
@@ -339,20 +285,6 @@ public class FileController {
                                         != null
                         ? setFileNote.getSetFileNoteRequest().getSetFileNoteRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteRequest();
-
-        List<String> validation = fileValidator.validateSetFileNote(setFileNoteRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse setFileNoteResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.SetFileNoteResponse();
-
-            setFileNoteResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            setFileNoteResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_SET_FILE_NOTE);
-
-            return buildFileNoteResponse(setFileNoteResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_FILE_NOTE);
