@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
@@ -59,7 +60,7 @@ public class SetCrownFileDetailTest {
         response.setMdocCcn("Test");
         response.setResponseMessageTxt("Test");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
@@ -75,7 +76,7 @@ public class SetCrownFileDetailTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

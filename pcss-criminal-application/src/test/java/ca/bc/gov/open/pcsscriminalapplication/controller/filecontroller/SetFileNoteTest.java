@@ -10,6 +10,7 @@ import ca.bc.gov.open.wsdl.pcss.three.FileNoteType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
@@ -52,7 +53,7 @@ public class SetFileNoteTest {
         response.setResponseCd("TEST");
         response.setResponseMessageTxt("TEST");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         SetFileNoteResponse result = sut.setFileNote(createTestRequest());
@@ -69,7 +70,7 @@ public class SetFileNoteTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.setFileNote(createTestRequest()));

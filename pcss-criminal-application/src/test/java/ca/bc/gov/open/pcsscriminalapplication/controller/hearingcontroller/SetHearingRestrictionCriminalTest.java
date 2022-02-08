@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
@@ -60,7 +61,7 @@ public class SetHearingRestrictionCriminalTest {
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalResponse result =
@@ -79,7 +80,7 @@ public class SetHearingRestrictionCriminalTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(

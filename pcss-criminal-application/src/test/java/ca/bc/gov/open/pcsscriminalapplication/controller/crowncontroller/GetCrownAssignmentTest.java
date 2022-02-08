@@ -12,6 +12,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -59,7 +60,7 @@ public class GetCrownAssignmentTest {
         response.setResponseMessageTxt("Test");
         response.setCrownAssignment(Collections.singletonList(new CrownAssignment()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetCrownAssignmentResponse result = sut.getCrownAssignment(createTestRequest());
@@ -74,7 +75,7 @@ public class GetCrownAssignmentTest {
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
         Assertions.assertThrows(
                 ORDSException.class, () -> sut.getCrownAssignment(createTestRequest()));

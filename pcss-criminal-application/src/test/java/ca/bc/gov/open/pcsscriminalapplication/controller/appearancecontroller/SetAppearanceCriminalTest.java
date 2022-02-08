@@ -13,6 +13,7 @@ import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
@@ -57,7 +58,7 @@ public class SetAppearanceCriminalTest {
         response.setResponseMessageTxt("TEST");
         response.setDetail(Collections.singletonList(new Detail2()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         SetAppearanceCriminalResponse result = sut.setAppearanceCriminal(createTestRequest());
@@ -85,7 +86,7 @@ public class SetAppearanceCriminalTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
