@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.Detail4;
 import ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse;
@@ -14,7 +13,6 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
@@ -37,8 +35,6 @@ public class SetCounselDetailCriminalTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private CrownValidator crownValidatorMock;
-
     private CrownController sut;
 
     @BeforeAll
@@ -50,10 +46,7 @@ public class SetCounselDetailCriminalTest {
 
         sut =
                 new CrownController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        crownValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -63,9 +56,6 @@ public class SetCounselDetailCriminalTest {
         SetCounselDetailCriminalResponse response = new SetCounselDetailCriminalResponse();
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
-
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
-                .thenReturn(new ArrayList<>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
@@ -80,35 +70,8 @@ public class SetCounselDetailCriminalTest {
     }
 
     @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalResponse result =
-                sut.setCounselDetailCriminal(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getSetCounselDetailCriminalResponse()
-                        .getSetCounselDetailCriminalResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getSetCounselDetailCriminalResponse()
-                        .getSetCounselDetailCriminalResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
-
-        Mockito.when(crownValidatorMock.validateSetCounselDetailCriminal(any()))
-                .thenReturn(new ArrayList<>());
-
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
         Assertions.assertThrows(

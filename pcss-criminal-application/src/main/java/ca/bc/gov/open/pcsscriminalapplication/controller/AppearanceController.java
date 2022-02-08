@@ -3,7 +3,6 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
@@ -12,9 +11,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalApprMethodResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalCountResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,17 +31,12 @@ public class AppearanceController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final AppearanceValidator appearanceValidator;
 
     public AppearanceController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            AppearanceValidator appearanceValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.appearanceValidator = appearanceValidator;
     }
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_APPEARANCE)
@@ -65,24 +57,6 @@ public class AppearanceController {
                                 .getGetAppearanceCriminalRequest()
                                 .getGetAppearanceCriminalRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalRequest();
-
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminal(getAppearanceCriminalRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse
-                    getAppearanceCriminalResponseValidation =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResponse();
-
-            getAppearanceCriminalResponseValidation.setResponseCd(
-                    Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalResponseValidation.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceResponse(getAppearanceCriminalResponseValidation);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE)
@@ -167,27 +141,6 @@ public class AppearanceController {
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetAppearanceCriminalApprMethodRequest();
 
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalApprMethod(
-                        getAppearanceCriminalApprMethodRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalApprMethodResponse
-                    getAppearanceCriminalApprMethodResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one
-                                    .GetAppearanceCriminalApprMethodResponse();
-
-            getAppearanceCriminalApprMethodResponse.setResponseCd(
-                    Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalApprMethodResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalApprMethodResponse(
-                    getAppearanceCriminalApprMethodResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_APPEARANCE_METHOD)
@@ -268,26 +221,6 @@ public class AppearanceController {
                                         .getGetAppearanceCriminalApprMethodSecureRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.secure.one
                                         .GetAppearanceCriminalApprMethodSecureRequest();
-
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalApprMethodSecure(
-                        getAppearanceCriminalApprMethodSecureRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalApprMethodResponse
-                    appearanceCriminalApprMethodResponse =
-                            new ca.bc.gov.open.wsdl.pcss.secure.one
-                                    .GetAppearanceCriminalApprMethodResponse();
-
-            appearanceCriminalApprMethodResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            appearanceCriminalApprMethodResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalApprMethodSecureResponse(
-                    appearanceCriminalApprMethodResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
@@ -385,24 +318,6 @@ public class AppearanceController {
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetAppearanceCriminalCountRequest();
 
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalCount(
-                        getAppearanceCriminalCountRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalCountResponse
-                    getAppearanceCriminalCountResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalCountResponse();
-
-            getAppearanceCriminalCountResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalCountResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalCountResponse(getAppearanceCriminalCountResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_APPEARANCE_COUNT)
@@ -481,25 +396,6 @@ public class AppearanceController {
                                         .getGetAppearanceCriminalCountSecureRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.secure.one
                                         .GetAppearanceCriminalCountSecureRequest();
-
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalCountSecure(
-                        getAppearanceCriminalCountSecureRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse
-                    appearanceCriminalCountResponse =
-                            new ca.bc.gov.open.wsdl.pcss.secure.one
-                                    .GetAppearanceCriminalCountResponse();
-
-            appearanceCriminalCountResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            appearanceCriminalCountResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalCountResponse(appearanceCriminalCountResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
@@ -594,25 +490,6 @@ public class AppearanceController {
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetAppearanceCriminalResourceRequest();
 
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalResource(
-                        getAppearanceCriminalResourceRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse
-                    getAppearanceCriminalResourceResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one
-                                    .GetAppearanceCriminalResourceResponse();
-
-            getAppearanceCriminalResourceResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalResourceResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalResourceResponse(getAppearanceCriminalResourceResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_APPEARANCE_RESOURCE)
@@ -689,24 +566,6 @@ public class AppearanceController {
                                         .getGetAppearanceCriminalSecureRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.secure.one
                                         .GetAppearanceCriminalSecureRequest();
-
-        List<String> validation =
-                appearanceValidator.validateGetAppearanceCriminalSecure(
-                        getAppearanceCriminalSecureRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse
-                    getAppearanceCriminalResourceResponse =
-                            new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalResponse();
-
-            getAppearanceCriminalResourceResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalResourceResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalSecureResponse(getAppearanceCriminalResourceResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
@@ -804,22 +663,6 @@ public class AppearanceController {
                                 .getSetAppearanceCriminalRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalRequest();
 
-        List<String> validation =
-                appearanceValidator.validateSetAppearanceCriminal(setAppearanceCriminalRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse
-                    setAppearanceCriminalResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse();
-
-            setAppearanceCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            setAppearanceCriminalResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceCriminalResponse(setAppearanceCriminalResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_APPEARANCE);
 
@@ -893,24 +736,6 @@ public class AppearanceController {
                                         .getSetAppearanceMethodCriminalRequest()
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .SetAppearanceMethodCriminalRequest();
-
-        List<String> validation =
-                appearanceValidator.validateSetAppearanceMethodCriminal(
-                        setAppearanceMethodCriminalRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalResponse
-                    setAppearanceMethodCriminalResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceMethodCriminalResponse();
-
-            setAppearanceMethodCriminalResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            setAppearanceMethodCriminalResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_APPEARANCE);
-
-            return buildAppearanceMethodCriminalResponse(setAppearanceMethodCriminalResponse);
-        }
 
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(

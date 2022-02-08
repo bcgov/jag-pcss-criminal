@@ -5,14 +5,12 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.SyncController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.SyncValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.HearingRestriction;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
@@ -32,8 +30,6 @@ public class GetSyncCriminalHearingRestrictionTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private SyncValidator syncValidatorMock;
-
     private SyncController sut;
 
     @BeforeAll
@@ -45,10 +41,7 @@ public class GetSyncCriminalHearingRestrictionTest {
 
         sut =
                 new SyncController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        syncValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -63,8 +56,6 @@ public class GetSyncCriminalHearingRestrictionTest {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
-        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any()))
-                .thenReturn(new ArrayList<>());
 
         GetSyncCriminalHearingRestrictionResponse result =
                 sut.getSyncCriminalHearingRestriction(createTestRequest());
@@ -89,36 +80,11 @@ public class GetSyncCriminalHearingRestrictionTest {
     }
 
     @Test
-    @DisplayName("Fail: get returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetSyncCriminalHearingRestrictionResponse result =
-                sut.getSyncCriminalHearingRestriction(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetSyncCriminalHearingRestrictionResponse()
-                        .getGetSyncCriminalHearingRestrictionResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getGetSyncCriminalHearingRestrictionResponse()
-                        .getGetSyncCriminalHearingRestrictionResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
-        Mockito.when(syncValidatorMock.validateGetSyncCriminalHearingRestriction(any()))
-                .thenReturn(new ArrayList<>());
 
         Assertions.assertThrows(
                 ORDSException.class,

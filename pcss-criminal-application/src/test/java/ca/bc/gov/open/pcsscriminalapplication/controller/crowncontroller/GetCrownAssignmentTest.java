@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
@@ -14,7 +13,6 @@ import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
@@ -37,8 +35,6 @@ public class GetCrownAssignmentTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private CrownValidator crownValidatorMock;
-
     private CrownController sut;
 
     @BeforeAll
@@ -50,10 +46,7 @@ public class GetCrownAssignmentTest {
 
         sut =
                 new CrownController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        crownValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -65,9 +58,6 @@ public class GetCrownAssignmentTest {
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
         response.setCrownAssignment(Collections.singletonList(new CrownAssignment()));
-
-        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any()))
-                .thenReturn(new ArrayList<String>());
 
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
@@ -82,34 +72,8 @@ public class GetCrownAssignmentTest {
     }
 
     @Test
-    @DisplayName("Fail: get returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetCrownAssignmentResponse result = sut.getCrownAssignment(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetCrownAssignmentResponse()
-                        .getGetCrownAssignmentResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getGetCrownAssignmentResponse()
-                        .getGetCrownAssignmentResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
-
-        Mockito.when(crownValidatorMock.validateGetCrownAssignment(any()))
-                .thenReturn(new ArrayList<String>());
-
         Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
         Assertions.assertThrows(
