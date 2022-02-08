@@ -4,6 +4,7 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
+import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
@@ -67,10 +68,12 @@ public class SyncController {
                                 getSyncCriminalAppearanceRequest.getRequestAgencyIdentifierId())
                         .queryParam(
                                 Keys.QUERY_REQUEST_DATE,
-                                getSyncCriminalAppearanceRequest.getRequestDtm())
+                                InstantSerializer.convert(
+                                        getSyncCriminalAppearanceRequest.getRequestDtm()))
                         .queryParam(
                                 Keys.QUERY_SYNC_TO_DATE,
-                                getSyncCriminalAppearanceRequest.getProcessUpToDtm())
+                                InstantSerializer.convert(
+                                        getSyncCriminalAppearanceRequest.getProcessUpToDtm()))
                         .build();
 
         try {
@@ -154,10 +157,13 @@ public class SyncController {
                                         .getRequestAgencyIdentifierId())
                         .queryParam(
                                 Keys.QUERY_REQUEST_DATE,
-                                getSyncCriminalHearingRestrictionRequest.getRequestDtm())
+                                InstantSerializer.convert(
+                                        getSyncCriminalHearingRestrictionRequest.getRequestDtm()))
                         .queryParam(
                                 Keys.QUERY_SYNC_TO_DATE,
-                                getSyncCriminalHearingRestrictionRequest.getProcessUpToDtm())
+                                InstantSerializer.convert(
+                                        getSyncCriminalHearingRestrictionRequest
+                                                .getProcessUpToDtm()))
                         .build();
 
         try {

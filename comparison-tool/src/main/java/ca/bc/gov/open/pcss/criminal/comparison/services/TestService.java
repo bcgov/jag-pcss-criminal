@@ -5,6 +5,7 @@ import ca.bc.gov.open.pcss.criminal.comparison.config.WebServiceSenderWithAuth;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,6 +30,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.transport.http.HttpComponentsMessageSender;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 @Service
 public class TestService {
@@ -55,28 +60,98 @@ public class TestService {
   @Value("${host.password}")
   private String password;
 
-  private String RAID = "83.0001";
-  private String partId = RAID;
-  private Instant dtm = Instant.now();
+  private final String RAID = "83.0001";
+  private final String partId = RAID;
+  private final Instant dtm = Instant.now();
 
   private PrintWriter fileOutput;
-  private static String outputDir = "comparison-tool/results/";
+  private static final String outputDir = "comparison-tool/results/";
 
   private int overallDiff = 0;
 
   public void runCompares() throws IOException {
     System.out.println("INFO: PCSS Criminal Diff testing started");
 
-    // getAppearanceCriminalCompare();
-    //   getAppearanceMethodCriminalCompare();
-    //            getAppearanceCriminalCountCompare();
-    //           getAppearanceCriminalResourceCompare();
-    //          getClosedFileCompare();
-    //          getCrownAssignmentCompare();
-    //getFileDetailCriminalCompare();
-    //    getPersonalAvailabilityCompare();
-     getPersonnelAvailDetailCompare();
-    // getPersonnelSearchCompare();
+    getAppearanceCriminalCompare();
+    getAppearanceMethodCriminalCompare();
+    getAppearanceCriminalCountCompare();
+    getAppearanceCriminalResourceCompare();
+    getClosedFileCompare();
+    getCrownAssignmentCompare();
+    getFileDetailCriminalCompare();
+    getPersonalAvailabilityCompare();
+    getPersonnelAvailDetailCompare();
+    getPersonnelSearchCompare();
+    getSyncCriminalAppearanceCompare();
+    getSyncCriminalHearingRestrictionCompare();
+  }
+
+  private void getSyncCriminalHearingRestrictionCompare() throws IOException {
+    GetSyncCriminalHearingRestriction request = new GetSyncCriminalHearingRestriction();
+    GetSyncCriminalHearingRestrictionRequest one = new GetSyncCriminalHearingRestrictionRequest();
+    ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest two =
+        new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionRequest();
+
+    request.setGetSyncCriminalHearingRestrictionRequest(one);
+    one.setGetSyncCriminalHearingRestrictionRequest(two);
+
+    two.setRequestDtm(dtm);
+    two.setRequestAgencyIdentifierId(RAID);
+    two.setRequestPartId(partId);
+    two.setProcessUpToDtm(ZonedDateTime.now().plusYears(20).toInstant());
+
+    fileOutput =
+        new PrintWriter(
+            outputDir + "getSyncCriminalHearingRestriction.txt", StandardCharsets.UTF_8);
+
+    System.out.println("\nINFO: getSyncCriminalHearingRestriction with 20 year future ");
+
+    if (!compare(new GetSyncCriminalHearingRestrictionResponse(), request)) {
+      fileOutput.println("\nINFO: getSyncCriminalHearingRestriction with 20 year future ");
+    }
+  }
+
+  private void getSyncCriminalAppearanceCompare() throws IOException {
+    int diffCounter = 0;
+    GetSyncCriminalAppearance request = new GetSyncCriminalAppearance();
+    GetSyncCriminalAppearanceRequest one = new GetSyncCriminalAppearanceRequest();
+    ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest two =
+        new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalAppearanceRequest();
+
+    request.setGetSyncCriminalAppearanceRequest(one);
+    one.setGetSyncCriminalAppearanceRequest(two);
+
+    two.setRequestDtm(dtm);
+    two.setRequestPartId(partId);
+    two.setRequestAgencyIdentifierId(RAID);
+    two.setProcessUpToDtm(ZonedDateTime.now().plusYears(20).toInstant());
+
+    fileOutput =
+        new PrintWriter(outputDir + "getSyncCriminalAppearance.txt", StandardCharsets.UTF_8);
+
+    System.out.println("\nINFO: getSyncCriminalAppearance with 20 year future ");
+
+    if (!compare(new GetSyncCriminalAppearanceResponse(), request)) {
+      fileOutput.println("\nINFO: getSyncCriminalAppearance with 20 year future ");
+      ++diffCounter;
+    }
+
+    System.out.println(
+        "########################################################\n"
+            + "INFO: getSyncCriminalAppearance Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    fileOutput.println(
+        "########################################################\n"
+            + "INFO: getSyncCriminalAppearance Completed there are "
+            + diffCounter
+            + " diffs\n"
+            + "########################################################");
+
+    overallDiff += diffCounter;
+    fileOutput.close();
   }
 
   private void getPersonnelSearchCompare() throws IOException {
@@ -638,6 +713,22 @@ public class TestService {
       }
     }
 
+    two.setFutureYN(YesNoType.Y);
+    two.setHistoryYN(YesNoType.Y);
+    two.setAppearanceId(null);
+    two.setJustinNo("35674");
+    if (!compare(new GetAppearanceCriminalResponse(), request)) {
+      fileOutput.println(
+          "\nINFO: GetCriminalAppearance with AppearanceId: "
+              + two.getAppearanceId()
+              + " Justin number "
+              + two.getJustinNo()
+              + " Future "
+              + two.getFutureYN().toString()
+              + " History "
+              + two.getHistoryYN().toString());
+      ++diffCounter;
+    }
     System.out.println(
         "########################################################\n"
             + "INFO: GetCriminalAppearance Completed there are "
@@ -711,17 +802,29 @@ public class TestService {
     }
   }
 
+  private <T> String printSoap(T obj) throws JAXBException {
+    JAXBContext context = JAXBContext.newInstance(obj.getClass());
+    Marshaller marshaller = context.createMarshaller();
+
+    StringWriter sw = new StringWriter();
+
+    marshaller.marshal(obj, sw);
+    return sw.toString();
+  }
+
   private void printDiff(Diff diff) {
 
     List<Change> actualChanges = new ArrayList<>(diff.getChanges());
 
-    actualChanges.removeIf(c ->{
-      if (c instanceof ValueChange){
-        return ((ValueChange) c).getLeft() == null && ((ValueChange) c).getRight().toString().isBlank();
-      }
+    actualChanges.removeIf(
+        c -> {
+          if (c instanceof ValueChange) {
+            return ((ValueChange) c).getLeft() == null
+                && ((ValueChange) c).getRight().toString().isBlank();
+          }
 
-      return false;
-    });
+          return false;
+        });
 
     int diffSize = actualChanges.size();
 
