@@ -1,6 +1,3 @@
-server:
-  port: 8081
-
 host:
   password: ${BASIC_AUTH_PASS}
   username: ${BASIC_AUTH_USER}
