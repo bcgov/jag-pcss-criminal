@@ -10,6 +10,7 @@ import ca.bc.gov.open.wsdl.pcss.two.GetHealth;
 import ca.bc.gov.open.wsdl.pcss.two.GetHealthResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,7 +58,7 @@ public class GetHealthTest {
         response.setMethod("TEST");
         response.setVersion("TEST");
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetHealthResponse result = sut.getHealth(new GetHealth());
@@ -75,7 +76,7 @@ public class GetHealthTest {
     @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getHealth(new GetHealth()));

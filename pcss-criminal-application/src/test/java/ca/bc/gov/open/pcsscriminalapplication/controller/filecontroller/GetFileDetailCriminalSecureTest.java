@@ -5,13 +5,12 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.net.URI;
+import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
@@ -30,8 +29,6 @@ public class GetFileDetailCriminalSecureTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private FileValidator fileValidatorMock;
-
     private FileController sut;
 
     @BeforeAll
@@ -43,10 +40,7 @@ public class GetFileDetailCriminalSecureTest {
 
         sut =
                 new FileController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        fileValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -58,10 +52,7 @@ public class GetFileDetailCriminalSecureTest {
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
 
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminalSecure(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetFileDetailCriminalSecureResponse result =
@@ -84,37 +75,11 @@ public class GetFileDetailCriminalSecureTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminalSecure(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
                 ORDSException.class, () -> sut.getFileDetailCriminalSecure(createTestRequest()));
-    }
-
-    @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(fileValidatorMock.validateGetFileDetailCriminalSecure(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetFileDetailCriminalSecureResponse result =
-                sut.getFileDetailCriminalSecure(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetFileDetailCriminalResponse()
-                        .getGetFileDetailCriminalResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getGetFileDetailCriminalResponse()
-                        .getGetFileDetailCriminalResponse()
-                        .getResponseCd());
     }
 
     private GetFileDetailCriminalSecure createTestRequest() {
@@ -128,7 +93,7 @@ public class GetFileDetailCriminalSecureTest {
 
         getFileDetailCriminalRequest.setApplicationCd("TEST");
         getFileDetailCriminalRequest.setRequestAgencyIdentifierId("TEST");
-        getFileDetailCriminalRequest.setRequestDtm("2013-03-25 13:04:22.1");
+        getFileDetailCriminalRequest.setRequestDtm(Instant.now());
         getFileDetailCriminalRequest.setRequestPartId("TEST");
         getFileDetailCriminalRequest.setJustinNo("TEST");
 

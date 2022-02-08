@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.three.AppearanceDurationType;
 import ca.bc.gov.open.wsdl.pcss.three.FileComplexityType;
@@ -14,8 +13,8 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.net.URI;
+import java.time.Instant;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,8 +36,6 @@ public class SetCrownFileDetailTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private CrownValidator crownValidatorMock;
-
     private CrownController sut;
 
     @BeforeAll
@@ -50,10 +47,7 @@ public class SetCrownFileDetailTest {
 
         sut =
                 new CrownController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        crownValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -66,10 +60,7 @@ public class SetCrownFileDetailTest {
         response.setMdocCcn("Test");
         response.setResponseMessageTxt("Test");
 
-        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
@@ -82,35 +73,10 @@ public class SetCrownFileDetailTest {
     }
 
     @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        SetCrownFileDetailResponse result = sut.setCrownFileDetail(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getSetCrownFileDetailResponse()
-                        .getSetCrownFileDetailResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getSetCrownFileDetailResponse()
-                        .getSetCrownFileDetailResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(crownValidatorMock.validateSetCrownFileDetail(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
@@ -124,7 +90,7 @@ public class SetCrownFileDetailTest {
                 new ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailRequest();
         setCrownFileDetailRequest1.setRequestAgencyIdentifierId("Test");
         setCrownFileDetailRequest1.setRequestPartId("Test");
-        setCrownFileDetailRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setCrownFileDetailRequest1.setRequestDtm(Instant.now());
         setCrownFileDetailRequest1.setJustinNo("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenQty("Test");
         setCrownFileDetailRequest1.setCrownEstimateLenUnit(AppearanceDurationType.HRS);

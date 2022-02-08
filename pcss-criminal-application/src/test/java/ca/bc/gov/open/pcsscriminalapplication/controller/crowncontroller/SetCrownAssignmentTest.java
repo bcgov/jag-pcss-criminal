@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.CrownController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.CrownValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.CrownAssignment2;
 import ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse;
@@ -13,7 +12,8 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
+import java.net.URI;
+import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
@@ -36,8 +36,6 @@ public class SetCrownAssignmentTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private CrownValidator crownValidatorMock;
-
     private CrownController sut;
 
     @BeforeAll
@@ -49,10 +47,7 @@ public class SetCrownAssignmentTest {
 
         sut =
                 new CrownController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        crownValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -63,10 +58,7 @@ public class SetCrownAssignmentTest {
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
 
-        Mockito.when(crownValidatorMock.validateSetCrownAssignment(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse result =
@@ -79,36 +71,10 @@ public class SetCrownAssignmentTest {
     }
 
     @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(crownValidatorMock.validateSetCrownAssignment(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentResponse result =
-                sut.setCrownAssignment(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getSetCrownAssignmentResponse()
-                        .getSetCrownAssignmentResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getSetCrownAssignmentResponse()
-                        .getSetCrownAssignmentResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(crownValidatorMock.validateSetCrownAssignment(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
@@ -122,7 +88,7 @@ public class SetCrownAssignmentTest {
                 new ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentRequest();
         setCrownAssignmentRequest1.setRequestAgencyIdentifierId("Test");
         setCrownAssignmentRequest1.setRequestPartId("Test");
-        setCrownAssignmentRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        setCrownAssignmentRequest1.setRequestDtm(Instant.now());
         setCrownAssignmentRequest1.setJustinNo("Test");
         setCrownAssignmentRequest1.setCrownAssignment(
                 Collections.singletonList(new CrownAssignment2()));

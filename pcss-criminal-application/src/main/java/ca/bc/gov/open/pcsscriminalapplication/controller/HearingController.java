@@ -3,16 +3,13 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.HearingValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -32,17 +29,12 @@ public class HearingController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final HearingValidator hearingValidator;
 
     public HearingController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            HearingValidator hearingValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.hearingValidator = hearingValidator;
     }
 
     @PayloadRoot(
@@ -66,21 +58,6 @@ public class HearingController {
                                 .getSetHearingRestrictionCriminalRequest()
                         : new SetHearingRestrictionCriminalRequest();
 
-        List<String> validationErrors =
-                hearingValidator.validateSetHearingRestrictionCriminal(
-                        setHearingRestrictionCriminalRequest);
-        if (!validationErrors.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse innerErrorResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse();
-            innerErrorResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            innerErrorResponse.setResponseMessageTxt(StringUtils.join(validationErrors, ","));
-
-            log.warn(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL);
-
-            return buildHearingResponse(innerErrorResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_HEARING);
 
@@ -94,7 +71,7 @@ public class HearingController {
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse>
                     response =
                             restTemplate.exchange(
-                                    builder.toUriString(),
+                                    builder.build().toUri(),
                                     HttpMethod.POST,
                                     body,
                                     ca.bc.gov.open.wsdl.pcss.one

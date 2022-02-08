@@ -3,17 +3,11 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.PersonnelValidator;
-import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.wsdl.pcss.one.Commitment;
-import ca.bc.gov.open.wsdl.pcss.one.Personnel;
+import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
-import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -33,17 +27,12 @@ public class PersonnelController {
     private final RestTemplate restTemplate;
     private final PcssProperties pcssProperties;
     private final LogBuilder logBuilder;
-    private final PersonnelValidator personnelValidator;
 
     public PersonnelController(
-            RestTemplate restTemplate,
-            PcssProperties pcssProperties,
-            LogBuilder logBuilder,
-            PersonnelValidator personnelValidator) {
+            RestTemplate restTemplate, PcssProperties pcssProperties, LogBuilder logBuilder) {
         this.restTemplate = restTemplate;
         this.pcssProperties = pcssProperties;
         this.logBuilder = logBuilder;
-        this.personnelValidator = personnelValidator;
     }
 
     @PayloadRoot(
@@ -69,25 +58,6 @@ public class PersonnelController {
                                 : new ca.bc.gov.open.wsdl.pcss.one
                                         .GetPersonnelAvailabilityRequest();
 
-        List<String> validation =
-                personnelValidator.validateGetPersonnelAvailability(
-                        getPersonnelAvailabilityRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse
-                    getAppearanceCriminalResponseValidation =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse();
-
-            getAppearanceCriminalResponseValidation.setResponseCd(
-                    Keys.FAILED_VALIDATION.toString());
-            getAppearanceCriminalResponseValidation.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_AVAILABILITY);
-
-            return buildPersonnelAvailabilityResponse(getAppearanceCriminalResponseValidation);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_PERSONNEL_AVAILABILITY)
@@ -107,8 +77,13 @@ public class PersonnelController {
                                 Keys.QUERY_PART_ID_LIST,
                                 getPersonnelAvailabilityRequest.getPartIdList())
                         .queryParam(
-                                Keys.QUERY_FROM_DATE, getPersonnelAvailabilityRequest.getFromDt())
-                        .queryParam(Keys.QUERY_TO_DATE, getPersonnelAvailabilityRequest.getToDt());
+                                Keys.QUERY_FROM_DATE,
+                                InstantSerializer.convert(
+                                        getPersonnelAvailabilityRequest.getFromDt()))
+                        .queryParam(
+                                Keys.QUERY_TO_DATE,
+                                InstantSerializer.convert(
+                                        getPersonnelAvailabilityRequest.getToDt()));
 
         try {
 
@@ -116,7 +91,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse.class);
@@ -143,27 +118,6 @@ public class PersonnelController {
     private GetPersonnelAvailabilityResponse buildPersonnelAvailabilityResponse(
             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailabilityResponse
                     getPersonnelAvailabilityResponseInner) {
-
-        if (getPersonnelAvailabilityResponseInner.getPersonnel() != null) {
-            getPersonnelAvailabilityResponseInner
-                    .getPersonnel()
-                    .forEach(
-                            ((Consumer<Personnel>)
-                                            personnel ->
-                                                    personnel.setAvailabilityDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getAvailabilityDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCommitmentDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCreatedDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCreatedDt()))));
-        }
 
         GetPersonnelAvailabilityResponse getPersonnelAvailabilityResponse =
                 new GetPersonnelAvailabilityResponse();
@@ -196,23 +150,6 @@ public class PersonnelController {
                                 .getGetPersonnelAvailDetailRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailRequest();
 
-        List<String> validation =
-                personnelValidator.validateGetPersonnelAvailDetail(getPersonnelAvailDetailRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse
-                    getPersonnelAvailDetailResponse =
-                            new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse();
-
-            getPersonnelAvailDetailResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getPersonnelAvailDetailResponse.setResponseMessageTxt(
-                    StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_DETAIL);
-
-            return buildPersonnelAvailDetail(getPersonnelAvailDetailResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_PERSONNEL_DETAIL)
@@ -241,7 +178,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse.class);
@@ -268,27 +205,6 @@ public class PersonnelController {
     private GetPersonnelAvailDetailResponse buildPersonnelAvailDetail(
             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelAvailDetailResponse
                     getPersonnelAvailDetailResponseInner) {
-
-        if (getPersonnelAvailDetailResponseInner.getCommitment() != null) {
-            getPersonnelAvailDetailResponseInner
-                    .getCommitment()
-                    .forEach(
-                            ((Consumer<Commitment>)
-                                            personnel ->
-                                                    personnel.setCommitmentTm(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentTm())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCommitmentDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCommitmentDt())))
-                                    .andThen(
-                                            personnel ->
-                                                    personnel.setCreatedDt(
-                                                            DateUtils.formatDate(
-                                                                    personnel.getCreatedDt()))));
-        }
 
         GetPersonnelAvailDetailResponse getPersonnelAvailDetailResponse =
                 new GetPersonnelAvailDetailResponse();
@@ -320,21 +236,6 @@ public class PersonnelController {
                                 .getGetPersonnelSearchRequest()
                         : new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchRequest();
 
-        List<String> validation =
-                personnelValidator.validateGetPersonnelSearch(getPersonnelSearchRequest);
-        if (!validation.isEmpty()) {
-
-            ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse getPersonnelSearchResponse =
-                    new ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse();
-
-            getPersonnelSearchResponse.setResponseCd(Keys.FAILED_VALIDATION.toString());
-            getPersonnelSearchResponse.setResponseMessageTxt(StringUtils.join(validation, ","));
-
-            log.info(Keys.LOG_FAILED_VALIDATION, Keys.SOAP_METHOD_PERSONNEL_SEARCH);
-
-            return buildPersonnelSearch(getPersonnelSearchResponse);
-        }
-
         UriComponentsBuilder builder =
                 UriComponentsBuilder.fromHttpUrl(
                                 pcssProperties.getHost() + Keys.ORDS_PERSONNEL_SEARCH)
@@ -360,7 +261,7 @@ public class PersonnelController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetPersonnelSearchResponse.class);
