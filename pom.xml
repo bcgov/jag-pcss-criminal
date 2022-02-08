@@ -36,6 +36,7 @@
         <module>pcss-criminal-model</module>
         <module>pcss-criminal-secure-model</module>
         <module>pcss-criminal-application</module>
+        <module>comparison-tool</module>
     </modules>
 
 
