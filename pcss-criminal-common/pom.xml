@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ca.bc.gov.open</groupId>
 	<artifactId>pcss-criminal-common</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>pcss-criminal-common</name>
 	<description>Common components</description>
 	<properties>

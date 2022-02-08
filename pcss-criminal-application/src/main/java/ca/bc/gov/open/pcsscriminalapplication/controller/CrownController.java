@@ -83,7 +83,7 @@ public class CrownController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
                             ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse.class);
@@ -149,7 +149,7 @@ public class CrownController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.POST,
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCounselDetailCriminalResponse.class);
@@ -214,7 +214,7 @@ public class CrownController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.POST,
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownAssignmentResponse.class);
@@ -279,7 +279,7 @@ public class CrownController {
 
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse> response =
                     restTemplate.exchange(
-                            builder.toUriString(),
+                            builder.build().toUri(),
                             HttpMethod.POST,
                             body,
                             ca.bc.gov.open.wsdl.pcss.one.SetCrownFileDetailResponse.class);

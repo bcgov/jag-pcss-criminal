@@ -26,18 +26,22 @@ public class InstantSoapConverter {
     public static String print(Instant value) {
         String out =
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                        .withZone(ZoneId.systemDefault())
+                        .withZone(ZoneId.of("GMT-7"))
                         .format(value);
         return out + ".0";
     }
 
     public static Instant parse(String value) {
         try {
+            if (value.isBlank()) {
+                return null;
+            }
+
             Date d;
             // Try to parse a datetime first then try date only if both fail return null
             try {
                 // Date time parser
-                var sdf = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss.SSSSSS", Locale.US);
+                var sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS", Locale.US);
                 sdf.setTimeZone(TimeZone.getTimeZone("GMT-7"));
                 d = sdf.parse(value);
             } catch (ParseException ex) {

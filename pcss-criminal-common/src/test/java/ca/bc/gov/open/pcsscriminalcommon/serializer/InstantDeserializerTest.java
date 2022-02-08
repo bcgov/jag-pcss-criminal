@@ -22,7 +22,7 @@ public class InstantDeserializerTest {
 
         MockitoAnnotations.openMocks(this);
 
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
 
         sut = new InstantDeserializer();
     }
@@ -35,7 +35,7 @@ public class InstantDeserializerTest {
 
         Instant result = sut.deserialize(jsonParserMock, null);
 
-        Assertions.assertEquals("2001-11-26T12:00:00Z", result.toString());
+        Assertions.assertEquals("2001-11-26T19:00:00Z", result.toString());
     }
 
     @Test

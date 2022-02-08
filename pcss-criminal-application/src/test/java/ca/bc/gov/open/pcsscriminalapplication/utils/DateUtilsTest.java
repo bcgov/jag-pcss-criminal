@@ -36,6 +36,6 @@ public class DateUtilsTest {
         LocalDateTime testDateTime = testDate.atTime(13, 4, 22);
         Assertions.assertEquals(
                 "2013-03-25 13:04:22",
-                DateUtils.formatORDSDate(testDateTime.toInstant(ZoneOffset.UTC)));
+                DateUtils.formatORDSDate(testDateTime.toInstant(ZoneOffset.of("GMT-7"))));
     }
 }
