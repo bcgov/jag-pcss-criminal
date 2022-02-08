@@ -3,16 +3,13 @@ package ca.bc.gov.open.pcsscriminalcommon.serializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class InstantDeserializer extends JsonDeserializer<Instant> {
@@ -20,14 +17,23 @@ public class InstantDeserializer extends JsonDeserializer<Instant> {
     public Instant deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         try {
-
-            SimpleDateFormat d = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
-            d.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
-
-            return d.parse(jsonParser.getText()).toInstant();
-
+            if (jsonParser.getText().split("-")[0].length() < 4) {
+                var sfd = new SimpleDateFormat("dd-MMM-yy hh.mm.ss.SSSSSS a", Locale.US);
+                sfd.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+                return sfd.parse(jsonParser.getText()).toInstant();
+            } else {
+                var sfd = new SimpleDateFormat("yyyy-MMM-dd", Locale.US);
+                sfd.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+                return sfd.parse(jsonParser.getText()).toInstant();
+            }
         } catch (ParseException e) {
-            log.error(e.getLocalizedMessage());
+            try {
+                var sfd = new SimpleDateFormat("dd-MMM-yy", Locale.US);
+                sfd.setTimeZone(TimeZone.getTimeZone("GMT-7"));
+                return sfd.parse(jsonParser.getText()).toInstant();
+            } catch (ParseException e2) {
+
+            }
         }
         return null;
     }

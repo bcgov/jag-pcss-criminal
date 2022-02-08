@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.FileController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.FileValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.CourtFile;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFile;
@@ -13,7 +12,8 @@ import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
+import java.net.URI;
+import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
@@ -33,8 +33,6 @@ public class GetClosedFileTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private FileValidator fileValidatorMock;
-
     private FileController sut;
 
     @BeforeAll
@@ -46,10 +44,7 @@ public class GetClosedFileTest {
 
         sut =
                 new FileController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        fileValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
@@ -62,9 +57,7 @@ public class GetClosedFileTest {
         response.setResponseCd("TEST");
         response.setCourtFile(Collections.singletonList(new CourtFile()));
 
-        Mockito.when(fileValidatorMock.validateGetClosedFile(any())).thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetClosedFileResponse result = sut.getClosedFile(createTestRequest());
@@ -87,31 +80,10 @@ public class GetClosedFileTest {
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(fileValidatorMock.validateGetClosedFile(any())).thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(ORDSException.class, () -> sut.getClosedFile(createTestRequest()));
-    }
-
-    @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(fileValidatorMock.validateGetClosedFile(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetClosedFileResponse result = sut.getClosedFile(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetClosedFileResponce()
-                        .getGetClosedFileResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2", result.getGetClosedFileResponce().getGetClosedFileResponse().getResponseCd());
     }
 
     private GetClosedFile createTestRequest() {
@@ -123,10 +95,10 @@ public class GetClosedFileTest {
 
         getClosedFileRequest1.setAgencyId("TEST");
         getClosedFileRequest1.setRequestAgencyIdentifierId("TEST");
-        getClosedFileRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setRequestDtm(Instant.now());
         getClosedFileRequest1.setRequestPartId("TEST");
-        getClosedFileRequest1.setFromApprDt("2013-03-25 13:04:22.1");
-        getClosedFileRequest1.setToApprDt("2013-03-25 13:04:22.1");
+        getClosedFileRequest1.setFromApprDt(Instant.now());
+        getClosedFileRequest1.setToApprDt(Instant.now());
 
         getClosedFileRequest.setGetClosedFileRequest(getClosedFileRequest1);
 

@@ -5,13 +5,13 @@ import static org.mockito.ArgumentMatchers.any;
 import ca.bc.gov.open.pcsscriminalapplication.controller.AppearanceController;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
-import ca.bc.gov.open.pcsscriminalapplication.service.AppearanceValidator;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.secure.one.ApprCount;
 import ca.bc.gov.open.wsdl.pcss.secure.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.ArrayList;
+import java.net.URI;
+import java.time.Instant;
 import java.util.Collections;
 import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
@@ -31,8 +31,6 @@ public class GetAppearanceCriminalCountSecureTest {
 
     @Mock private ObjectMapper objectMapperMock;
 
-    @Mock private AppearanceValidator appearanceValidatorMock;
-
     private AppearanceController sut;
 
     @BeforeAll
@@ -44,18 +42,12 @@ public class GetAppearanceCriminalCountSecureTest {
 
         sut =
                 new AppearanceController(
-                        restTemplateMock,
-                        pcssPropertiesMock,
-                        new LogBuilder(objectMapperMock),
-                        appearanceValidatorMock);
+                        restTemplateMock, pcssPropertiesMock, new LogBuilder(objectMapperMock));
     }
 
     @Test
     @DisplayName("Success: get returns expected object")
     public void successTestReturns() throws JsonProcessingException {
-
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCountSecure(any()))
-                .thenReturn(new ArrayList<>());
 
         ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse response =
                 new ca.bc.gov.open.wsdl.pcss.secure.one.GetAppearanceCriminalCountResponse();
@@ -63,7 +55,7 @@ public class GetAppearanceCriminalCountSecureTest {
         response.setResponseCd("TEST");
         response.setApprCount(Collections.singletonList(new ApprCount()));
 
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
         GetAppearanceCriminalCountSecureResponse result =
@@ -89,36 +81,10 @@ public class GetAppearanceCriminalCountSecureTest {
     }
 
     @Test
-    @DisplayName("Fail: post returns validation failure object")
-    public void failTestReturns() throws JsonProcessingException {
-
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCountSecure(any()))
-                .thenReturn(Collections.singletonList("BAD DATA"));
-
-        GetAppearanceCriminalCountSecureResponse result =
-                sut.getAppearanceCriminalCountSecure(createTestRequest());
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(
-                "BAD DATA",
-                result.getGetAppearanceCriminalCountResponse()
-                        .getGetAppearanceCriminalCountResponse()
-                        .getResponseMessageTxt());
-        Assertions.assertEquals(
-                "-2",
-                result.getGetAppearanceCriminalCountResponse()
-                        .getGetAppearanceCriminalCountResponse()
-                        .getResponseCd());
-    }
-
-    @Test
     @DisplayName("Error: ords throws exception")
     public void errorOrdsException() {
 
-        Mockito.when(appearanceValidatorMock.validateGetAppearanceCriminalCountSecure(any()))
-                .thenReturn(new ArrayList<>());
-
-        Mockito.when(restTemplateMock.exchange(any(String.class), any(), any(), any(Class.class)))
+        Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenThrow(new HTTPException(400));
 
         Assertions.assertThrows(
@@ -139,7 +105,7 @@ public class GetAppearanceCriminalCountSecureTest {
 
         getAppearanceCriminalCountSecureRequest1.setAppearanceId("TEST");
         getAppearanceCriminalCountSecureRequest1.setRequestAgencyIdentifierId("TEST");
-        getAppearanceCriminalCountSecureRequest1.setRequestDtm("2013-03-25 13:04:22.1");
+        getAppearanceCriminalCountSecureRequest1.setRequestDtm(Instant.now());
         getAppearanceCriminalCountSecureRequest1.setRequestPartId("TEST");
         getAppearanceCriminalCountSecureRequest1.setApplicationCd("TEST");
 

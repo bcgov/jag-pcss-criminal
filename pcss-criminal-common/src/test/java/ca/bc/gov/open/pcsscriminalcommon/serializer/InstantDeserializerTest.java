@@ -1,21 +1,19 @@
 package ca.bc.gov.open.pcsscriminalcommon.serializer;
 
 import com.fasterxml.jackson.core.JsonParser;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.TimeZone;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.io.IOException;
-import java.time.Instant;
-import java.util.TimeZone;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DisplayName("Create Account Test Suite")
 public class InstantDeserializerTest {
 
-    @Mock
-    JsonParser jsonParserMock;
+    @Mock JsonParser jsonParserMock;
 
     InstantDeserializer sut;
 
@@ -24,7 +22,7 @@ public class InstantDeserializerTest {
 
         MockitoAnnotations.openMocks(this);
 
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
 
         sut = new InstantDeserializer();
     }
@@ -37,8 +35,7 @@ public class InstantDeserializerTest {
 
         Instant result = sut.deserialize(jsonParserMock, null);
 
-        Assertions.assertEquals("2001-11-26T12:00:00Z", result.toString());
-
+        Assertions.assertEquals("2001-11-26T19:00:00Z", result.toString());
     }
 
     @Test
@@ -50,7 +47,5 @@ public class InstantDeserializerTest {
         Instant result = sut.deserialize(jsonParserMock, null);
 
         Assertions.assertNull(result);
-
     }
-
 }
