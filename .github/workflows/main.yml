@@ -224,7 +224,10 @@ jobs:
           BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
           BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
         run: |
-          curl --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} ${TEST_STARTER_URL}
+          if curl --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} ${TEST_STARTER_URL}
+            then echo "SUCCESS"
+            else echo "FAILURE"
+          fi
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
