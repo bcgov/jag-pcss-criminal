@@ -225,7 +225,6 @@ jobs:
           BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
         run: |
           if curl --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} ${TEST_STARTER_URL}
-            then
             else exit 1
           fi
 
