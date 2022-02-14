@@ -227,7 +227,7 @@ jobs:
           RET=`curl --write-out '%{content_type}' --output /dev/null --request GET --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} --url ${TEST_STARTER_URL}`
           if [ $RET!="application/json" ]
             then
-              echo "Received content_type is ${content_type}, was expecting application/json"
+              echo "Received content_type is ${RET}, was expecting application/json"
               exit 1
           fi
 
