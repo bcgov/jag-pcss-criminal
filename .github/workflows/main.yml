@@ -224,13 +224,9 @@ jobs:
           BASIC_AUTH_USER: ${{ secrets.BASIC_AUTH_USER }}
           BASIC_AUTH_PASS: ${{ secrets.BASIC_AUTH_PASS }}
         run: |
-          if curl --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} ${TEST_STARTER_URL}
-            then
-              echo "SUCCESS"
-              exit 0
-            else
-              echo "FAIL"
-              exit 1
+          RET=`curl --write-out '%{content_type}' --output /dev/null --request GET --user ${BASIC_AUTH_USER}:${BASIC_AUTH_PASS} --url ${TEST_STARTER_URL}`
+          if [ $RET!="application/json" ]
+            then exit 1
           fi
 
       - name: Archive production artifacts
