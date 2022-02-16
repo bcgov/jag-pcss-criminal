@@ -32,7 +32,7 @@ public class InstantDeserializer extends JsonDeserializer<Instant> {
                 sfd.setTimeZone(TimeZone.getTimeZone("GMT-7"));
                 return sfd.parse(jsonParser.getText()).toInstant();
             } catch (ParseException e2) {
-
+                log.error(e2.getLocalizedMessage());
             }
         }
         return null;
