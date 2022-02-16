@@ -18,8 +18,8 @@
         <url>${SPLUNK_HTTP_URL}</url>
         <token>${SPLUNK_TOKEN}</token>
         <index>${SPLUNK_INDEX}</index>
-        <source>pcss-civil-application</source>
-        <sourcetype>pcss-civil-logs</sourcetype>
+        <source>pcss-criminal-application</source>
+        <sourcetype>pcss-criminal-logs</sourcetype>
         <disableCertificateValidation>true</disableCertificateValidation>
         <batch_size_count>1</batch_size_count>
         <connectTimeout>5000</connectTimeout>
