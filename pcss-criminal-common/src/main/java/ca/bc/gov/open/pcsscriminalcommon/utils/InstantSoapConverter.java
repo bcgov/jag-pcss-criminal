@@ -55,7 +55,7 @@ public class InstantSoapConverter {
             }
             return d.toInstant();
         } catch (Exception ex) {
-            llog.warn("Bad date received from soap request - invalid date format: " + value);
+            log.warn("Bad date received from soap request - invalid date format: " + value);
             return null;
         }
     }
