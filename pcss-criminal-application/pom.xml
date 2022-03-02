@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-logging</artifactId>
-			<version>2.6.2</version>
+			<version>2.6.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -102,7 +102,7 @@
 		<dependency>
 			<groupId>com.splunk.logging</groupId>
 			<artifactId>splunk-library-javalogging</artifactId>
-			<version>1.11.2</version>
+			<version>1.11.4</version>
 			<scope>runtime</scope>
 		</dependency>
 		<!-- Logging framework -->
