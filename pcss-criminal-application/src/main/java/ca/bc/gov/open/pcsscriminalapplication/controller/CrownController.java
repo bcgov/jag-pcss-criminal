@@ -222,7 +222,7 @@ public class CrownController {
             SetCrownAssignmentResponse setCrownAssignmentResponse =
                     buildSetCrownAssignmentResponse(response.getBody());
 
-            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_CROWN_FILE_DETAIL);
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
 
             return setCrownAssignmentResponse;
 
