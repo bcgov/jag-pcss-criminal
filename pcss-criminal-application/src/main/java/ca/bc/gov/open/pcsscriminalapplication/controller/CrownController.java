@@ -4,8 +4,6 @@ import ca.bc.gov.open.pcsscriminalapplication.Keys;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
-import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
-import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import ca.bc.gov.open.wsdl.pcss.one.*;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
@@ -20,12 +18,6 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetail;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownFileDetailResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import java.time.Instant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpEntity;
@@ -231,16 +223,6 @@ public class CrownController {
                     buildSetCrownAssignmentResponse(response.getBody());
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_CROWN_ASSIGNMENT);
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-            objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-            SimpleModule module = new SimpleModule();
-            module.addDeserializer(Instant.class, new InstantDeserializer());
-            module.addSerializer(Instant.class, new InstantSerializer());
-            objectMapper.registerModule(module);
-            log.info("request + " + objectMapper.writeValueAsString(setCrownAssignmentRequest));
 
             return setCrownAssignmentResponse;
 
