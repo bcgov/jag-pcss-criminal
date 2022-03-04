@@ -10,7 +10,7 @@ WORKDIR /
 
 COPY . .
 
-RUN mvn -B clean install \
+RUN mvn -ntp -B clean install \
         -P ${MVN_PROFILE} \
         -Dmaven.test.skip=${SKIP_TESTS}
 
