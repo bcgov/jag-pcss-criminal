@@ -294,20 +294,20 @@ public class TestService {
     private int personTypeCompare(GetPersonnelAvailability request) throws IOException {
         int diffCounter = 0;
         InputStream inputIds =
-                getClass().getResourceAsStream("/getPersonnelAvailabilityPartId.csv");
+                getClass().getResourceAsStream("/getPersonnelAvailabilityPartIdList.csv");
         assert inputIds != null;
         Scanner scanner = new Scanner(inputIds);
         fileOutput =
-                new PrintWriter(outputDir + "getPersonnelAvailDetail.txt", StandardCharsets.UTF_8);
+                new PrintWriter(outputDir + "getPersonnelAvailability.txt", StandardCharsets.UTF_8);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            System.out.println("\nINFO: getPersonnelAvailDetail with partId: " + line);
+            System.out.println("\nINFO: getPersonnelAvailability with PartIdList: " + line);
             request.getGetPersonnelAvailabilityRequest()
                     .getGetPersonnelAvailabilityRequest()
                     .setPartIdList(line);
             if (!compare(new GetPersonnelAvailabilityResponse(), request)) {
-                fileOutput.println("\nINFO: getPersonnelAvailDetail with partId: " + line);
+                fileOutput.println("\nINFO: getPersonnelAvailability with PartIdList: " + line);
                 ++diffCounter;
             }
         }
@@ -317,20 +317,20 @@ public class TestService {
     private int personTypeDetailCompare(GetPersonnelAvailDetail request) throws IOException {
         int diffCounter = 0;
         InputStream inputIds =
-                getClass().getResourceAsStream("/getPersonnelAvailabilityDetailPartId.csv");
+                getClass().getResourceAsStream("/getPersonnelAvailDetailPaasPartId.csv");
         assert inputIds != null;
         Scanner scanner = new Scanner(inputIds);
         fileOutput =
-                new PrintWriter(outputDir + "getPersonnelAvailability.txt", StandardCharsets.UTF_8);
+                new PrintWriter(outputDir + "getPersonnelAvailDetail.txt", StandardCharsets.UTF_8);
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-            System.out.println("\nINFO: getPersonnelAvailability with partId: " + line);
+            System.out.println("\nINFO: getPersonnelAvailDetail with PaasPartId: " + line);
             request.getGetPersonnelAvailDetailRequest()
                     .getGetPersonnelAvailDetailRequest()
                     .setPaasPartId(line);
             if (!compare(new GetPersonnelAvailDetailResponse(), request)) {
-                fileOutput.println("\nINFO: getPersonnelAvailability with partId: " + line);
+                fileOutput.println("\nINFO: getPersonnelAvailDetail with PaasPartId: " + line);
                 ++diffCounter;
             }
         }
@@ -787,7 +787,7 @@ public class TestService {
         try {
             resultObjectWM = (T) webServiceTemplate.marshalSendAndReceive(wmHost, request);
             resultObjectAPI = (T) webServiceTemplate.marshalSendAndReceive(apiHost, request);
-
+            Thread.sleep(5000);
         } catch (Exception e) {
             System.out.println("ERROR: Failed to send request... " + e);
             fileOutput.println("ERROR: Failed to send request... " + e);
