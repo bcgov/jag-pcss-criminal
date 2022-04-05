@@ -321,7 +321,6 @@ public class FileController {
             module.addDeserializer(Instant.class, new InstantDeserializer());
             module.addSerializer(Instant.class, new InstantSerializer());
             objectMapper.registerModule(module);
-            log.info("request + " + objectMapper.writeValueAsString(setFileNoteRequest));
 
             return setFileNoteResponse;
 
