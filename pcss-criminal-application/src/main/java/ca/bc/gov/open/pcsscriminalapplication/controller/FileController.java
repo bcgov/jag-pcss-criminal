@@ -313,16 +313,6 @@ public class FileController {
 
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_FILE_NOTE);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
-            objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-            SimpleModule module = new SimpleModule();
-            module.addDeserializer(Instant.class, new InstantDeserializer());
-            module.addSerializer(Instant.class, new InstantSerializer());
-            objectMapper.registerModule(module);
-            log.info("request + " + objectMapper.writeValueAsString(setFileNoteRequest));
-
             return setFileNoteResponse;
 
         } catch (Exception ex) {
