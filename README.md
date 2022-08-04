@@ -1,6 +1,6 @@
 # jag-pcss-criminal
 
-[![Lifecycle:Maturing](https://img.shields.io/badge/Lifecycle-Maturing-007EC6)](https://github.com/bcgov/jag-pcss-criminal)
+[![Lifecycle:Stable](https://img.shields.io/badge/Lifecycle-Stable-97ca00)](https://github.com/bcgov/jag-pcss-criminal)
 [![Maintainability](https://api.codeclimate.com/v1/badges/602085fc42697705f899/maintainability)](https://codeclimate.com/github/bcgov/jag-pcss-criminal/maintainability) 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/602085fc42697705f899/test_coverage)](https://codeclimate.com/github/bcgov/jag-pcss-criminal/test_coverage)
 
