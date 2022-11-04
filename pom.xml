@@ -19,7 +19,6 @@
         <snakeyaml.version>1.33</snakeyaml.version>
         <jackson-bom.version>2.13.4.20221013</jackson-bom.version>
         <spring-security.version>5.7.5</spring-security.version>
-        <spring-security-test.version>5.7.5</spring-security-test.version>
     </properties>
     <repositories>
         <repository>
