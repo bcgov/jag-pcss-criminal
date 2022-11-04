@@ -19,7 +19,9 @@ RUN mvn -ntp -B clean install \
 #############################################################################################
 ### Stage where Docker is running a java process to run a service built in previous stage ###
 #############################################################################################
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-alpine
+
+RUN apk upgrade expat  # Fix for CVE-2022-43680
 
 ARG SERVICE_NAME=pcss-criminal-application
 
