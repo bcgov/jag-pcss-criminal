@@ -128,7 +128,7 @@ objects:
             - name: ORDS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pcss-civil-application-secrets
+                  name: pcss-criminal-splunk-config
                   key: ORDS_PASSWORD
             resources:
               limits:
