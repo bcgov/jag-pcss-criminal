@@ -118,8 +118,18 @@ objects:
             - name: ORDS_HOST
               valueFrom:
                 secretKeyRef:
-                  name: pcss-criminal-application-secrets
+                  name: pcss-criminal-splunk-config
                   key: ORDS_HOST
+            - name: ORDS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-splunk-config
+                  key: ORDS_USERNAME
+            - name: ORDS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-civil-application-secrets
+                  key: ORDS_PASSWORD
             resources:
               limits:
                 cpu: 500m
