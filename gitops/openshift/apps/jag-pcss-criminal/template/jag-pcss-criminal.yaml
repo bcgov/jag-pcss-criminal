@@ -118,17 +118,17 @@ objects:
             - name: ORDS_HOST
               valueFrom:
                 secretKeyRef:
-                  name: pcss-criminal-splunk-config
+                  name: pcss-criminal-application-secrets
                   key: ORDS_HOST
             - name: ORDS_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: pcss-criminal-splunk-config
+                  name: pcss-criminal-application-secrets
                   key: ORDS_USERNAME
             - name: ORDS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: pcss-criminal-splunk-config
+                  name: pcss-criminal-application-secrets
                   key: ORDS_PASSWORD
             resources:
               limits:
