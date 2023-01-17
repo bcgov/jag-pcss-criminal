@@ -50,7 +50,6 @@ public class SoapConfig extends WsConfigurerAdapter {
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         var restTemplate = restTemplateBuilder.basicAuthentication(username, password).build();
-
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
     }
