@@ -11,6 +11,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.soap.SOAPMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,11 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 @EnableWs
 @Configuration
 public class SoapConfig extends WsConfigurerAdapter {
+    @Value("${pcss.username}")
+    private String username;
+
+    @Value("${pcss.password}")
+    private String password;
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -41,8 +48,8 @@ public class SoapConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate = restTemplateBuilder.basicAuthentication(username, password).build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
     }

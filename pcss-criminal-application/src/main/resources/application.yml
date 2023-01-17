@@ -4,4 +4,8 @@ security:
     username: ${BASIC_AUTH_USER}
 pcss:
   host: ${ORDS_HOST}
+  username: ${ORDS_USERNAME}
+  password: ${ORDS_PASSWORD}
+
+
 
