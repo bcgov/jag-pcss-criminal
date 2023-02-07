@@ -36,6 +36,7 @@ public class Keys {
     public static final String SOAP_METHOD_SYNC_HEARING = "getSyncCriminalHearingRestriction";
     public static final String SOAP_METHOD_CROWN_FILE_DETAIL = "setCrownFileDetail";
     public static final String SOAP_METHOD_CROWN_ASSIGNMENT = "getCrownAssignment";
+    public static final String SOAP_METHOD_FILE_ACCESS = "getFileAccess";
     public static final String SOAP_METHOD_SET_CROWN_ASSIGNMENT = "setCrownAssignment";
     public static final String SOAP_METHOD_COUNSEL_DETAIL_CRIMINAL = "setCounselDetailCriminal";
 
@@ -89,6 +90,7 @@ public class Keys {
     public static final String ORDS_FILE_DETAIL = "file/detail";
     public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
     public static final String ORDS_FILE_NOTE = "file/note";
+    public static final String ORDS_FILE_ACCESS = "file/access";
 
     // Logs
     public static final String LOG_RECEIVED = "{}: received";
