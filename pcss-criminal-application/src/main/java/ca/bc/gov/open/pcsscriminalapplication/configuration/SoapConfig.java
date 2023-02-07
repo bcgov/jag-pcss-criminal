@@ -89,10 +89,10 @@ public class SoapConfig extends WsConfigurerAdapter {
         return messageFactory;
     }
 
-    @Bean(name = "JusticePCSSCriminal.wsProvider:pcssCriminalW")
+    @Bean(name = "JusticePCSSCriminal.wsProvider:pcssCriminal")
     public Wsdl11Definition JusticePCSSWSDL() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminalW.wsdl"));
+        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminal.wsdl"));
         return wsdl11Definition;
     }
 

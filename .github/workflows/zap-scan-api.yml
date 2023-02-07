@@ -20,7 +20,7 @@ jobs:
           format: soap
           docker_name: 'owasp/zap2docker-stable'
           issue_title: 'ZAP Scan Report - PCSS Criminal API'
-          target: '${{ secrets.JAG_PCSS_CRIMINAL_API_RouteUrl }}/ws/JusticePCSSCriminal.wsProvider:pcssCriminalW?WSDL'
+          target: '${{ secrets.JAG_PCSS_CRIMINAL_API_RouteUrl }}/ws/JusticePCSSCriminal.wsProvider:pcssCriminal?WSDL'
           fail_action: true
           cmd_options: '-c "zaprules.conf" -S -z "-configFile /zap/wrk/zapoptions.prop"'
       
