@@ -65,7 +65,7 @@ public class GetFileAccessTest {
 
         Assertions.assertNotNull(result);
         Assertions.assertEquals("TEST", result.getResponseCd());
-        Assertions.assertEquals("TEST", result.getFileAccess());
+        Assertions.assertEquals(value, result.getFileAccess());
     }
 
     @Test
