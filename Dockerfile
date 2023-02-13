@@ -27,5 +27,5 @@ ARG SERVICE_NAME=pcss-criminal-application
 
 COPY --from=build ./${SERVICE_NAME}/target/${SERVICE_NAME}.jar /app/service.jar
 
-CMD ["java", "-jar", "/app/service.jar"]
+CMD ["java", "-Xmx1g", "-jar", "/app/service.jar"]
 #############################################################################################
