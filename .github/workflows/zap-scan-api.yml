@@ -8,7 +8,7 @@ jobs:
     name: Scan the application
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Update zap properties file
         run: echo  "replacer.full_list(0).replacement=${{ secrets.BASIC_AUTH_HEADER_DEV }}" >> "$GITHUB_WORKSPACE/zapoptions.prop"
@@ -20,7 +20,7 @@ jobs:
           format: soap
           docker_name: 'owasp/zap2docker-stable'
           issue_title: 'ZAP Scan Report - PCSS Criminal API'
-          target: '${{ secrets.JAG_PCSS_CRIMINAL_API_RouteUrl }}/ws/JusticePCSSCriminal.wsProvider:pcssCriminalW?WSDL'
+          target: '${{ secrets.JAG_PCSS_CRIMINAL_API_RouteUrl }}/ws/JusticePCSSCriminal.wsProvider:pcssCriminal?WSDL'
           fail_action: true
           cmd_options: '-c "zaprules.conf" -S -z "-configFile /zap/wrk/zapoptions.prop"'
       

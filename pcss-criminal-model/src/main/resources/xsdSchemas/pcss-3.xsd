@@ -1,6 +1,5 @@
 <xsd:schema targetNamespace="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"
             xmlns:annox="http://annox.dev.java.net"
-            xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
     <xsd:simpleType name="AgencyIdentifierType">
         <xsd:restriction base="xsd:string">
@@ -15,10 +14,7 @@
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="DateTimeType">
-        <xsd:restriction base="xsd:dateTime">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:length value="21"/>
-        </xsd:restriction>
+        <xsd:restriction base="xsd:dateTime"/>
     </xsd:simpleType>
     <xsd:simpleType name="ParticipantRoleType">
         <xsd:restriction base="xsd:string">
@@ -71,16 +67,10 @@
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="DateType">
-        <xsd:restriction base="xsd:dateTime">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:length value="21"/>
-        </xsd:restriction>
+        <xsd:restriction base="xsd:dateTime"/>
     </xsd:simpleType>
     <xsd:simpleType name="TimeType">
-        <xsd:restriction base="xsd:dateTime">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:length value="21"/>
-        </xsd:restriction>
+        <xsd:restriction base="xsd:dateTime"/>
     </xsd:simpleType>
     <xsd:simpleType name="AvailablePersonType">
         <xsd:restriction base="xsd:string">
@@ -289,6 +279,13 @@
             <xsd:whiteSpace value="preserve"/>
             <xsd:enumeration value="WIT"/>
             <xsd:enumeration value="CRN"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="JustinFileAccessType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Restricted"/>
+            <xsd:enumeration value="Allowed"/>
+            <xsd:enumeration value="NotFound"/>
         </xsd:restriction>
     </xsd:simpleType>
 </xsd:schema>

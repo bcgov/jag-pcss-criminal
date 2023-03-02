@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
+import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -11,6 +12,9 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.soap.SOAPMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +33,10 @@ import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
 
 @EnableWs
 @Configuration
+@EnableConfigurationProperties(PcssProperties.class)
 public class SoapConfig extends WsConfigurerAdapter {
+
+    @Autowired private PcssProperties pcssProperties;
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -41,8 +48,12 @@ public class SoapConfig extends WsConfigurerAdapter {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        RestTemplate restTemplate = new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .basicAuthentication(
+                                pcssProperties.getUserName(), pcssProperties.getPassword())
+                        .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
     }
@@ -78,10 +89,10 @@ public class SoapConfig extends WsConfigurerAdapter {
         return messageFactory;
     }
 
-    @Bean(name = "JusticePCSSCriminal.wsProvider:pcssCriminalW")
+    @Bean(name = "JusticePCSSCriminal.wsProvider:pcssCriminal")
     public Wsdl11Definition JusticePCSSWSDL() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminalW.wsdl"));
+        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminal.wsdl"));
         return wsdl11Definition;
     }
 
