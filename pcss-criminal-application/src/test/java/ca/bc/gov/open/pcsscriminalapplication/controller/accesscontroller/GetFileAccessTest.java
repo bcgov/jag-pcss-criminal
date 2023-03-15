@@ -61,11 +61,16 @@ public class GetFileAccessTest {
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
 
-        GetFileAccessResponse result = sut.getFileAccess(new GetFileAccess());
+        ca.bc.gov.open.wsdl.pcss.two.GetFileAccessResponse result =
+                sut.getFileAccess(new GetFileAccess());
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals("TEST", result.getResponseCd());
-        Assertions.assertEquals(value, result.getFileAccess());
+        Assertions.assertEquals(
+                "TEST",
+                result.getGetFileAccessResponse().getGetFileAccessResponse().getResponseCd());
+        Assertions.assertEquals(
+                value,
+                result.getGetFileAccessResponse().getGetFileAccessResponse().getFileAccess());
     }
 
     @Test

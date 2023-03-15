@@ -7,6 +7,7 @@ import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.GetFileAccessRequest;
 import ca.bc.gov.open.wsdl.pcss.one.GetFileAccessResponse;
 import ca.bc.gov.open.wsdl.pcss.two.GetFileAccess;
+import ca.bc.gov.open.wsdl.pcss.two.GetFileAccessResponse2;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -38,8 +39,8 @@ public class AccessController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_FILE_ACCESS)
     @ResponsePayload
-    public GetFileAccessResponse getFileAccess(@RequestPayload GetFileAccess getFileAccess)
-            throws JsonProcessingException {
+    public ca.bc.gov.open.wsdl.pcss.two.GetFileAccessResponse getFileAccess(
+            @RequestPayload GetFileAccess getFileAccess) throws JsonProcessingException {
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_FILE_ACCESS);
 
         ca.bc.gov.open.wsdl.pcss.one.GetFileAccessRequest getFileAccessRequest =
@@ -63,7 +64,12 @@ public class AccessController {
                             payload,
                             GetFileAccessResponse.class);
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_FILE_ACCESS);
-            return resp.getBody();
+            ca.bc.gov.open.wsdl.pcss.two.GetFileAccessResponse getFileAccessResponse =
+                    new ca.bc.gov.open.wsdl.pcss.two.GetFileAccessResponse();
+            GetFileAccessResponse2 getFileAccessResponse2 = new GetFileAccessResponse2();
+            getFileAccessResponse2.setGetFileAccessResponse(resp.getBody());
+            getFileAccessResponse.setGetFileAccessResponse(getFileAccessResponse2);
+            return getFileAccessResponse;
         } catch (Exception ex) {
             log.error(
                     logBuilder.writeLogMessage(
