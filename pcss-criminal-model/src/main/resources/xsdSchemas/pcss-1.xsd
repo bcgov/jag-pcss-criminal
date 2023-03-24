@@ -17,8 +17,8 @@
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="ResponseCd" type="xsd:string"/>
-                <xsd:element maxOccurs="unbounded" name="FileAccess" type="pcss:JustinFileAccess"/>
-                <xsd:element name="ResponseMessageTxt" type="xsd:string"/>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="FileAccess" type="pcss:JustinFileAccess"/>
+                <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
