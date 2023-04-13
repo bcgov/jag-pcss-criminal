@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class SoapConfig extends WsConfigurerAdapter {
                 restTemplateBuilder
                         .basicAuthentication(
                                 pcssProperties.getUserName(), pcssProperties.getPassword())
+                        .setReadTimeout(Duration.ofMinutes(2))
                         .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
