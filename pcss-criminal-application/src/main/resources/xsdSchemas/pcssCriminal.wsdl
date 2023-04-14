@@ -62,14 +62,15 @@
                     <xsd:element name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
                     <xsd:element name="RequestPartId" type="dx:SystemIdType"/>
                     <xsd:element name="RequestDtm" type="dx:DateTimeType"/>
-                    <xsd:element minOccurs="0" name="ApplicationCd " type="xsd:string"/>
-                    <xsd:element maxOccurs="unbounded" name="JustinNo " type="dx:JustinNoType"/>
+                    <xsd:element minOccurs="0" name="ApplicationCd" type="xsd:string"/>
+                    <xsd:element minOccurs="1" maxOccurs="unbounded" name="JustinNo" type="dx:JustinNoType"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="getFileAccessResponse">
                 <xsd:sequence>
                     <xsd:element name="ResponseCd" type="xsd:string"/>
-                    <xsd:element maxOccurs="unbounded" name="FileAccess" type="pcss:JustinFileAccess"/>
+                    <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="FileAccess" type="pcss:JustinFileAccess"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="JustinFileAccess">
