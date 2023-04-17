@@ -54,7 +54,9 @@ public class SoapConfig extends WsConfigurerAdapter {
                 restTemplateBuilder
                         .basicAuthentication(
                                 pcssProperties.getUserName(), pcssProperties.getPassword())
-                        .setReadTimeout(Duration.ofMinutes(2))
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(pcssProperties.getOrdsReadTimeout())))
                         .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
