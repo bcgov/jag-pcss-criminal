@@ -748,6 +748,7 @@
             <xsd:element form="qualified" name="RccAgencyFileNo" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="SynopsisTxt" type="xsd:string"/>
             <xsd:element form="qualified" name="DemsCaseUrl" minOccurs="0" type="xsd:string"/>
+            <xsd:element form="qualified" name="DemsCaseAccessToken" minOccurs="0" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:element name="getClosedFileRequest">
