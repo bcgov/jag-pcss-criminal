@@ -29,8 +29,11 @@ import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
+import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
+import org.springframework.xml.xsd.SimpleXsdSchema;
+import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
@@ -76,7 +79,6 @@ public class SoapConfig extends WsConfigurerAdapter {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Instant.class, new InstantDeserializer());
         module.addSerializer(Instant.class, new InstantSerializer());
@@ -106,5 +108,22 @@ public class SoapConfig extends WsConfigurerAdapter {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
         wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminalSecure.wsdl"));
         return wsdl11Definition;
+    }
+
+    @Bean(name = "demsIntegration")
+    public DefaultWsdl11Definition demsIntegrationWSDL(XsdSchema demsIntegrationSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("DemsIntegrationPort");
+        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setTargetNamespace(
+                "http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1");
+        wsdl11Definition.setCreateSoap12Binding(true);
+        wsdl11Definition.setSchema(demsIntegrationSchema);
+        return wsdl11Definition;
+    }
+
+    @Bean
+    public XsdSchema demsIntegrationSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsIntegration.xsd"));
     }
 }
