@@ -93,10 +93,10 @@ public class Keys {
     public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
     public static final String ORDS_FILE_NOTE = "file/note";
     public static final String ORDS_FILE_ACCESS = "file/access";
-    public static final String ORDS_FILE_DEMS_CASE_URL = "dems/dems-case-url";
+    public static final String ORDS_FILE_DEMS_CASE_URL = "cases";
 
     // Endpoints
-    public static final String SOAP_METHOD_DEMSCASE_MAPPING = "getDemsCaseMapping";
+    public static final String SOAP_METHOD_DEMSCASE_MAPPING = "getDemsCaseMappingRequest";
 
     // Logs
     public static final String LOG_RECEIVED = "{}: received";

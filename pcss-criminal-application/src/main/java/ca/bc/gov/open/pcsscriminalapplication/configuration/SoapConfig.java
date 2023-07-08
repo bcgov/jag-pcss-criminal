@@ -1,5 +1,6 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
+import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
@@ -37,10 +38,11 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-@EnableConfigurationProperties(PcssProperties.class)
+@EnableConfigurationProperties({DemsProperties.class, PcssProperties.class})
 public class SoapConfig extends WsConfigurerAdapter {
 
     @Autowired private PcssProperties pcssProperties;
+    @Autowired private DemsProperties demsProperties;
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -52,6 +54,7 @@ public class SoapConfig extends WsConfigurerAdapter {
     }
 
     @Bean
+    @Primary
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         var restTemplate =
                 restTemplateBuilder
@@ -60,6 +63,20 @@ public class SoapConfig extends WsConfigurerAdapter {
                         .setReadTimeout(
                                 Duration.ofSeconds(
                                         Integer.parseInt(pcssProperties.getOrdsReadTimeout())))
+                        .build();
+        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        return restTemplate;
+    }
+
+    @Bean(name = "restTemplateDEMS")
+    public RestTemplate restTemplateDEMS(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .basicAuthentication(
+                                demsProperties.getUserName(), demsProperties.getPassword())
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(demsProperties.getOrdsReadTimeout())))
                         .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
@@ -114,7 +131,7 @@ public class SoapConfig extends WsConfigurerAdapter {
     public DefaultWsdl11Definition demsIntegrationWSDL(XsdSchema demsIntegrationSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("DemsIntegrationPort");
-        wsdl11Definition.setLocationUri("/ws");
+        wsdl11Definition.setLocationUri("/criminal");
         wsdl11Definition.setTargetNamespace(
                 "http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1");
         wsdl11Definition.setCreateSoap12Binding(true);

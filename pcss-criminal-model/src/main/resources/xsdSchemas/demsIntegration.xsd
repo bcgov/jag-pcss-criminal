@@ -1,14 +1,15 @@
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1"
+<xsd:schema xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1"
             targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1" >
 
-    <xsd:element name="getDemsCaseMapping">
+    <xsd:element name="getDemsCaseMappingRequest">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="RequestAgencyIdentifierId" type="tns:AgencyIdentifierType"/>
-                <xsd:element name="RequestPartId" type="tns:SystemIdType"/>
-                <xsd:element name="RequestDtm" type="tns:DateTimeType"/>
+                <xsd:element name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
+                <xsd:element name="RequestPartId" type="dx:SystemIdType"/>
+                <xsd:element name="RequestDtm" type="dx:DateTimeType"/>
                 <xsd:element minOccurs="0" name="ApplicationCd" type="xsd:string"/>
-                <xsd:element minOccurs="1" maxOccurs="unbounded" name="JustinNo" type="tns:JustinNoType"/>
+                <xsd:element minOccurs="1" maxOccurs="unbounded" name="JustinNo" type="dx:JustinNoType"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -16,46 +17,17 @@
     <xsd:element name="getDemsCaseMappingResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element minOccurs="0" maxOccurs="unbounded" name="DemsCaseLink" type="tns:DemsCaseType"/>
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="dems_cases" type="tns:DemsCaseType"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:complexType name="DemsCaseLinkType">
-        <xsd:sequence>
-            <xsd:element name="JustinNo" type="tns:JustinNoType"/>
-            <xsd:element minOccurs="0" maxOccurs="unbounded" name="DemsCase" type="tns:DemsCaseType"/>
-        </xsd:sequence>
-    </xsd:complexType>
     <xsd:complexType name="DemsCaseType">
         <xsd:sequence>
-            <xsd:element name="RccAgencyId" type="tns:AgencyIdentifierType"/>
-            <xsd:element name="RccAgencyFileNo" type="xsd:string"/>
-            <xsd:element name="DemsCaseUrl" minOccurs="0" type="xsd:string"/>
+            <xsd:element name="mdoc_justin_no" type="xsd:string"/>
+            <xsd:element name="agen_id" type="dx:AgencyIdentifierType"/>
+            <xsd:element name="agency_file_no" type="xsd:string"/>
+            <xsd:element name="dems_url" minOccurs="0" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:simpleType name="SystemIdType">
-        <xsd:restriction base="xsd:string">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:maxLength value="16"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-
-    <xsd:simpleType name="AgencyIdentifierType">
-        <xsd:restriction base="xsd:string">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:maxLength value="16"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-
-    <xsd:simpleType name="JustinNoType">
-        <xsd:restriction base="xsd:string">
-            <xsd:whiteSpace value="preserve"/>
-            <xsd:maxLength value="12"/>
-        </xsd:restriction>
-    </xsd:simpleType>
-
-    <xsd:simpleType name="DateTimeType">
-        <xsd:restriction base="xsd:dateTime"/>
-    </xsd:simpleType>
 </xsd:schema>

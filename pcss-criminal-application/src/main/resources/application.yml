@@ -7,6 +7,12 @@ pcss:
   username: ${ORDS_USERNAME}
   password: ${ORDS_PASSWORD}
   ordsReadTimeout: ${ORDS_READ_TIMEOUT:120}
+dems:
+  host: ${DEMS_ORDS_HOST}
+  username: ${DEMS_ORDS_USERNAME}
+  password: ${DEMS_ORDS_PASSWORD}
+  ordsReadTimeout: ${DEMS_ORDS_READ_TIMEOUT:120}
+
 
 
 
