@@ -64,7 +64,9 @@ public class DemsCaseUrlController {
                                 "requestDtm",
                                 DateUtils.formatORDSDate(getDemsCaseMappingRequest.getRequestDtm()))
                         .queryParam("applicationCd", getDemsCaseMappingRequest.getApplicationCd())
-                        .queryParam("justinNo", String.join(",", getDemsCaseMappingRequest.getJustinNo()));
+                        .queryParam(
+                                "justinNo",
+                                String.join(",", getDemsCaseMappingRequest.getJustinNo()));
 
         try {
 
@@ -80,7 +82,6 @@ public class DemsCaseUrlController {
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_DEMSCASE_MAPPING);
 
             return response.getBody();
-
         } catch (Exception ex) {
 
             log.error(
