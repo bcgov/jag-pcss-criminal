@@ -96,7 +96,7 @@ public class Keys {
     public static final String ORDS_FILE_DEMS_CASE_URL = "cases";
 
     // Endpoints
-    public static final String SOAP_METHOD_DEMSCASE_MAPPING = "getDemsCaseMappingRequest";
+    public static final String SOAP_METHOD_DEMSCASE_REQUEST = "getDemsCasesRequest";
 
     // Logs
     public static final String LOG_RECEIVED = "{}: received";
