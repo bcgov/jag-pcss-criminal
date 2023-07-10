@@ -13,4 +13,5 @@ public class PcssProperties {
     private String namespace;
     private String userName;
     private String password;
+    private String ordsReadTimeout;
 }
