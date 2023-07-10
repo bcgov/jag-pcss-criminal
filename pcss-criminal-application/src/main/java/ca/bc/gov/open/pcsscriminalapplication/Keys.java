@@ -7,6 +7,8 @@ public class Keys {
     }
 
     public static final String SOAP_NAMESPACE = "http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1";
+    public static final String SOAP_DEMSCASEURL_NAMESPACE =
+            "http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1";
 
     // Methods
     public static final String SOAP_METHOD_APPEARANCE = "getAppearanceCriminal";
@@ -91,6 +93,10 @@ public class Keys {
     public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
     public static final String ORDS_FILE_NOTE = "file/note";
     public static final String ORDS_FILE_ACCESS = "file/access";
+    public static final String ORDS_FILE_DEMS_CASE_URL = "cases";
+
+    // Endpoints
+    public static final String SOAP_METHOD_DEMSCASE_MAPPING = "getDemsCaseMappingRequest";
 
     // Logs
     public static final String LOG_RECEIVED = "{}: received";

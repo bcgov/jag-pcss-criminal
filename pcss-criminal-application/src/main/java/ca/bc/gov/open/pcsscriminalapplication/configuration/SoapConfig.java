@@ -1,17 +1,18 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
+import ca.bc.gov.open.pcsscriminalapplication.exception.DetailSoapFaultDefinitionExceptionResolver;
+import ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException;
+import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import javax.xml.soap.SOAPMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,16 +29,40 @@ import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
+import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
+import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.Wsdl11Definition;
+import org.springframework.xml.xsd.SimpleXsdSchema;
+import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-@EnableConfigurationProperties(PcssProperties.class)
+@EnableConfigurationProperties({DemsProperties.class, PcssProperties.class})
 public class SoapConfig extends WsConfigurerAdapter {
 
     @Autowired private PcssProperties pcssProperties;
+    @Autowired private DemsProperties demsProperties;
+
+    @Bean
+    public SoapFaultMappingExceptionResolver exceptionResolver() {
+        SoapFaultMappingExceptionResolver exceptionResolver =
+                new DetailSoapFaultDefinitionExceptionResolver();
+
+        SoapFaultDefinition faultDefinition = new SoapFaultDefinition();
+        faultDefinition.setFaultCode(SoapFaultDefinition.SERVER);
+        exceptionResolver.setDefaultFault(faultDefinition);
+
+        Properties errorMappings = new Properties();
+        errorMappings.setProperty(Exception.class.getName(), SoapFaultDefinition.SERVER.toString());
+        errorMappings.setProperty(
+                ServiceFaultException.class.getName(), SoapFaultDefinition.SERVER.toString());
+        exceptionResolver.setExceptionMappings(errorMappings);
+        exceptionResolver.setOrder(1);
+        return exceptionResolver;
+    }
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -49,6 +74,7 @@ public class SoapConfig extends WsConfigurerAdapter {
     }
 
     @Bean
+    @Primary
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         var restTemplate =
                 restTemplateBuilder
@@ -57,6 +83,20 @@ public class SoapConfig extends WsConfigurerAdapter {
                         .setReadTimeout(
                                 Duration.ofSeconds(
                                         Integer.parseInt(pcssProperties.getOrdsReadTimeout())))
+                        .build();
+        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        return restTemplate;
+    }
+
+    @Bean(name = "restTemplateDEMS")
+    public RestTemplate restTemplateDEMS(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .basicAuthentication(
+                                demsProperties.getUserName(), demsProperties.getPassword())
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(demsProperties.getOrdsReadTimeout())))
                         .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
         return restTemplate;
@@ -76,7 +116,8 @@ public class SoapConfig extends WsConfigurerAdapter {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.setPropertyNamingStrategy(
+                PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Instant.class, new InstantDeserializer());
         module.addSerializer(Instant.class, new InstantSerializer());
@@ -105,6 +146,29 @@ public class SoapConfig extends WsConfigurerAdapter {
     public Wsdl11Definition JusticeSecurePCSSWSDL() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
         wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/pcssCriminalSecure.wsdl"));
+        return wsdl11Definition;
+    }
+
+    @Bean(name = "demsCase")
+    public DefaultWsdl11Definition demsCaseWSDL(XsdSchema demsCaseSchema) {
+        DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
+        wsdl11Definition.setPortTypeName("DemsCasePort");
+        wsdl11Definition.setLocationUri("/criminal");
+        wsdl11Definition.setTargetNamespace("http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1");
+        wsdl11Definition.setCreateSoap12Binding(true);
+        wsdl11Definition.setSchema(demsCaseSchema);
+        return wsdl11Definition;
+    }
+
+    @Bean
+    public XsdSchema demsCaseSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsCase.xsd"));
+    }
+
+    @Bean(name = "demsCase")
+    public Wsdl11Definition DemsCaseWSDL() {
+        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/demsCase.wsdl"));
         return wsdl11Definition;
     }
 }

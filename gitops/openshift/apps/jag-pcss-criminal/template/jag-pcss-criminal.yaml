@@ -131,10 +131,26 @@ objects:
                   name: pcss-criminal-application-secrets
                   key: ORDS_PASSWORD
             - name: ORDS_READ_TIMEOUT
+            - name: DEMS_ORDS_HOST
               valueFrom:
                 secretKeyRef:
                   name: pcss-criminal-application-secrets
-                  key: ORDS_READ_TIMEOUT
+                  key: DEMS_ORDS_HOST
+            - name: DEMS_ORDS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: DEMS_ORDS_USERNAME
+            - name: DEMS_ORDS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: DEMS_ORDS_PASSWORD
+            - name: DEMS_ORDS_READ_TIMEOUT
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: DEMS_ORDS_READ_TIMEOUT
             resources:
               limits:
                 cpu: 500m
