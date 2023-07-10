@@ -2,7 +2,7 @@
             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1"
             targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" >
 
-    <xsd:element name="getDemsCaseMappingRequest">
+    <xsd:element name="getDemsCasesRequest">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
@@ -14,7 +14,7 @@
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="getDemsCaseMappingResponse">
+    <xsd:element name="getDemsCasesResponse">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element minOccurs="0" maxOccurs="unbounded" name="dems_case" type="tns:DemsCaseType"/>
