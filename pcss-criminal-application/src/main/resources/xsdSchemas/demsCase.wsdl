@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1">
     <wsdl:types>
-        <xsd:schema xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1">
+        <xsd:schema xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1">
 		<xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"/>
             <xsd:element name="getDemsCaseMappingRequest">
                 <xsd:complexType>

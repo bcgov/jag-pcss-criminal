@@ -1,6 +1,6 @@
 <xsd:schema xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1"
-            targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1" >
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1"
+            targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" >
 
     <xsd:element name="getDemsCaseMappingRequest">
         <xsd:complexType>

@@ -149,27 +149,26 @@ public class SoapConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
-    @Bean(name = "demsIntegration")
-    public DefaultWsdl11Definition demsIntegrationWSDL(XsdSchema demsIntegrationSchema) {
+    @Bean(name = "demsCase")
+    public DefaultWsdl11Definition demsCaseWSDL(XsdSchema demsCaseSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
-        wsdl11Definition.setPortTypeName("DemsIntegrationPort");
+        wsdl11Definition.setPortTypeName("DemsCasePort");
         wsdl11Definition.setLocationUri("/criminal");
-        wsdl11Definition.setTargetNamespace(
-                "http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1");
+        wsdl11Definition.setTargetNamespace("http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1");
         wsdl11Definition.setCreateSoap12Binding(true);
-        wsdl11Definition.setSchema(demsIntegrationSchema);
+        wsdl11Definition.setSchema(demsCaseSchema);
         return wsdl11Definition;
     }
 
     @Bean
-    public XsdSchema demsIntegrationSchema() {
-        return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsIntegration.xsd"));
+    public XsdSchema demsCaseSchema() {
+        return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsCase.xsd"));
     }
 
-    @Bean(name = "demsIntegration")
-    public Wsdl11Definition DemsIntegrationWSDL() {
+    @Bean(name = "demsCase")
+    public Wsdl11Definition DemsCaseWSDL() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
-        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/demsIntegration.wsdl"));
+        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/demsCase.wsdl"));
         return wsdl11Definition;
     }
 }

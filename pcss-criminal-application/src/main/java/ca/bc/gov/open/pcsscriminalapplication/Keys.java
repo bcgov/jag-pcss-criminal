@@ -8,7 +8,7 @@ public class Keys {
 
     public static final String SOAP_NAMESPACE = "http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1";
     public static final String SOAP_DEMSCASEURL_NAMESPACE =
-            "http://courts.gov.bc.ca/xml/ns/pcss/demsIntegration/v1";
+            "http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1";
 
     // Methods
     public static final String SOAP_METHOD_APPEARANCE = "getAppearanceCriminal";
