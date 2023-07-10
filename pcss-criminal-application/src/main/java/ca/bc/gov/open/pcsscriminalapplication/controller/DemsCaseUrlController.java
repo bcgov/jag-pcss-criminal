@@ -1,7 +1,8 @@
 package ca.bc.gov.open.pcsscriminalapplication.controller;
 
+import static ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException.handleError;
+
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.ORDSException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
@@ -90,7 +91,8 @@ public class DemsCaseUrlController {
                             Keys.SOAP_METHOD_DEMSCASE_MAPPING,
                             getDemsCaseMappingRequest,
                             ex.getMessage()));
-            throw new ORDSException();
+
+            throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         }
     }
 }

@@ -1,5 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
+import ca.bc.gov.open.pcsscriminalapplication.exception.DetailSoapFaultDefinitionExceptionResolver;
+import ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
@@ -10,6 +12,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import javax.xml.soap.SOAPMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -26,6 +29,8 @@ import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
 import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
+import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
+import org.springframework.ws.soap.server.endpoint.SoapFaultMappingExceptionResolver;
 import org.springframework.ws.transport.http.MessageDispatcherServlet;
 import org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition;
 import org.springframework.ws.wsdl.wsdl11.SimpleWsdl11Definition;
@@ -40,6 +45,24 @@ public class SoapConfig extends WsConfigurerAdapter {
 
     @Autowired private PcssProperties pcssProperties;
     @Autowired private DemsProperties demsProperties;
+
+    @Bean
+    public SoapFaultMappingExceptionResolver exceptionResolver() {
+        SoapFaultMappingExceptionResolver exceptionResolver =
+                new DetailSoapFaultDefinitionExceptionResolver();
+
+        SoapFaultDefinition faultDefinition = new SoapFaultDefinition();
+        faultDefinition.setFaultCode(SoapFaultDefinition.SERVER);
+        exceptionResolver.setDefaultFault(faultDefinition);
+
+        Properties errorMappings = new Properties();
+        errorMappings.setProperty(Exception.class.getName(), SoapFaultDefinition.SERVER.toString());
+        errorMappings.setProperty(
+                ServiceFaultException.class.getName(), SoapFaultDefinition.SERVER.toString());
+        exceptionResolver.setExceptionMappings(errorMappings);
+        exceptionResolver.setOrder(1);
+        return exceptionResolver;
+    }
 
     @Bean
     public ServletRegistrationBean<MessageDispatcherServlet> messageDispatcherServlet(
@@ -141,5 +164,12 @@ public class SoapConfig extends WsConfigurerAdapter {
     @Bean
     public XsdSchema demsIntegrationSchema() {
         return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsIntegration.xsd"));
+    }
+
+    @Bean(name = "demsIntegration")
+    public Wsdl11Definition DemsIntegrationWSDL() {
+        SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
+        wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/demsIntegration.wsdl"));
+        return wsdl11Definition;
     }
 }
