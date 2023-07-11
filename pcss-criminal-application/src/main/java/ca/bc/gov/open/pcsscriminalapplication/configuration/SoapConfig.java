@@ -149,7 +149,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
-    @Bean(name = "demsCase_getWSDLFromXSD")
+    @Bean(name = "createDemsCaseWSDLFromXSD")
     public DefaultWsdl11Definition demsCaseWSDL(XsdSchema demsCaseSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("DemsCasePort");
@@ -165,7 +165,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         return new SimpleXsdSchema(new ClassPathResource("xsdSchemas/demsCase.xsd"));
     }
 
-    @Bean(name = "demsCase")
+    @Bean(name = "JusticePCSSCriminal.Integration:demsCase")
     public Wsdl11Definition DemsCaseWSDL() {
         SimpleWsdl11Definition wsdl11Definition = new SimpleWsdl11Definition();
         wsdl11Definition.setWsdl(new ClassPathResource("xsdSchemas/demsCase.wsdl"));
