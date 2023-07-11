@@ -149,7 +149,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         return wsdl11Definition;
     }
 
-    @Bean(name = "demsCase")
+    @Bean(name = "demsCase_getWSDLFromXSD")
     public DefaultWsdl11Definition demsCaseWSDL(XsdSchema demsCaseSchema) {
         DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
         wsdl11Definition.setPortTypeName("DemsCasePort");
