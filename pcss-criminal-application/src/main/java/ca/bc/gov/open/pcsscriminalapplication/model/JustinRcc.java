@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(
         name = "rccId",
         propOrder = {"justinNo", "rccId"})
-public class RccId implements Serializable {
+public class JustinRcc implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @XmlElement(name = "justinNo", required = true)

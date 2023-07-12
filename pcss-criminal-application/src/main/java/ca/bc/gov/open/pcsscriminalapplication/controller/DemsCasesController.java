@@ -3,8 +3,8 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import static ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException.handleError;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.model.RccId;
-import ca.bc.gov.open.pcsscriminalapplication.model.RccIds;
+import ca.bc.gov.open.pcsscriminalapplication.model.JustinRCCs;
+import ca.bc.gov.open.pcsscriminalapplication.model.JustinRcc;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.IslProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.DateUtils;
@@ -65,65 +65,91 @@ public class DemsCasesController {
             @RequestPayload GetDemsCasesRequest getDemsCasesRequest)
             throws JsonProcessingException {
 
-        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_DEMSCASE_REQUEST);
-
-        UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(
-                                demsProperties.getHost() + Keys.ORDS_FILE_DEMS_CASE_URL)
-                        .queryParam(
-                                "requestAgencyIdentifierId",
-                                getDemsCasesRequest.getRequestAgencyIdentifierId())
-                        .queryParam("requestPartId", getDemsCasesRequest.getRequestPartId())
-                        .queryParam(
-                                "requestDtm",
-                                DateUtils.formatORDSDate(getDemsCasesRequest.getRequestDtm()))
-                        .queryParam("applicationCd", getDemsCasesRequest.getApplicationCd())
-                        .queryParam(
-                                "justinNo", String.join(",", getDemsCasesRequest.getJustinNo()));
+        HttpEntity<JustinRCCs> response = null;
 
         try {
+            UriComponentsBuilder builder =
+                    UriComponentsBuilder.fromHttpUrl(
+                                    demsProperties.getHost() + Keys.ORDS_FILE_DEMS_CASE_URL)
+                            .queryParam(
+                                    "requestAgencyIdentifierId",
+                                    getDemsCasesRequest.getRequestAgencyIdentifierId())
+                            .queryParam("requestPartId", getDemsCasesRequest.getRequestPartId())
+                            .queryParam(
+                                    "requestDtm",
+                                    DateUtils.formatORDSDate(getDemsCasesRequest.getRequestDtm()))
+                            .queryParam("applicationCd", getDemsCasesRequest.getApplicationCd())
+                            .queryParam(
+                                    "justinNo",
+                                    String.join(",", getDemsCasesRequest.getJustinNo()));
 
-            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_DEMSCASE_REQUEST);
-
-            HttpEntity<RccIds> response =
+            response =
                     restTemplate.exchange(
                             builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
-                            RccIds.class);
+                            JustinRCCs.class);
 
-            RccIds rccIds = response.getBody();
-            String rccPattern = rccIds.getDemsCasePattern();
+            log.info("Request Success from ORDS", "dems rccid request");
+        } catch (Exception ex) {
 
-            HashMap<String, String> rccIdsMap =
-                    (HashMap<String, String>)
-                            rccIds.getJustins().stream()
-                                    .collect(Collectors.toMap(RccId::getJustinNo, RccId::getRccId));
+            log.error(
+                    logBuilder.writeLogMessage(
+                            Keys.ORDS_ERROR_MESSAGE,
+                            "dems rccid request",
+                            getDemsCasesRequest,
+                            ex.getMessage()));
 
-            HashMap<String, String> rccIdToDemsURL = new HashMap<>();
-            rccIds.getJustins().stream().forEach(id -> rccIdToDemsURL.put(id.getRccId(), ""));
+            throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
+        }
 
-            rccIdToDemsURL.forEach(
-                    (rccid, value) -> {
-                        UriComponentsBuilder islBuilder =
-                                UriComponentsBuilder.fromHttpUrl(
-                                        String.format(islProperties.getHost(), rccid));
-
-                        HttpEntity<List<Map<String, String>>> resp =
-                                restTemplateISL.exchange(
-                                        islBuilder.build().toUri(),
-                                        HttpMethod.GET,
-                                        new HttpEntity<>(new HttpHeaders()),
-                                        new ParameterizedTypeReference<>() {});
-
-                        List<Map<String, String>> list = resp.getBody();
-                        if (list.stream().count() == 0) {
-                            rccIdToDemsURL.put(rccid, rccPattern.replaceAll("<<RCC_ID>>", rccid));
-                        }
-                    });
+        try {
 
             GetDemsCasesResponse ret = new GetDemsCasesResponse();
             ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
+
+            JustinRCCs justinRCCs = response.getBody();
+            String rccPattern = justinRCCs.getDemsCasePattern();
+
+            HashMap<String, String> rccIdsMap =
+                    (HashMap<String, String>)
+                            justinRCCs.getJustins().stream()
+                                    .collect(
+                                            Collectors.toMap(
+                                                    JustinRcc::getJustinNo, JustinRcc::getRccId));
+
+            HashMap<String, String> rccIdToDemsURL = new HashMap<>();
+            justinRCCs.getJustins().stream().forEach(id -> rccIdToDemsURL.put(id.getRccId(), ""));
+
+            for (Map.Entry<String, String> entry : rccIdToDemsURL.entrySet()) {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                UriComponentsBuilder islBuilder = null;
+                try {
+                    islBuilder =
+                            UriComponentsBuilder.fromHttpUrl(
+                                    String.format(islProperties.getHost(), key));
+
+                    HttpEntity<List<Map<String, String>>> resp =
+                            restTemplateISL.exchange(
+                                    islBuilder.build().toUri(),
+                                    HttpMethod.GET,
+                                    new HttpEntity<>(new HttpHeaders()),
+                                    new ParameterizedTypeReference<>() {});
+
+                    List<Map<String, String>> list = resp.getBody();
+                    if (list.stream().count() > 0) {
+                        rccIdToDemsURL.put(key, rccPattern.replaceAll("<<RCC_ID>>", key));
+                    }
+                } catch (Exception ex) {
+                    log.error(
+                            logBuilder.writeLogMessage(
+                                    Keys.ORDS_ERROR_MESSAGE, "ISL request", null, ex.getMessage()));
+
+                    throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
+                }
+            }
+
             rccIdsMap.forEach(
                     (justinNo, rccid) -> {
                         DemsCaseType demsCaseType = new DemsCaseType();

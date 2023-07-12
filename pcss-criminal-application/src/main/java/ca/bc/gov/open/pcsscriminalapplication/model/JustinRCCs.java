@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
         name = "",
-        propOrder = {"RccIds"})
+        propOrder = {"JustinRccs"})
 @XmlRootElement(name = "rccIdsResponse")
-public class RccIds implements Serializable {
+public class JustinRCCs implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class RccIds implements Serializable {
     protected String demsCasePattern;
 
     @XmlElement(name = "justins")
-    protected List<RccId> justins;
+    protected List<JustinRcc> justins;
 
     public String getDemsCasePattern() {
         return demsCasePattern;
@@ -28,17 +28,17 @@ public class RccIds implements Serializable {
         this.demsCasePattern = value;
     }
 
-    public List<RccId> getJustins() {
+    public List<JustinRcc> getJustins() {
         if (justins == null) {
-            justins = new ArrayList<RccId>();
+            justins = new ArrayList<JustinRcc>();
         }
         return this.justins;
     }
 
-    public void setDemsCase(List<RccId> value) {
+    public void setDemsCase(List<JustinRcc> value) {
         this.justins = null;
         if (value != null) {
-            List<RccId> draftl = this.getJustins();
+            List<JustinRcc> draftl = this.getJustins();
             draftl.addAll(value);
         }
     }
