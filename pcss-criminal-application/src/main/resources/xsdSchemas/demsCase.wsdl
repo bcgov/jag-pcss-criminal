@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1">
     <wsdl:types>
         <xsd:schema xmlns:dx="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://courts.gov.bc.ca/xml/ns/pcss/demsCase/v1">
@@ -15,16 +16,14 @@
             <xsd:element name="getDemsCasesResponse">
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="dems_case" type="tns:DemsCaseType"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="DemsCase" type="tns:DemsCaseType"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
             <xsd:complexType name="DemsCaseType">
                 <xsd:sequence>
-                    <xsd:element name="mdoc_justin_no" type="xsd:string"/>
-                    <xsd:element name="agen_id" type="dx:AgencyIdentifierType"/>
-                    <xsd:element name="agency_file_no" type="xsd:string"/>
-                    <xsd:element minOccurs="0" name="dems_url" type="xsd:string"/>
+                    <xsd:element name="JustinNo" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="DemsUrl" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:element name="Error">
@@ -65,15 +64,19 @@
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="getDemsCasesRequest">
-        <wsdl:part element="tns:getDemsCasesRequest" name="getDemsCasesRequest"> </wsdl:part>
+        <wsdl:part element="tns:getDemsCasesRequest" name="getDemsCasesRequest">
+        </wsdl:part>
     </wsdl:message>
     <wsdl:message name="getDemsCasesResponse">
-        <wsdl:part element="tns:getDemsCasesResponse" name="getDemsCasesResponse"> </wsdl:part>
+        <wsdl:part element="tns:getDemsCasesResponse" name="getDemsCasesResponse">
+        </wsdl:part>
     </wsdl:message>
     <wsdl:portType name="DemsCasePort">
         <wsdl:operation name="getDemsCases">
-            <wsdl:input message="tns:getDemsCasesRequest" name="getDemsCasesRequest"> </wsdl:input>
-            <wsdl:output message="tns:getDemsCasesResponse" name="getDemsCasesResponse"> </wsdl:output>
+            <wsdl:input message="tns:getDemsCasesRequest" name="getDemsCasesRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:getDemsCasesResponse" name="getDemsCasesResponse">
+            </wsdl:output>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="DemsCasePortSoap12" type="tns:DemsCasePort">
