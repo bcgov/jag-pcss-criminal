@@ -23,10 +23,8 @@
     </xsd:element>
     <xsd:complexType name="DemsCaseType">
         <xsd:sequence>
-            <xsd:element name="mdoc_justin_no" type="xsd:string"/>
-            <xsd:element name="agen_id" type="dx:AgencyIdentifierType"/>
-            <xsd:element name="agency_file_no" type="xsd:string"/>
-            <xsd:element name="dems_url" minOccurs="0" type="xsd:string"/>
+            <xsd:element name="justinNo" type="xsd:string"/>
+            <xsd:element name="demsUrl" minOccurs="0" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
 

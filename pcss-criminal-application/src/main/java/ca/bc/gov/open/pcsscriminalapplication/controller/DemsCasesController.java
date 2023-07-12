@@ -153,7 +153,7 @@ public class DemsCasesController {
             rccIdsMap.forEach(
                     (justinNo, rccid) -> {
                         DemsCaseType demsCaseType = new DemsCaseType();
-                        demsCaseType.setMdocJustinNo(justinNo);
+                        demsCaseType.setJustinNo(justinNo);
                         demsCaseType.setDemsUrl(rccIdToDemsURL.get(rccid));
                         demsCase.add(demsCaseType);
                     });
