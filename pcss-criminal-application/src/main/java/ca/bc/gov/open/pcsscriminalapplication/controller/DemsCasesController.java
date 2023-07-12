@@ -109,19 +109,19 @@ public class DemsCasesController {
             ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
 
             JustinRCCs justinRCCs = response.getBody();
-            String rccPattern = justinRCCs.getDemsCasePattern();
+            final String DEMSURL = justinRCCs.getDemsCasePattern();
 
-            HashMap<String, String> rccIdsMap =
+            HashMap<String, String> justinRccs =
                     (HashMap<String, String>)
                             justinRCCs.getJustins().stream()
                                     .collect(
                                             Collectors.toMap(
                                                     JustinRcc::getJustinNo, JustinRcc::getRccId));
 
-            HashMap<String, String> rccIdToDemsURL = new HashMap<>();
-            justinRCCs.getJustins().stream().forEach(id -> rccIdToDemsURL.put(id.getRccId(), ""));
+            HashMap<String, String> rccIdToDemsURLs = new HashMap<>();
+            justinRCCs.getJustins().stream().forEach(id -> rccIdToDemsURLs.put(id.getRccId(), ""));
 
-            for (Map.Entry<String, String> entry : rccIdToDemsURL.entrySet()) {
+            for (Map.Entry<String, String> entry : rccIdToDemsURLs.entrySet()) {
                 String key = entry.getKey();
                 String value = entry.getValue();
                 UriComponentsBuilder islBuilder = null;
@@ -139,7 +139,7 @@ public class DemsCasesController {
 
                     List<Map<String, String>> list = resp.getBody();
                     if (list.stream().count() > 0) {
-                        rccIdToDemsURL.put(key, rccPattern.replaceAll("<<RCC_ID>>", key));
+                        rccIdToDemsURLs.put(key, DEMSURL.replaceAll("<<RCC_ID>>", key));
                     }
                 } catch (Exception ex) {
                     log.error(
@@ -150,11 +150,11 @@ public class DemsCasesController {
                 }
             }
 
-            rccIdsMap.forEach(
+            justinRccs.forEach(
                     (justinNo, rccid) -> {
                         DemsCaseType demsCaseType = new DemsCaseType();
                         demsCaseType.setJustinNo(justinNo);
-                        demsCaseType.setDemsUrl(rccIdToDemsURL.get(rccid));
+                        demsCaseType.setDemsUrl(rccIdToDemsURLs.get(rccid));
                         demsCase.add(demsCaseType);
                     });
             ret.setDemsCase(demsCase);
