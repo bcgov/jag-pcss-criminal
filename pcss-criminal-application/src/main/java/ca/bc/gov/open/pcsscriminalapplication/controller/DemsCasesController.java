@@ -3,6 +3,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import static ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException.handleError;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
+import ca.bc.gov.open.pcsscriminalapplication.exception.ReThrowException;
 import ca.bc.gov.open.pcsscriminalapplication.model.JustinRCCs;
 import ca.bc.gov.open.pcsscriminalapplication.model.JustinRcc;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
@@ -57,16 +58,8 @@ public class DemsCasesController {
         this.objectMapper = objectMapper;
     }
 
-    @PayloadRoot(
-            namespace = Keys.SOAP_DEMSCASEURL_NAMESPACE,
-            localPart = Keys.SOAP_METHOD_DEMSCASE_REQUEST)
-    @ResponsePayload
-    public GetDemsCasesResponse getDemsCaseMapping(
-            @RequestPayload GetDemsCasesRequest getDemsCasesRequest)
+    private HttpEntity<JustinRCCs> getJustinRCCs(GetDemsCasesRequest getDemsCasesRequest)
             throws JsonProcessingException {
-
-        HttpEntity<JustinRCCs> response = null;
-
         try {
             UriComponentsBuilder builder =
                     UriComponentsBuilder.fromHttpUrl(
@@ -83,7 +76,7 @@ public class DemsCasesController {
                                     "justinNo",
                                     String.join(",", getDemsCasesRequest.getJustinNo()));
 
-            response =
+            HttpEntity<JustinRCCs> response =
                     restTemplate.exchange(
                             builder.build().toUri(),
                             HttpMethod.GET,
@@ -91,6 +84,8 @@ public class DemsCasesController {
                             JustinRCCs.class);
 
             log.info("Request Success from ORDS", "dems rccid request");
+
+            return response;
         } catch (Exception ex) {
 
             log.error(
@@ -102,9 +97,12 @@ public class DemsCasesController {
 
             throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         }
+    }
 
+    private GetDemsCasesResponse getDemsCases(
+            GetDemsCasesRequest getDemsCasesRequest, HttpEntity<JustinRCCs> response)
+            throws JsonProcessingException {
         try {
-
             GetDemsCasesResponse ret = new GetDemsCasesResponse();
             ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
 
@@ -144,9 +142,13 @@ public class DemsCasesController {
                 } catch (Exception ex) {
                     log.error(
                             logBuilder.writeLogMessage(
-                                    Keys.ORDS_ERROR_MESSAGE, "ISL request", null, ex.getMessage()));
+                                    Keys.ORDS_ERROR_MESSAGE,
+                                    "ISL request",
+                                    getDemsCasesRequest,
+                                    ex.getMessage()));
 
-                    throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
+                    throw new ReThrowException(
+                            ex.getMessage(), Keys.ORDS_ERROR_MESSAGE + ": ISL request");
                 }
             }
 
@@ -160,6 +162,8 @@ public class DemsCasesController {
             ret.setDemsCase(demsCase);
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_DEMSCASE_REQUEST);
             return ret;
+        } catch (ReThrowException ex) {
+            throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         } catch (Exception ex) {
 
             log.error(
@@ -171,5 +175,17 @@ public class DemsCasesController {
 
             throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         }
+    }
+
+    @PayloadRoot(
+            namespace = Keys.SOAP_DEMSCASEURL_NAMESPACE,
+            localPart = Keys.SOAP_METHOD_DEMSCASE_REQUEST)
+    @ResponsePayload
+    public GetDemsCasesResponse getDemsCaseMapping(
+            @RequestPayload GetDemsCasesRequest getDemsCasesRequest)
+            throws JsonProcessingException {
+
+        HttpEntity<JustinRCCs> response = getJustinRCCs(getDemsCasesRequest);
+        return getDemsCases(getDemsCasesRequest, response);
     }
 }
