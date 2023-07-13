@@ -2,12 +2,15 @@ package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
 import ca.bc.gov.open.pcsscriminalapplication.exception.DetailSoapFaultDefinitionExceptionResolver;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException;
+import ca.bc.gov.open.pcsscriminalapplication.properties.CaseLookupProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
+import ca.bc.gov.open.pcsscriminalapplication.properties.IslProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
@@ -23,6 +26,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.config.annotation.EnableWs;
@@ -40,11 +47,18 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-@EnableConfigurationProperties({DemsProperties.class, PcssProperties.class})
+@EnableConfigurationProperties({
+    DemsProperties.class,
+    PcssProperties.class,
+    IslProperties.class,
+    CaseLookupProperties.class
+})
 public class SoapConfig extends WsConfigurerAdapter {
 
     @Autowired private PcssProperties pcssProperties;
     @Autowired private DemsProperties demsProperties;
+    @Autowired private IslProperties islProperties;
+    @Autowired private CaseLookupProperties caseLookupProperties;
 
     @Bean
     public SoapFaultMappingExceptionResolver exceptionResolver() {
@@ -102,6 +116,67 @@ public class SoapConfig extends WsConfigurerAdapter {
         return restTemplate;
     }
 
+    @Bean(name = "restTemplateCaseLookup")
+    public RestTemplate restTemplateCaseLookup(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(
+                                                caseLookupProperties.getOrdsReadTimeout())))
+                        .build();
+        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        restTemplate
+                .getInterceptors()
+                .add(
+                        new ClientHttpRequestInterceptor() {
+                            @Override
+                            public ClientHttpResponse intercept(
+                                    HttpRequest request,
+                                    byte[] body,
+                                    ClientHttpRequestExecution execution)
+                                    throws IOException {
+                                request.getHeaders()
+                                        .add(
+                                                "Authorization",
+                                                "Bearer "
+                                                        + new String(
+                                                                caseLookupProperties.getToken()));
+                                return execution.execute(request, body);
+                            }
+                        });
+        return restTemplate;
+    }
+
+    @Bean(name = "restTemplateISL")
+    public RestTemplate restTemplateISL(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(islProperties.getOrdsReadTimeout())))
+                        .build();
+        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        restTemplate
+                .getInterceptors()
+                .add(
+                        new ClientHttpRequestInterceptor() {
+                            @Override
+                            public ClientHttpResponse intercept(
+                                    HttpRequest request,
+                                    byte[] body,
+                                    ClientHttpRequestExecution execution)
+                                    throws IOException {
+                                request.getHeaders()
+                                        .add(
+                                                "Authorization",
+                                                "Bearer " + new String(islProperties.getToken()));
+                                return execution.execute(request, body);
+                            }
+                        });
+        return restTemplate;
+    }
+
     private MappingJackson2HttpMessageConverter createMappingJacksonHttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 
@@ -116,8 +191,6 @@ public class SoapConfig extends WsConfigurerAdapter {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.disable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE);
         objectMapper.configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES, true);
-        objectMapper.setPropertyNamingStrategy(
-                PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Instant.class, new InstantDeserializer());
         module.addSerializer(Instant.class, new InstantSerializer());
