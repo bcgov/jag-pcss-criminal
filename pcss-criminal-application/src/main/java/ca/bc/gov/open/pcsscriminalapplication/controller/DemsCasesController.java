@@ -149,7 +149,6 @@ public class DemsCasesController {
             ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
 
             JustinRCCs justinRCCs = response.getBody();
-            final String DEMSURL = justinRCCs.getDemsCasePattern();
 
             HashMap<String, String> justinRccs =
                     (HashMap<String, String>)

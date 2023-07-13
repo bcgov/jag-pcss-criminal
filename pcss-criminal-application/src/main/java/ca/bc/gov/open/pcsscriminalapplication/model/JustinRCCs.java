@@ -14,19 +14,8 @@ public class JustinRCCs implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @XmlElement(name = "demsCasePattern", required = true)
-    protected String demsCasePattern;
-
     @XmlElement(name = "justins")
     protected List<JustinRcc> justins;
-
-    public String getDemsCasePattern() {
-        return demsCasePattern;
-    }
-
-    public void setDemsCasePattern(String value) {
-        this.demsCasePattern = value;
-    }
 
     public List<JustinRcc> getJustins() {
         if (justins == null) {
