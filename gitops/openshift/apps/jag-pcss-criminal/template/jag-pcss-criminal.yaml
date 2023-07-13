@@ -170,6 +170,21 @@ objects:
                 secretKeyRef:
                   name: pcss-criminal-application-secrets
                   key: ISL_ORDS_READ_TIMEOUT
+            - name: CASE_LOOKUP_ORDS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: CASE_LOOKUP_ORDS_HOST
+            - name: CASE_LOOKUP_ORDS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: CASE_LOOKUP_ORDS_TOKEN
+            - name: CASE_LOOKUP_ORDS_READ_TIMEOUT
+              valueFrom:
+                secretKeyRef:
+                  name: pcss-criminal-application-secrets
+                  key: CASE_LOOKUP_ORDS_READ_TIMEOUT
             resources:
               limits:
                 cpu: 500m

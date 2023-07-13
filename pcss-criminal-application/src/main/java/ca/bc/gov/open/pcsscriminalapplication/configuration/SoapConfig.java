@@ -2,6 +2,7 @@ package ca.bc.gov.open.pcsscriminalapplication.configuration;
 
 import ca.bc.gov.open.pcsscriminalapplication.exception.DetailSoapFaultDefinitionExceptionResolver;
 import ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException;
+import ca.bc.gov.open.pcsscriminalapplication.properties.CaseLookupProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.IslProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
@@ -46,12 +47,18 @@ import org.springframework.xml.xsd.XsdSchema;
 
 @EnableWs
 @Configuration
-@EnableConfigurationProperties({DemsProperties.class, PcssProperties.class, IslProperties.class})
+@EnableConfigurationProperties({
+    DemsProperties.class,
+    PcssProperties.class,
+    IslProperties.class,
+    CaseLookupProperties.class
+})
 public class SoapConfig extends WsConfigurerAdapter {
 
     @Autowired private PcssProperties pcssProperties;
     @Autowired private DemsProperties demsProperties;
     @Autowired private IslProperties islProperties;
+    @Autowired private CaseLookupProperties caseLookupProperties;
 
     @Bean
     public SoapFaultMappingExceptionResolver exceptionResolver() {
@@ -106,6 +113,38 @@ public class SoapConfig extends WsConfigurerAdapter {
                                         Integer.parseInt(demsProperties.getOrdsReadTimeout())))
                         .build();
         restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        return restTemplate;
+    }
+
+    @Bean(name = "restTemplateCaseLookup")
+    public RestTemplate restTemplateCaseLookup(RestTemplateBuilder restTemplateBuilder) {
+        var restTemplate =
+                restTemplateBuilder
+                        .setReadTimeout(
+                                Duration.ofSeconds(
+                                        Integer.parseInt(
+                                                caseLookupProperties.getOrdsReadTimeout())))
+                        .build();
+        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
+        restTemplate
+                .getInterceptors()
+                .add(
+                        new ClientHttpRequestInterceptor() {
+                            @Override
+                            public ClientHttpResponse intercept(
+                                    HttpRequest request,
+                                    byte[] body,
+                                    ClientHttpRequestExecution execution)
+                                    throws IOException {
+                                request.getHeaders()
+                                        .add(
+                                                "Authorization",
+                                                "Bearer "
+                                                        + new String(
+                                                                caseLookupProperties.getToken()));
+                                return execution.execute(request, body);
+                            }
+                        });
         return restTemplate;
     }
 
