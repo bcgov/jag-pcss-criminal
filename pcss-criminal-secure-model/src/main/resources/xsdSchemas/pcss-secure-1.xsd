@@ -182,6 +182,8 @@
               <xsd:element form="qualified" minOccurs="0" name="CounselRelatedRepTypeCd" type="xsd:string"/>
               <xsd:element form="qualified" minOccurs="0" name="CounselEnteredDt" type="dx:DateType"/>
               <xsd:element form="qualified" minOccurs="0" name="DesignatedCounselYN" type="dx:YesNoType"/>
+              <xsd:element form="qualified" minOccurs="0" name="RvoYN" type="dx:YesNoType"/>
+              <xsd:element form="qualified" minOccurs="0" name="HroipYN" type="dx:YesNoType"/>
               <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Charge" type="pcss:Charge"/>
             </xsd:sequence>
           </xsd:complexType>
@@ -230,6 +232,7 @@
               <xsd:element form="qualified" name="RccAgencyId" type="dx:AgencyIdentifierType"/>
               <xsd:element form="qualified" name="RccAgencyFileNo" type="xsd:string"/>
               <xsd:element form="qualified" minOccurs="0" name="SynopsisTxt" type="xsd:string"/>
+              <xsd:element form="qualified" name="DemsCaseUrl" minOccurs="0" type="xsd:string"/>
             </xsd:sequence>
           </xsd:complexType>
         	</xsd:schema>
