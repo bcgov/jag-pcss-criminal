@@ -57,9 +57,11 @@
                     <xsd:maxLength value="12"/>
                 </xsd:restriction>
             </xsd:simpleType>
-
             <xsd:simpleType name="DateTimeType">
-                <xsd:restriction base="xsd:dateTime"/>
+                <xsd:restriction base="xsd:string">
+                    <xsd:whiteSpace value="preserve"/>
+                    <xsd:length value="21"/>
+                </xsd:restriction>
             </xsd:simpleType>
         </xsd:schema>
     </wsdl:types>
