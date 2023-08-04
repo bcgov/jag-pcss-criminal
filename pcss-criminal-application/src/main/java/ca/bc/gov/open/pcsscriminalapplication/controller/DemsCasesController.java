@@ -125,18 +125,17 @@ public class DemsCasesController {
 
             CaseLookup caseLookup = response.getBody();
 
-            log.info("Request success from ORDS: Case lookup request for rcc_id: " + rccId);
-
+            log.info("Request success on looking up a hyperlink for rcc_id: " + rccId);
             return caseLookup.getHyperlink();
         } catch (Exception ex) {
 
             log.error(
                     logBuilder.writeLogMessage(
-                            "Error received from ORDS",
-                            "Case lookup request",
+                            "Error occurred while looking up a hyperlink on the rccId: " + rccId,
+                            "getHyperLink",
                             getDemsCasesRequest,
                             ex.getMessage()));
-            // do not throw exception for an unexisting rcc_id
+            // do not throw exception for an unexisting rccId; instead, proceed to next rccId
             return null;
         }
     }
@@ -183,19 +182,19 @@ public class DemsCasesController {
                             rccIdToDemsURLs.put(key, hyperlink);
                         }
                     }
-                    log.info("Request Success from ORDS ISL request for rcc_id " + key);
+                    log.info("Request Success on requesting an ISL service on the rccId: " + key);
                 } catch (ReThrowException ex) {
                     throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
                 } catch (Exception ex) {
                     log.error(
                             logBuilder.writeLogMessage(
-                                    "Error received from ORDS",
-                                    "ISL request",
+                                    "Error occurred while requesting an ISL service on the rccId: "
+                                            + key,
+                                    "getDemsCases",
                                     getDemsCasesRequest,
                                     ex.getMessage()));
-
-                    throw new ReThrowException(
-                            ex.getMessage(), "Error received from ORDS: ISL request");
+                    // do not throw exception for an unexisting rccId; instead, proceed to next
+                    // rccId
                 }
             }
 
@@ -207,7 +206,7 @@ public class DemsCasesController {
                         demsCase.add(demsCaseType);
                     });
             ret.setDemsCase(demsCase);
-            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_DEMSCASE_REQUEST);
+            log.info("successful", "getDemsCases");
             return ret;
         } catch (ReThrowException ex) {
             throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
@@ -215,8 +214,8 @@ public class DemsCasesController {
 
             log.error(
                     logBuilder.writeLogMessage(
-                            Keys.ORDS_ERROR_MESSAGE,
-                            Keys.SOAP_METHOD_DEMSCASE_REQUEST,
+                            "Error occurred",
+                            "getDemsCases",
                             getDemsCasesRequest,
                             ex.getMessage()));
 
