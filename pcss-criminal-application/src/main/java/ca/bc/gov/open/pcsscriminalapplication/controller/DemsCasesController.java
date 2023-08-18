@@ -50,6 +50,7 @@ public class DemsCasesController {
     private final CaseLookupProperties caseLookupProperties;
     private final LogBuilder logBuilder;
     private final ObjectMapper objectMapper;
+    public static final String INVALID_RCC_ID = "0";
 
     public DemsCasesController(
             @Qualifier("restTemplateDEMS") RestTemplate restTemplate,
@@ -157,7 +158,12 @@ public class DemsCasesController {
                                                     JustinRcc::getJustinNo, JustinRcc::getRccId));
 
             HashMap<String, String> rccIdToDemsURLs = new HashMap<>();
-            justinRCCs.getJustins().stream().forEach(id -> rccIdToDemsURLs.put(id.getRccId(), ""));
+            justinRCCs.getJustins().stream()
+                    .forEach(
+                            id -> {
+                                if (!id.getRccId().equals(INVALID_RCC_ID))
+                                    rccIdToDemsURLs.put(id.getRccId(), "");
+                            });
 
             for (Map.Entry<String, String> entry : rccIdToDemsURLs.entrySet()) {
                 String key = entry.getKey();
