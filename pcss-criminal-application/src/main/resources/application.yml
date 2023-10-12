@@ -12,10 +12,6 @@ dems:
   username: ${DEMS_ORDS_USERNAME}
   password: ${DEMS_ORDS_PASSWORD}
   ordsReadTimeout: ${DEMS_ORDS_READ_TIMEOUT:120}
-isl:
-  host: ${ISL_ORDS_HOST}
-  token: ${ISL_ORDS_TOKEN}
-  ordsReadTimeout: ${ISL_ORDS_READ_TIMEOUT:120}
 caselookup:
   host: ${CASE_LOOKUP_ORDS_HOST}
   token: ${CASE_LOOKUP_ORDS_TOKEN}
