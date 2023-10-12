@@ -156,16 +156,15 @@ public class DemsCasesController {
                         rccIdToDemsURLMap.put(link.getRcc_id(), link.getHyperlink());
                     });
                 }
-
-                // iterate <JustinNo, RCCId> map, find RCCID's hyperlink and then add <JustinNo, hyperlink> pairs to demsCase
-                justinRccIdMap.forEach(
-                        (justinNo, rccid) -> {
-                            DemsCaseType demsCaseType = new DemsCaseType();
-                            demsCaseType.setJustinNo(justinNo);
-                            demsCaseType.setDemsUrl(rccIdToDemsURLMap.get(rccid));
-                            demsCase.add(demsCaseType);
-                        });
             }
+            // iterate <JustinNo, RCCId> map, find RCCID's hyperlink and then add <JustinNo, hyperlink> pairs to demsCase
+            justinRccIdMap.forEach(
+                    (justinNo, rccid) -> {
+                        DemsCaseType demsCaseType = new DemsCaseType();
+                        demsCaseType.setJustinNo(justinNo);
+                        demsCaseType.setDemsUrl(rccIdToDemsURLMap.get(rccid)!=null?rccIdToDemsURLMap.get(rccid):"");
+                        demsCase.add(demsCaseType);
+                    });
             response.setDemsCase(demsCase);
             log.info("Request success from the ISL caseHyperlink web service");
             return response;
