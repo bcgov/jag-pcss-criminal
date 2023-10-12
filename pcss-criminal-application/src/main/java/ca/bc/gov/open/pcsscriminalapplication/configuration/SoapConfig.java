@@ -148,35 +148,6 @@ public class SoapConfig extends WsConfigurerAdapter {
         return restTemplate;
     }
 
-    @Bean(name = "restTemplateISL")
-    public RestTemplate restTemplateISL(RestTemplateBuilder restTemplateBuilder) {
-        var restTemplate =
-                restTemplateBuilder
-                        .setReadTimeout(
-                                Duration.ofSeconds(
-                                        Integer.parseInt(islProperties.getOrdsReadTimeout())))
-                        .build();
-        restTemplate.getMessageConverters().add(0, createMappingJacksonHttpMessageConverter());
-        restTemplate
-                .getInterceptors()
-                .add(
-                        new ClientHttpRequestInterceptor() {
-                            @Override
-                            public ClientHttpResponse intercept(
-                                    HttpRequest request,
-                                    byte[] body,
-                                    ClientHttpRequestExecution execution)
-                                    throws IOException {
-                                request.getHeaders()
-                                        .add(
-                                                "Authorization",
-                                                "Bearer " + new String(islProperties.getToken()));
-                                return execution.execute(request, body);
-                            }
-                        });
-        return restTemplate;
-    }
-
     private MappingJackson2HttpMessageConverter createMappingJacksonHttpMessageConverter() {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 

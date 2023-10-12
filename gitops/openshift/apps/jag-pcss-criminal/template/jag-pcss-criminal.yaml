@@ -155,21 +155,6 @@ objects:
                 secretKeyRef:
                   name: pcss-criminal-application-secrets
                   key: DEMS_ORDS_READ_TIMEOUT
-            - name: ISL_ORDS_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: pcss-criminal-application-secrets
-                  key: ISL_ORDS_HOST
-            - name: ISL_ORDS_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: pcss-criminal-application-secrets
-                  key: ISL_ORDS_TOKEN
-            - name: ISL_ORDS_READ_TIMEOUT
-              valueFrom:
-                secretKeyRef:
-                  name: pcss-criminal-application-secrets
-                  key: ISL_ORDS_READ_TIMEOUT
             - name: CASE_LOOKUP_ORDS_HOST
               valueFrom:
                 secretKeyRef:

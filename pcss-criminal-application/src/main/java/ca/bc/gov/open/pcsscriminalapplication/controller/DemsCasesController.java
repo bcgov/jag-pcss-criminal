@@ -3,11 +3,7 @@ package ca.bc.gov.open.pcsscriminalapplication.controller;
 import static ca.bc.gov.open.pcsscriminalapplication.exception.ServiceFaultException.handleError;
 
 import ca.bc.gov.open.pcsscriminalapplication.Keys;
-import ca.bc.gov.open.pcsscriminalapplication.exception.ReThrowException;
-import ca.bc.gov.open.pcsscriminalapplication.model.CaseLookup;
-import ca.bc.gov.open.pcsscriminalapplication.model.JustinRCCs;
-import ca.bc.gov.open.pcsscriminalapplication.model.JustinRcc;
-import ca.bc.gov.open.pcsscriminalapplication.model.RccCase;
+import ca.bc.gov.open.pcsscriminalapplication.model.*;
 import ca.bc.gov.open.pcsscriminalapplication.properties.CaseLookupProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.IslProperties;
@@ -23,7 +19,6 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -43,7 +38,6 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 })
 public class DemsCasesController {
     private final RestTemplate restTemplate;
-    private final RestTemplate restTemplateISL;
     private final RestTemplate restTemplateCaseLookup;
     private final DemsProperties demsProperties;
     private final IslProperties islProperties;
@@ -54,7 +48,6 @@ public class DemsCasesController {
 
     public DemsCasesController(
             @Qualifier("restTemplateDEMS") RestTemplate restTemplate,
-            @Qualifier("restTemplateISL") RestTemplate restTemplateISL,
             @Qualifier("restTemplateCaseLookup") RestTemplate restTemplateCaseLookup,
             DemsProperties demsProperties,
             IslProperties islProperties,
@@ -63,7 +56,6 @@ public class DemsCasesController {
             ObjectMapper objectMapper)
             throws JsonProcessingException {
         this.restTemplate = restTemplate;
-        this.restTemplateISL = restTemplateISL;
         this.restTemplateCaseLookup = restTemplateCaseLookup;
         this.demsProperties = demsProperties;
         this.islProperties = islProperties;
@@ -72,7 +64,7 @@ public class DemsCasesController {
         this.objectMapper = objectMapper;
     }
 
-    private HttpEntity<JustinRCCs> getJustinRCCs(GetDemsCasesRequest getDemsCasesRequest)
+    private JustinRCCs getJustinRCCs(GetDemsCasesRequest getDemsCasesRequest)
             throws JsonProcessingException {
         try {
             UriComponentsBuilder builder =
@@ -96,15 +88,15 @@ public class DemsCasesController {
                             new HttpEntity<>(new HttpHeaders()),
                             JustinRCCs.class);
 
-            log.info("Request success from ORDS: Dems rccid request");
+            log.info("Request success from ORDS: Dems rccid");
 
-            return response;
+            return response.getBody();
         } catch (Exception ex) {
 
             log.error(
                     logBuilder.writeLogMessage(
-                            Keys.ORDS_ERROR_MESSAGE,
-                            "dems rccid request",
+                            "Error occurred while receiving from ORDS",
+                            "getJustinRCCs",
                             getDemsCasesRequest,
                             ex.getMessage()));
 
@@ -112,118 +104,88 @@ public class DemsCasesController {
         }
     }
 
-    private String getHyperLink(GetDemsCasesRequest getDemsCasesRequest, String rccId)
+    private GetDemsCasesResponse getCaseListHyperlink(
+            GetDemsCasesRequest getDemsCasesRequest, JustinRCCs justinRccs)
             throws JsonProcessingException {
+
+        HttpEntity<CaseHyperLinkerLookupRequest> body = null;
         try {
-            UriComponentsBuilder builder =
-                    UriComponentsBuilder.fromHttpUrl(caseLookupProperties.getHost() + rccId);
-            HttpEntity<CaseLookup> response =
-                    restTemplateCaseLookup.exchange(
-                            builder.build().toUri(),
-                            HttpMethod.GET,
-                            new HttpEntity<>(new HttpHeaders()),
-                            CaseLookup.class);
+            GetDemsCasesResponse response = new GetDemsCasesResponse();
 
-            CaseLookup caseLookup = response.getBody();
-
-            log.info("Request success on looking up a hyperlink for rcc_id: " + rccId);
-            return caseLookup.getHyperlink();
-        } catch (Exception ex) {
-
-            log.error(
-                    logBuilder.writeLogMessage(
-                            "Error occurred while looking up a hyperlink on the rccId: " + rccId,
-                            "getHyperLink",
-                            getDemsCasesRequest,
-                            ex.getMessage()));
-            // do not throw exception for an unexisting rccId; instead, proceed to next rccId
-            return null;
-        }
-    }
-
-    private GetDemsCasesResponse getDemsCases(
-            GetDemsCasesRequest getDemsCasesRequest, HttpEntity<JustinRCCs> response)
-            throws JsonProcessingException {
-        try {
-            GetDemsCasesResponse ret = new GetDemsCasesResponse();
-            ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
-
-            JustinRCCs justinRCCs = response.getBody();
-
-            HashMap<String, String> justinRccs =
+            // create <JustinNo, RCCId> pairs - justinRccIdMap
+            HashMap<String, String> justinRccIdMap =
                     (HashMap<String, String>)
-                            justinRCCs.getJustins().stream()
+                            justinRccs.getJustins().stream()
                                     .collect(
                                             Collectors.toMap(
                                                     JustinRcc::getJustinNo, JustinRcc::getRccId));
 
-            HashMap<String, String> rccIdToDemsURLs = new HashMap<>();
-            justinRCCs.getJustins().stream()
+            // create <RCCId, hyperlink> pairs - rccIdToDemsURLMap
+            HashMap<String, String> rccIdToDemsURLMap = new HashMap<>();
+            justinRccs.getJustins().stream()
                     .forEach(
-                            id -> {
-                                if (!id.getRccId().equals(INVALID_RCC_ID))
-                                    rccIdToDemsURLs.put(id.getRccId(), "");
+                            justinRCC -> {
+                                if (!justinRCC.getRccId().equals(INVALID_RCC_ID))
+                                    rccIdToDemsURLMap.put(justinRCC.getRccId(), "");
                             });
 
-            for (Map.Entry<String, String> entry : rccIdToDemsURLs.entrySet()) {
-                String key = entry.getKey();
-                String value = entry.getValue();
-                UriComponentsBuilder islBuilder = null;
-                try {
-                    islBuilder =
-                            UriComponentsBuilder.fromHttpUrl(
-                                    String.format(islProperties.getHost(), key));
+            // create all rccids' hpyerlink lookup request:  { "rcc_ids": [  "1xxxx2.xxxx", "1xxxx3.xxxx"] }
+            CaseHyperLinkerLookupRequest rccIds = new CaseHyperLinkerLookupRequest();
+            rccIdToDemsURLMap.forEach((rccId, url) -> rccIds.add(rccId));
 
-                    HttpEntity<List<RccCase>> resp =
-                            restTemplateISL.exchange(
-                                    islBuilder.build().toUri(),
-                                    HttpMethod.GET,
-                                    new HttpEntity<>(new HttpHeaders()),
-                                    new ParameterizedTypeReference<List<RccCase>>() {});
+            ArrayList<DemsCaseType> demsCase = new ArrayList<DemsCaseType>();
 
-                    List<RccCase> list = resp.getBody();
-                    if (list.size() > 0) {
-                        String hyperlink = getHyperLink(getDemsCasesRequest, key);
-                        if (hyperlink != null && !hyperlink.trim().isEmpty()) {
-                            rccIdToDemsURLs.put(key, hyperlink);
-                        }
-                    }
-                    log.info("Request Success on requesting an ISL service on the rccId: " + key);
-                } catch (ReThrowException ex) {
-                    throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
-                } catch (Exception ex) {
-                    log.error(
-                            logBuilder.writeLogMessage(
-                                    "Error occurred while requesting an ISL service on the rccId: "
-                                            + key,
-                                    "getDemsCases",
-                                    getDemsCasesRequest,
-                                    ex.getMessage()));
-                    // do not throw exception for an unexisting rccId; instead, proceed to next
-                    // rccId
-                }
-            }
+            if(rccIds.getRcc_ids().size() > 0 ) {
+                 body =
+                        new HttpEntity<>(rccIds, new HttpHeaders());
 
-            justinRccs.forEach(
-                    (justinNo, rccid) -> {
-                        DemsCaseType demsCaseType = new DemsCaseType();
-                        demsCaseType.setJustinNo(justinNo);
-                        demsCaseType.setDemsUrl(rccIdToDemsURLs.get(rccid));
-                        demsCase.add(demsCaseType);
+                UriComponentsBuilder islBuilder =
+                        UriComponentsBuilder.fromHttpUrl(caseLookupProperties.getHost());
+
+                HttpEntity<CaseHyperLinkerLookupResponse> resp =
+                        restTemplateCaseLookup.exchange(
+                                islBuilder.build().toUri(),
+                                HttpMethod.POST,
+                                body,
+                                CaseHyperLinkerLookupResponse.class);
+
+                // fill <RCCId, hyperlink> mapping
+                CaseHyperLinkerLookupResponse list = resp.getBody();
+                if (list != null && list.getCase_hyperlinks() != null) {
+                    list.getCase_hyperlinks().forEach(link -> {
+                        rccIdToDemsURLMap.put(link.getRcc_id(), link.getHyperlink());
                     });
-            ret.setDemsCase(demsCase);
-            log.info("successful", "getDemsCases");
-            return ret;
-        } catch (ReThrowException ex) {
-            throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
+                }
+
+                // iterate <JustinNo, RCCId> map, find RCCID's hyperlink and then add <JustinNo, hyperlink> pairs to demsCase
+                justinRccIdMap.forEach(
+                        (justinNo, rccid) -> {
+                            DemsCaseType demsCaseType = new DemsCaseType();
+                            demsCaseType.setJustinNo(justinNo);
+                            demsCaseType.setDemsUrl(rccIdToDemsURLMap.get(rccid));
+                            demsCase.add(demsCaseType);
+                        });
+            }
+            response.setDemsCase(demsCase);
+            log.info("Request success from the ISL caseHyperlink web service");
+            return response;
         } catch (Exception ex) {
 
-            log.error(
-                    logBuilder.writeLogMessage(
-                            "Error occurred",
-                            "getDemsCases",
-                            getDemsCasesRequest,
-                            ex.getMessage()));
+            if(body != null && body.getBody() != null) {
+                log.error(
+                        logBuilder.writeLogMessage(
+                                "Error occurred while fetching data from the ISL caseHyperlink web service",
+                                "getCaseListHyperlink",
+                                body.getBody(),
+                                ex.getMessage()));
+            } else {
+                log.error(
+                        logBuilder.writeLogMessage(
+                                "Error occurred while fetching data from the ISL caseHyperlink web service",
+                                "getCaseListHyperlink",
+                                getDemsCasesRequest,
+                                ex.getMessage()));
+            }
 
             throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         }
@@ -237,7 +199,7 @@ public class DemsCasesController {
             @RequestPayload GetDemsCasesRequest getDemsCasesRequest)
             throws JsonProcessingException {
 
-        HttpEntity<JustinRCCs> response = getJustinRCCs(getDemsCasesRequest);
-        return getDemsCases(getDemsCasesRequest, response);
+        JustinRCCs justinRccs = getJustinRCCs(getDemsCasesRequest);
+        return getCaseListHyperlink(getDemsCasesRequest, justinRccs);
     }
 }
