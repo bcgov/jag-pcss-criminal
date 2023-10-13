@@ -79,7 +79,7 @@ public class DemsCasesController {
                             .queryParam("applicationCd", getDemsCasesRequest.getApplicationCd())
                             .queryParam(
                                     "justinNo",
-                                    String.join(",", getDemsCasesRequest.getJustinNo()));
+                                    String.join(",", getDemsCasesRequest.getJustinNo().stream().distinct().collect(Collectors.toList())));
 
             HttpEntity<JustinRCCs> response =
                     restTemplate.exchange(
