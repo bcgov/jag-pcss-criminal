@@ -38,7 +38,7 @@
         </jxb:bindings>
     </jxb:bindings>
 
-    <jxb:bindings schemaLocation="../xsdSchemas/demsIntegration.xsd">
+    <jxb:bindings schemaLocation="../xsdSchemas/demsCase.xsd">
         <jxb:schemaBindings>
             <jxb:package name="ca.bc.gov.open.wsdl.pcss.demsCaseUrl"/>
         </jxb:schemaBindings>

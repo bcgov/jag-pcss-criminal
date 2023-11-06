@@ -26,6 +26,10 @@ ORDS_HOST: The url for ords rest package.
 
 ORDS_USERNAME: ORDS_HOST authentication.
 
+DEMS_ORDS_PASSWORD: ORDS_HOST authentication.
+
+DEMS_ORDS_USERNAME: ORDS_HOST authentication.
+
 ORDS_PASSWORD: ORDS_HOST authentication.
 
 ORDS_READ_TIMEOUT: Timeout in seconds which expects the response/result from ORDS.
@@ -71,6 +75,8 @@ BASIC_AUTH_PASS
 BASIC_AUTH_USER
 
 ORDS_HOST
+
+DEMS_ORDS_HOST
 
 ORDS_USERNAME
 
