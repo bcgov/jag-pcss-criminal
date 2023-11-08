@@ -13,7 +13,6 @@ import ca.bc.gov.open.wsdl.pcss.demsCaseUrl.DemsCaseType;
 import ca.bc.gov.open.wsdl.pcss.demsCaseUrl.GetDemsCasesRequest;
 import ca.bc.gov.open.wsdl.pcss.demsCaseUrl.GetDemsCasesResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -40,28 +39,22 @@ public class DemsCasesController {
     private final RestTemplate restTemplate;
     private final RestTemplate restTemplateCaseLookup;
     private final DemsProperties demsProperties;
-    private final IslProperties islProperties;
     private final CaseLookupProperties caseLookupProperties;
     private final LogBuilder logBuilder;
-    private final ObjectMapper objectMapper;
     public static final String INVALID_RCC_ID = "0";
 
     public DemsCasesController(
             @Qualifier("restTemplateDEMS") RestTemplate restTemplate,
             @Qualifier("restTemplateCaseLookup") RestTemplate restTemplateCaseLookup,
             DemsProperties demsProperties,
-            IslProperties islProperties,
             CaseLookupProperties caseLookupProperties,
-            LogBuilder logBuilder,
-            ObjectMapper objectMapper)
+            LogBuilder logBuilder)
             throws JsonProcessingException {
         this.restTemplate = restTemplate;
         this.restTemplateCaseLookup = restTemplateCaseLookup;
         this.demsProperties = demsProperties;
-        this.islProperties = islProperties;
         this.caseLookupProperties = caseLookupProperties;
         this.logBuilder = logBuilder;
-        this.objectMapper = objectMapper;
     }
 
     private JustinRCCs getJustinRCCs(GetDemsCasesRequest getDemsCasesRequest)
