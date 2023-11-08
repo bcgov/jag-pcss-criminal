@@ -12,10 +12,9 @@ import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetClosedFileResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -55,7 +54,7 @@ public class GetClosedFileTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetClosedFileResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
-        response.setCourtFile(Collections.singletonList(new CourtFile()));
+        response.getCourtFile().add(new CourtFile());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));

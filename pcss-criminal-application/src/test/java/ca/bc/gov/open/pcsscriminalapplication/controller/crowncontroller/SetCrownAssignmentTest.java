@@ -12,10 +12,9 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignment;
 import ca.bc.gov.open.wsdl.pcss.two.SetCrownAssignmentRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -90,8 +89,7 @@ public class SetCrownAssignmentTest {
         setCrownAssignmentRequest1.setRequestPartId("Test");
         setCrownAssignmentRequest1.setRequestDtm(Instant.now());
         setCrownAssignmentRequest1.setJustinNo("Test");
-        setCrownAssignmentRequest1.setCrownAssignment(
-                Collections.singletonList(new CrownAssignment2()));
+        setCrownAssignmentRequest1.getCrownAssignment().add(new CrownAssignment2());
 
         setCrownAssignmentRequest.setSetCrownAssignmentRequest(setCrownAssignmentRequest1);
         setCrownAssignment.setSetCrownAssignmentRequest(setCrownAssignmentRequest);

@@ -12,10 +12,9 @@ import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentRequest;
 import ca.bc.gov.open.wsdl.pcss.two.GetCrownAssignmentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -58,7 +57,7 @@ public class GetCrownAssignmentTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetCrownAssignmentResponse();
         response.setResponseCd("Test");
         response.setResponseMessageTxt("Test");
-        response.setCrownAssignment(Collections.singletonList(new CrownAssignment()));
+        response.getCrownAssignment().add(new CrownAssignment());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));

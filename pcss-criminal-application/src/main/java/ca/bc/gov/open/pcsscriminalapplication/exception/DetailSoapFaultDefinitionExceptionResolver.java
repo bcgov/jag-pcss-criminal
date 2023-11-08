@@ -1,7 +1,7 @@
 package ca.bc.gov.open.pcsscriminalapplication.exception;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
 import javax.xml.transform.Result;
 import lombok.extern.slf4j.Slf4j;

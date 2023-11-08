@@ -10,10 +10,9 @@ import ca.bc.gov.open.wsdl.pcss.one.Detail3;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -95,7 +94,7 @@ public class SetAppearanceMethodCriminalTest {
         setAppearanceMethodCriminalRequest1.setRequestAgencyIdentifierId("TEST");
         setAppearanceMethodCriminalRequest1.setRequestDtm(Instant.now());
         setAppearanceMethodCriminalRequest1.setRequestPartId("TEST");
-        setAppearanceMethodCriminalRequest1.setDetail(Collections.singletonList(new Detail3()));
+        setAppearanceMethodCriminalRequest1.getDetail().add(new Detail3());
 
         setAppearanceMethodCriminalRequest.setSetAppearanceMethodCriminalRequest(
                 setAppearanceMethodCriminalRequest1);
