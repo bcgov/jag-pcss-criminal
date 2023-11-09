@@ -10,10 +10,9 @@ import ca.bc.gov.open.wsdl.pcss.one.Resource;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -53,7 +52,7 @@ public class GetAppearanceCriminalResourceTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetAppearanceCriminalResourceResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
-        response.setResource(Collections.singletonList(new Resource()));
+        response.getResource().add(new Resource());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));

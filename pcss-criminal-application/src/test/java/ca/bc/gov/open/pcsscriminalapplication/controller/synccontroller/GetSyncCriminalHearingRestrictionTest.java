@@ -10,10 +10,9 @@ import ca.bc.gov.open.wsdl.pcss.one.HearingRestriction;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -53,7 +52,7 @@ public class GetSyncCriminalHearingRestrictionTest {
                 new ca.bc.gov.open.wsdl.pcss.one.GetSyncCriminalHearingRestrictionResponse();
         response.setResponseMessageTxt("TEST");
         response.setResponseCd("TEST");
-        response.setHearingRestriction(Collections.singletonList(new HearingRestriction()));
+        response.getHearingRestriction().add(new HearingRestriction());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));

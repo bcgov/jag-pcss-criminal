@@ -12,10 +12,9 @@ import ca.bc.gov.open.wsdl.pcss.three.AvailablePersonType;
 import ca.bc.gov.open.wsdl.pcss.two.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -57,8 +56,8 @@ public class GetPersonnelAvailDetailTest {
         response.setResponseCd("TEST");
         response.setDutyDsc("TEST");
         response.setShiftLadderDsc("TEST");
-        response.setAssignment(Collections.singletonList(new Assignment()));
-        response.setCommitment(Collections.singletonList(new Commitment()));
+        response.getAssignment().add(new Assignment());
+        response.getCommitment().add(new Commitment());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));

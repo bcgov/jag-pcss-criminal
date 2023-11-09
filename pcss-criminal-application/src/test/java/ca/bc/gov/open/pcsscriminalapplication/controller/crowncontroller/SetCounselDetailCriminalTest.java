@@ -12,10 +12,9 @@ import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetCounselDetailCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -91,7 +90,7 @@ public class SetCounselDetailCriminalTest {
         setCounselDetailCriminalRequest1.setRequestDtm(Instant.now());
         setCounselDetailCriminalRequest1.setProfPartId("Test");
         setCounselDetailCriminalRequest1.setProfSeqNo("Test");
-        setCounselDetailCriminalRequest1.setDetail(Collections.singletonList(new Detail4()));
+        setCounselDetailCriminalRequest1.getDetail().add(new Detail4());
 
         setCounselDetailCriminalRequest.setSetCounselDetailCriminalRequest(
                 setCounselDetailCriminalRequest1);

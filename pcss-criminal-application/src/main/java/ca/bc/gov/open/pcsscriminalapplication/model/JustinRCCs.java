@@ -1,9 +1,9 @@
 package ca.bc.gov.open.pcsscriminalapplication.model;
 
+import jakarta.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(

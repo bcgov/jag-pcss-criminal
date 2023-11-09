@@ -13,10 +13,9 @@ import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalRequest;
 import ca.bc.gov.open.wsdl.pcss.two.SetAppearanceCriminalResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Collections;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -56,7 +55,7 @@ public class SetAppearanceCriminalTest {
                 new ca.bc.gov.open.wsdl.pcss.one.SetAppearanceCriminalResponse();
         response.setResponseCd("TEST");
         response.setResponseMessageTxt("TEST");
-        response.setDetail(Collections.singletonList(new Detail2()));
+        response.getDetail().add(new Detail2());
 
         Mockito.when(restTemplateMock.exchange(any(URI.class), any(), any(), any(Class.class)))
                 .thenReturn(ResponseEntity.ok(response));
@@ -104,7 +103,7 @@ public class SetAppearanceCriminalTest {
         setAppearanceCriminalRequest1.setRequestAgencyIdentifierId("TEST");
         setAppearanceCriminalRequest1.setRequestDtm(Instant.now());
         setAppearanceCriminalRequest1.setRequestPartId("TEST");
-        setAppearanceCriminalRequest1.setDetail(Collections.singletonList(new Detail()));
+        setAppearanceCriminalRequest1.getDetail().add(new Detail());
 
         setAppearanceCriminalRequest.setSetAppearanceCriminalRequest(setAppearanceCriminalRequest1);
 
