@@ -576,6 +576,7 @@
                 <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
                 <xsd:element form="qualified" name="RequestPartId" type="dx:SystemIdType"/>
                 <xsd:element form="qualified" name="RequestDtm" type="dx:DateTimeType"/>
+                <xsd:element form="qualified" minOccurs="0" name="ApplicationCd" type="xsd:string"/>
                 <xsd:element form="qualified" minOccurs="0" name="JustinNo" type="dx:JustinNoType"/>
                 <xsd:element form="qualified" minOccurs="0" name="FutureYN" type="dx:YesNoType"/>
                 <xsd:element form="qualified" minOccurs="0" name="HistoryYN" type="dx:YesNoType"/>
@@ -620,6 +621,8 @@
             <xsd:element form="qualified" minOccurs="0" name="SupplementalEquipmentTxt" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="SecurityRestrictionTxt" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="OutOfTownJudgeTxt" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="BailPositionTypeCd" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="BailDecisionTypeCd" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:element name="getFileDetailCriminalRequest">

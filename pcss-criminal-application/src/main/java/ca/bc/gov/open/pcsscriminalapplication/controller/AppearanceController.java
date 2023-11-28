@@ -64,6 +64,9 @@ public class AppearanceController {
                                 Keys.QUERY_APPEARANCE_ID,
                                 getAppearanceCriminalRequest.getAppearanceId())
                         .queryParam(
+                                Keys.QUERY_APPLICATION_CD,
+                                getAppearanceCriminalRequest.getApplicationCd())
+                        .queryParam(
                                 Keys.QUERY_JUSTIN_NO, getAppearanceCriminalRequest.getJustinNo())
                         .queryParam(
                                 Keys.QUERY_FUTURE_FLAG, getAppearanceCriminalRequest.getFutureYN())
