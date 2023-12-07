@@ -268,7 +268,7 @@
     </xsd:element>
     <xsd:complexType name="Appearance">
         <xsd:sequence>
-            <xsd:element form="qualified" name="OperationModeCd" type="dx:OperationModeType"/>
+            <xsd:element form="qualified" name="OperationModeCd" type="xsd:string"/>
             <xsd:element form="qualified" name="TransactionDtm" type="dx:DateTimeType"/>
             <xsd:element form="qualified" name="ApprId" type="dx:SystemIdType"/>
             <xsd:element form="qualified" minOccurs="0" name="AppearanceDt" type="dx:DateType"/>
@@ -309,7 +309,7 @@
     </xsd:element>
     <xsd:complexType name="HearingRestriction">
         <xsd:sequence>
-            <xsd:element form="qualified" name="OperationModeCd" type="dx:OperationModeType"/>
+            <xsd:element form="qualified" name="OperationModeCd" type="xsd:string"/>
             <xsd:element form="qualified" name="TransactionDtm" type="dx:DateTimeType"/>
             <xsd:element form="qualified" name="HearingRestrictionId" type="dx:SystemIdType"/>
             <xsd:element form="qualified" minOccurs="0" name="AdjudicatorPartId" type="dx:SystemIdType"/>
@@ -378,7 +378,7 @@
     </xsd:element>
     <xsd:complexType name="Detail3">
         <xsd:sequence>
-            <xsd:element form="qualified" name="OperationModeCd" type="dx:OperationModeType"/>
+            <xsd:element form="qualified" name="OperationModeCd" type="xsd:string"/>
             <xsd:element form="qualified" name="ApprId" type="dx:SystemIdType"/>
             <xsd:element form="qualified" minOccurs="0" name="AssetUsageSeqNo" type="dx:SystemSeqNoType"/>
             <xsd:element form="qualified" minOccurs="0" name="RoleCd" type="dx:ParticipantRoleType"/>
@@ -433,7 +433,7 @@
                 <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
                 <xsd:element form="qualified" name="RequestPartId" type="dx:SystemIdType"/>
                 <xsd:element form="qualified" name="RequestDtm" type="dx:DateTimeType"/>
-                <xsd:element form="qualified" name="OperationModeCd" type="dx:OperationModeType"/>
+                <xsd:element form="qualified" name="OperationModeCd" type="xsd:string"/>
                 <xsd:element form="qualified" minOccurs="0" name="HearingRestrictionId" type="dx:SystemIdType"/>
                 <xsd:element form="qualified" minOccurs="0" name="AdjudicatorPartId" type="dx:SystemIdType"/>
                 <xsd:element form="qualified" minOccurs="0" name="HearingRestrictionCd" type="dx:HearingRestrictionType"/>
@@ -528,7 +528,7 @@
     </xsd:element>
     <xsd:complexType name="CrownAssignment2">
         <xsd:sequence>
-            <xsd:element form="qualified" name="OperationModeCd" type="dx:OperationModeType"/>
+            <xsd:element form="qualified" name="OperationModeCd" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="WorkAssignmentId" type="dx:SystemIdType"/>
             <xsd:element form="qualified" minOccurs="0" name="PaasAgencyId" type="dx:AgencyIdentifierType"/>
             <xsd:element form="qualified" minOccurs="0" name="PaasPartId" type="dx:SystemIdType"/>
