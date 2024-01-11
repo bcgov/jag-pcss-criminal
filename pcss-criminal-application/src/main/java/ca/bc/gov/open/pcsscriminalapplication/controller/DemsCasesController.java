@@ -182,7 +182,7 @@ public class DemsCasesController {
             log.error(
                     logBuilder.writeLogMessage(
                             "Error occurred while fetching data from the ISL caseHyperlink web service",
-                            "getCaseListHyperlink",
+                            "getDemsCasesRequest",
                             getDemsCasesRequest,
                             ex.getMessage()));
 
