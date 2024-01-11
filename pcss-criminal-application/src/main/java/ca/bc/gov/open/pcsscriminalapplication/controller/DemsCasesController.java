@@ -170,12 +170,22 @@ public class DemsCasesController {
             log.info("Request success from the ISL caseHyperlink web service");
             return response;
         } catch (Exception ex) {
+            if (body != null && body.getBody() != null) {
+                log.error(
+                        logBuilder.writeLogMessage(
+                                "Error occurred while fetching data from the ISL caseHyperlink web service",
+                                "getCaseListHyperlink",
+                                body.getBody(),
+                                ex.getMessage()));
+            }
+
             log.error(
                     logBuilder.writeLogMessage(
                             "Error occurred while fetching data from the ISL caseHyperlink web service",
                             "getCaseListHyperlink",
                             getDemsCasesRequest,
                             ex.getMessage()));
+
             throw handleError(ex, new ca.bc.gov.open.wsdl.pcss.demsCaseUrl.Error());
         }
     }
