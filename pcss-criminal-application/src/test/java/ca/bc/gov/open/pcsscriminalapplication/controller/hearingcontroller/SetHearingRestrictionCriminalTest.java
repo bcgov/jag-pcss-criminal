@@ -8,14 +8,13 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
 import ca.bc.gov.open.pcsscriminalapplication.utils.LogBuilder;
 import ca.bc.gov.open.wsdl.pcss.one.SetHearingRestrictionCriminalResponse;
 import ca.bc.gov.open.wsdl.pcss.three.HearingRestrictionType;
-import ca.bc.gov.open.wsdl.pcss.three.OperationModeType;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminal;
 import ca.bc.gov.open.wsdl.pcss.two.SetHearingRestrictionCriminalRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.xml.ws.http.HTTPException;
 import java.net.URI;
 import java.time.Instant;
-import javax.xml.ws.http.HTTPException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -106,7 +105,7 @@ public class SetHearingRestrictionCriminalTest {
         setHearingRestrictionCriminalRequest1.setProfSeqNo("Test");
         setHearingRestrictionCriminalRequest1.setRequestAgencyIdentifierId("Test");
         setHearingRestrictionCriminalRequest1.setPartId("Test");
-        setHearingRestrictionCriminalRequest1.setOperationModeCd(OperationModeType.ADD);
+        setHearingRestrictionCriminalRequest1.setOperationModeCd("A");
 
         setHearingRestrictionCriminalRequest.setSetHearingRestrictionCriminalRequest(
                 setHearingRestrictionCriminalRequest1);
