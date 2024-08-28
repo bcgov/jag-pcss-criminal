@@ -17,6 +17,8 @@
                 xmlns:pcss="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0" targetNamespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"/>
+            <xsd:element name="getMergedDataRequest" type="pcss:getMergedDataRequest"/>
+            <xsd:element name="getMergedDataResponse" type="pcss:getMergedDataResponse"/>
             <xsd:element name="getFileAccessRequest" type="pcss:getFileAccessRequest"/>
             <xsd:element name="getFileAccessResponse" type="pcss:getFileAccessResponse"/>
             <xsd:element name="getAppearanceCriminalApprMethodRequest" type="pcss:getAppearanceCriminalApprMethodRequest"/>
@@ -57,6 +59,26 @@
             <xsd:element name="getFileDetailCriminalResponse" type="pcss:getFileDetailCriminalResponse"/>
             <xsd:element name="getClosedFileRequest" type="pcss:getClosedFileRequest"/>
             <xsd:element name="getClosedFileResponse" type="pcss:getClosedFileResponse"/>
+            <xsd:complexType name="getMergedDataRequest">
+                <xsd:sequence>
+                    <xsd:element name="FromDate" type="xsd:string"/>
+                    <xsd:element name="ToDate" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedDataResponse">
+                <xsd:sequence>
+                    <xsd:element name="ResponseCd" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="MergedData" type="pcss:MergedDataType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MergedDataType">
+                <xsd:sequence>
+                    <xsd:element name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
+                    <xsd:element name="MergedWithPartId" type="dx:SystemIdType"/>
+                    <xsd:element name="MergeEntDate" type="dx:DateTimeType"/>
+                </xsd:sequence>
+            </xsd:complexType>
             <xsd:complexType name="getFileAccessRequest">
                 <xsd:sequence>
                     <xsd:element name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
@@ -771,6 +793,8 @@
                 xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"/>
+            <xsd:element name="getMergedData" type="tns:getMergedData"/>
+            <xsd:element name="getMergedDataResponse" type="tns:getMergedDataResponse"/>
             <xsd:element name="getFileAccess" type="tns:getFileAccess"/>
             <xsd:element name="getFileAccessResponse" type="tns:getFileAccessResponse"/>
             <xsd:element name="getAppearanceCriminalApprMethod" type="tns:getAppearanceCriminalApprMethod"/>
@@ -811,6 +835,26 @@
             <xsd:element name="getFileDetailCriminalResponse" type="tns:getFileDetailCriminalResponse"/>
             <xsd:element name="getClosedFile" type="tns:getClosedFile"/>
             <xsd:element name="getClosedFileResponse" type="tns:getClosedFileResponse"/>
+            <xsd:complexType name="getMergedData">
+                <xsd:sequence>
+                    <xsd:element name="getMergedDataRequest" nillable="true" type="tns:getMergedDataRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedDataRequest">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:getMergedDataRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedDataResponse">
+                <xsd:sequence>
+                    <xsd:element name="getMergedDataesponse" nillable="true" type="tns:getMergedDataResponse2"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedDataResponse2">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:getMergedDataResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
             <xsd:complexType name="getFileAccess">
                 <xsd:sequence>
                     <xsd:element name="getFileAccessRequest" nillable="true" type="tns:getFileAccessRequest"/>
@@ -1464,6 +1508,12 @@
             </xsd:simpleType>
         </xsd:schema>
     </wsdl:types>
+    <wsdl:message name="pcssCriminal_PortType_getMergedData">
+        <wsdl:part name="parameters" element="tns:getMergedData"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pcssCriminal_PortType_getMergedDataResponse">
+        <wsdl:part name="parameters" element="tns:getMergedDataResponse"></wsdl:part>
+    </wsdl:message>
     <wsdl:message name="pcssCriminal_PortType_getFileAccess">
         <wsdl:part name="parameters" element="tns:getFileAccess"></wsdl:part>
     </wsdl:message>

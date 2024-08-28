@@ -33,6 +33,32 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name="getMergedData">
+        <xsd:complexType >
+            <xsd:sequence>
+                <xsd:element name="getMergedDataRequest" nillable="true" type="tns:getMergedDataRequest"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="getMergedDataRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getMergedDataRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="getMergedDataResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="getMergedDataResponse" nillable="true" type="tns:getMergedDataResponse2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="getMergedDataResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getMergedDataResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:element name="getFileAccess">
         <xsd:complexType >
             <xsd:sequence>
