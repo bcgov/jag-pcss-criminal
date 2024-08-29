@@ -2,6 +2,30 @@
             xmlns:pcss="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"
             targetNamespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="getMergedDataRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" name="FromDate" type="xsd:string"/>
+                <xsd:element form="qualified" minOccurs="0" name="ToDate" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="getMergedDataResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" name="ResponseCd" type="xsd:string"/>
+                <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                <xsd:element form="qualified" minOccurs="0" maxOccurs="unbounded" name="MergedData" type="pcss:MergedDataType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="MergedDataType">
+        <xsd:sequence>
+            <xsd:element name="part_id" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
+            <xsd:element name="merged_with_part_id" type="dx:SystemIdType"/>
+            <xsd:element name="mrge_ent_dt" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
     <xsd:element name="getFileAccessRequest">
         <xsd:complexType>
             <xsd:sequence>
@@ -543,6 +567,26 @@
         </xsd:sequence>
     </xsd:complexType>
     <xsd:element name="setCrownAssignmentResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" name="ResponseCd" type="xsd:string"/>
+                <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="setFilesNoteRequest">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
+                <xsd:element form="qualified" name="RequestPartId" type="dx:SystemIdType"/>
+                <xsd:element form="qualified" name="RequestDtm" type="dx:DateTimeType"/>
+                <xsd:element form="qualified" name="JustinNoList" type="xsd:string"/>
+                <xsd:element form="qualified" name="NoteTxt" type="xsd:string"/>
+                <xsd:element form="qualified" name="FileNoteTypeCd" type="dx:FileNoteType"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:element name="setFilesNoteResponse">
         <xsd:complexType>
             <xsd:sequence>
                 <xsd:element form="qualified" name="ResponseCd" type="xsd:string"/>
