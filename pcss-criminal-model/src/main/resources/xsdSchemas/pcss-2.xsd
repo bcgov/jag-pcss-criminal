@@ -501,6 +501,32 @@
         </xsd:sequence>
     </xsd:complexType>
 
+    <xsd:element name="setFilesNote">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="setFilesNoteRequest" nillable="true" type="tns:setFilesNoteRequest"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="setFilesNoteRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFilesNoteRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="setFilesNoteResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="setFilesNoteResponse" nillable="true" type="tns:setFilesNoteResponse2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="setFilesNoteResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFilesNoteResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:element name="getAppearanceCriminal">
         <xsd:complexType>
             <xsd:sequence>

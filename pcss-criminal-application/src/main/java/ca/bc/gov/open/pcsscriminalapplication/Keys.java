@@ -27,6 +27,7 @@ public class Keys {
     public static final String SOAP_METHOD_FILE_DETAIL = "getFileDetailCriminal";
     public static final String SOAP_METHOD_FILE_DETAIL_SECURE = "getFileDetailCriminalSecure";
     public static final String SOAP_METHOD_SET_FILE_NOTE = "setFileNote";
+    public static final String SOAP_METHOD_SET_FILES_NOTE = "setFilesNote";
     public static final String SOAP_METHOD_HEARING_RESTRICTION_CRIMINAL =
             "setHearingRestrictionCriminal";
     public static final String SOAP_METHOD_HEALTH = "getHealth";
@@ -93,6 +94,7 @@ public class Keys {
     public static final String ORDS_FILE_DETAIL = "file/detail";
     public static final String ORDS_SECURE_FILE_DETAIL = "secure/file-detail";
     public static final String ORDS_FILE_NOTE = "file/note";
+    public static final String ORDS_FILES_NOTE = "files/note";
     public static final String ORDS_FILE_ACCESS = "file/access";
     public static final String ORDS_PARTICIPANT_MERGED_DATA = "participant/merge";
     public static final String ORDS_FILE_DEMS_CASE_URL = "rccids";
