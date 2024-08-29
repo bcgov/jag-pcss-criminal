@@ -333,7 +333,7 @@ public class FileController {
 
     @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_SET_FILES_NOTE)
     @ResponsePayload
-    public SetFilesNoteResponse setFileNote(@RequestPayload SetFilesNote setFilesNote)
+    public SetFilesNoteResponse setFilesNote(@RequestPayload SetFilesNote setFilesNote)
             throws JsonProcessingException {
 
         log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_SET_FILES_NOTE);
@@ -351,9 +351,7 @@ public class FileController {
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetFilesNoteRequest> body =
                 new HttpEntity<>(setFilesNoteRequest, new HttpHeaders());
         try {
-
             log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_SET_FILES_NOTE);
-
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.SetFilesNoteResponse> response =
                     restTemplate.exchange(
                             builder.build().toUri(),
@@ -362,11 +360,8 @@ public class FileController {
                             ca.bc.gov.open.wsdl.pcss.one.SetFilesNoteResponse.class);
 
             SetFilesNoteResponse setFilesNoteResponse = buildFilesNoteResponse(response.getBody());
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_SET_FILES_NOTE);
-
             return setFilesNoteResponse;
-
         } catch (Exception ex) {
 
             log.error(
@@ -379,7 +374,8 @@ public class FileController {
         }
     }
 
-    private SetFilesNoteResponse buildFilesNoteResponse(ca.bc.gov.open.wsdl.pcss.one.SetFilesNoteResponse setFilesNoteResponseInner) {
+    private SetFilesNoteResponse buildFilesNoteResponse(
+            ca.bc.gov.open.wsdl.pcss.one.SetFilesNoteResponse setFilesNoteResponseInner) {
 
         SetFilesNoteResponse setFilesNoteResponse = new SetFilesNoteResponse();
         SetFilesNoteResponse2 setFilesNoteResponse2 = new SetFilesNoteResponse2();
@@ -410,9 +406,7 @@ public class FileController {
         HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedDataRequest> body =
                 new HttpEntity<>(getMergedDataRequest, new HttpHeaders());
         try {
-
             log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_MERGED_DATA);
-
             HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse> response =
                     restTemplate.exchange(
                             builder.build().toUri(),
@@ -421,11 +415,8 @@ public class FileController {
                             ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse.class);
 
             GetMergedDataResponse getMergedDataResponse = buildMergedDataResponse(response.getBody());
-
             log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_MERGED_DATA);
-
             return getMergedDataResponse;
-
         } catch (Exception ex) {
 
             log.error(
@@ -438,7 +429,8 @@ public class FileController {
         }
     }
 
-    private GetMergedDataResponse buildMergedDataResponse(ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse getMergedDataResponseInner) {
+    private GetMergedDataResponse buildMergedDataResponse(
+            ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse getMergedDataResponseInner) {
 
         GetMergedDataResponse getMergedDataResponse = new GetMergedDataResponse();
         GetMergedDataResponse2 getMergedDataResponse2 = new GetMergedDataResponse2();
