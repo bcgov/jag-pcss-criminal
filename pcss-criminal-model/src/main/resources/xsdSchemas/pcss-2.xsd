@@ -33,29 +33,29 @@
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="getMergedData">
+    <xsd:element name="getMergedParticipants">
         <xsd:complexType >
             <xsd:sequence>
-                <xsd:element name="getMergedDataRequest" nillable="true" type="tns:getMergedDataRequest"/>
+                <xsd:element name="getMergedParticipantsRequest" nillable="true" type="tns:getMergedParticipantsRequest"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:complexType name="getMergedDataRequest">
+    <xsd:complexType name="getMergedParticipantsRequest">
         <xsd:sequence>
-            <xsd:element ref="pcss:getMergedDataRequest"/>
+            <xsd:element ref="pcss:getMergedParticipantsRequest"/>
         </xsd:sequence>
     </xsd:complexType>
 
-    <xsd:element name="getMergedDataResponse">
+    <xsd:element name="getMergedParticipantsResponse">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="getMergedDataResponse" nillable="true" type="tns:getMergedDataResponse2"/>
+                <xsd:element name="getMergedParticipantsResponse" nillable="true" type="tns:getMergedParticipantsResponse2"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
-    <xsd:complexType name="getMergedDataResponse2">
+    <xsd:complexType name="getMergedParticipantsResponse2">
         <xsd:sequence>
-            <xsd:element ref="pcss:getMergedDataResponse"/>
+            <xsd:element ref="pcss:getMergedParticipantsResponse"/>
         </xsd:sequence>
     </xsd:complexType>
 

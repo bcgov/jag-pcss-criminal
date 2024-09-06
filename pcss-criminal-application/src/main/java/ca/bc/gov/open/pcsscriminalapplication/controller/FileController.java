@@ -385,58 +385,58 @@ public class FileController {
         return setFilesNoteResponse;
     }
 
-    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_MERGED_DATA)
+    @PayloadRoot(namespace = Keys.SOAP_NAMESPACE, localPart = Keys.SOAP_METHOD_MERGED_PARTICIPANTS)
     @ResponsePayload
-    public GetMergedDataResponse getMergedData(@RequestPayload GetMergedData getMergedData)
+    public GetMergedParticipantsResponse getMergedParticipants(@RequestPayload GetMergedParticipants getMergedParticipants)
             throws JsonProcessingException {
 
-        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_MERGED_DATA);
+        log.info(Keys.LOG_RECEIVED, Keys.SOAP_METHOD_MERGED_PARTICIPANTS);
 
-        ca.bc.gov.open.wsdl.pcss.one.GetMergedDataRequest getMergedDataRequest =
-                getMergedData.getGetMergedDataRequest() != null
-                        && getMergedData.getGetMergedDataRequest().getGetMergedDataRequest() != null
-                        ? getMergedData.getGetMergedDataRequest().getGetMergedDataRequest()
-                        : new ca.bc.gov.open.wsdl.pcss.one.GetMergedDataRequest();
+        ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsRequest getMergedParticipantsRequest =
+                getMergedParticipants.getGetMergedParticipantsRequest() != null
+                        && getMergedParticipants.getGetMergedParticipantsRequest().getGetMergedParticipantsRequest() != null
+                        ? getMergedParticipants.getGetMergedParticipantsRequest().getGetMergedParticipantsRequest()
+                        : new ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsRequest();
 
         UriComponentsBuilder builder =
-                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PARTICIPANT_MERGED_DATA)
-                        .queryParam(Keys.QUERY_TO_DATE, getMergedDataRequest.getToDate())
-                        .queryParam(Keys.QUERY_FROM_DATE, getMergedDataRequest.getFromDate());
+                UriComponentsBuilder.fromHttpUrl(pcssProperties.getHost() + Keys.ORDS_PARTICIPANT_MERGED_PARTICIPANTS)
+                        .queryParam(Keys.QUERY_TO_DATE, getMergedParticipantsRequest.getToDate())
+                        .queryParam(Keys.QUERY_FROM_DATE, getMergedParticipantsRequest.getFromDate());
 
-        HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedDataRequest> body =
-                new HttpEntity<>(getMergedDataRequest, new HttpHeaders());
+        HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsRequest> body =
+                new HttpEntity<>(getMergedParticipantsRequest, new HttpHeaders());
         try {
-            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_MERGED_DATA);
-            HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse> response =
+            log.debug(Keys.LOG_ORDS, Keys.SOAP_METHOD_MERGED_PARTICIPANTS);
+            HttpEntity<ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsResponse> response =
                     restTemplate.exchange(
                             builder.build().toUri(),
                             HttpMethod.GET,
                             new HttpEntity<>(new HttpHeaders()),
-                            ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse.class);
+                            ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsResponse.class);
 
-            GetMergedDataResponse getMergedDataResponse = buildMergedDataResponse(response.getBody());
-            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_MERGED_DATA);
-            return getMergedDataResponse;
+            GetMergedParticipantsResponse getMergedParticipantsResponse = buildMergedParticipantsResponse(response.getBody());
+            log.info(Keys.LOG_SUCCESS, Keys.SOAP_METHOD_MERGED_PARTICIPANTS);
+            return getMergedParticipantsResponse;
         } catch (Exception ex) {
 
             log.error(
                     logBuilder.writeLogMessage(
                             Keys.ORDS_ERROR_MESSAGE,
-                            Keys.SOAP_METHOD_MERGED_DATA,
-                            getMergedDataRequest,
+                            Keys.SOAP_METHOD_MERGED_PARTICIPANTS,
+                            getMergedParticipantsRequest,
                             ex.getMessage()));
             throw new ORDSException();
         }
     }
 
-    private GetMergedDataResponse buildMergedDataResponse(
-            ca.bc.gov.open.wsdl.pcss.one.GetMergedDataResponse getMergedDataResponseInner) {
+    private GetMergedParticipantsResponse buildMergedParticipantsResponse(
+            ca.bc.gov.open.wsdl.pcss.one.GetMergedParticipantsResponse getMergedParticipantsResponseInner) {
 
-        GetMergedDataResponse getMergedDataResponse = new GetMergedDataResponse();
-        GetMergedDataResponse2 getMergedDataResponse2 = new GetMergedDataResponse2();
-        getMergedDataResponse2.setGetMergedDataResponse(getMergedDataResponseInner);
-        getMergedDataResponse.setGetMergedDataResponse(getMergedDataResponse2);
+        GetMergedParticipantsResponse getMergedParticipantsResponse = new GetMergedParticipantsResponse();
+        GetMergedParticipantsResponse2 getMergedParticipantsResponse2 = new GetMergedParticipantsResponse2();
+        getMergedParticipantsResponse2.setGetMergedParticipantsResponse(getMergedParticipantsResponseInner);
+        getMergedParticipantsResponse.setGetMergedParticipantsResponse(getMergedParticipantsResponse2);
 
-        return getMergedDataResponse;
+        return getMergedParticipantsResponse;
     }
 }
