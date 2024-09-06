@@ -17,8 +17,8 @@
                 xmlns:pcss="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0" targetNamespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/common/1.0.0"/>
-            <xsd:element name="getMergedDataRequest" type="pcss:getMergedDataRequest"/>
-            <xsd:element name="getMergedDataResponse" type="pcss:getMergedDataResponse"/>
+            <xsd:element name="getMergedParticipantsRequest" type="pcss:getMergedParticipantsRequest"/>
+            <xsd:element name="getMergedParticipantsResponse" type="pcss:getMergedParticipantsResponse"/>
             <xsd:element name="getFileAccessRequest" type="pcss:getFileAccessRequest"/>
             <xsd:element name="getFileAccessResponse" type="pcss:getFileAccessResponse"/>
             <xsd:element name="getAppearanceCriminalApprMethodRequest" type="pcss:getAppearanceCriminalApprMethodRequest"/>
@@ -61,20 +61,20 @@
             <xsd:element name="getFileDetailCriminalResponse" type="pcss:getFileDetailCriminalResponse"/>
             <xsd:element name="getClosedFileRequest" type="pcss:getClosedFileRequest"/>
             <xsd:element name="getClosedFileResponse" type="pcss:getClosedFileResponse"/>
-            <xsd:complexType name="getMergedDataRequest">
+            <xsd:complexType name="getMergedParticipantsRequest">
                 <xsd:sequence>
                     <xsd:element name="FromDate" type="xsd:string"/>
                     <xsd:element name="ToDate" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="getMergedDataResponse">
+            <xsd:complexType name="getMergedParticipantsResponse">
                 <xsd:sequence>
                     <xsd:element name="ResponseCd" type="xsd:string"/>
                     <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
-                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="MergedData" type="pcss:MergedDataType"/>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="MergedParticipants" type="pcss:MergedParticipantsType"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="MergedDataType">
+            <xsd:complexType name="MergedParticipantsType">
                 <xsd:sequence>
                     <xsd:element name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
                     <xsd:element name="MergedWithPartId" type="dx:SystemIdType"/>
@@ -811,8 +811,8 @@
                 xmlns:tns="http://courts.gov.bc.ca/xml/ns/pcss/criminal/v1"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema">
             <xsd:import namespace="http://courts.gov.bc.ca/XMLSchema/PCSS/1.0.0"/>
-            <xsd:element name="getMergedData" type="tns:getMergedData"/>
-            <xsd:element name="getMergedDataResponse" type="tns:getMergedDataResponse"/>
+            <xsd:element name="getMergedParticipants" type="tns:getMergedParticipants"/>
+            <xsd:element name="getMergedParticipantsResponse" type="tns:getMergedParticipantsResponse"/>
             <xsd:element name="getFileAccess" type="tns:getFileAccess"/>
             <xsd:element name="getFileAccessResponse" type="tns:getFileAccessResponse"/>
             <xsd:element name="getAppearanceCriminalApprMethod" type="tns:getAppearanceCriminalApprMethod"/>
@@ -853,24 +853,24 @@
             <xsd:element name="getFileDetailCriminalResponse" type="tns:getFileDetailCriminalResponse"/>
             <xsd:element name="getClosedFile" type="tns:getClosedFile"/>
             <xsd:element name="getClosedFileResponse" type="tns:getClosedFileResponse"/>
-            <xsd:complexType name="getMergedData">
+            <xsd:complexType name="getMergedParticipants">
                 <xsd:sequence>
-                    <xsd:element name="getMergedDataRequest" nillable="true" type="tns:getMergedDataRequest"/>
+                    <xsd:element name="getMergedParticipantsRequest" nillable="true" type="tns:getMergedParticipantsRequest"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="getMergedDataRequest">
+            <xsd:complexType name="getMergedParticipantsRequest">
                 <xsd:sequence>
-                    <xsd:element ref="pcss:getMergedDataRequest"/>
+                    <xsd:element ref="pcss:getMergedParticipantsRequest"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="getMergedDataResponse">
+            <xsd:complexType name="getMergedParticipantsResponse">
                 <xsd:sequence>
-                    <xsd:element name="getMergedDataesponse" nillable="true" type="tns:getMergedDataResponse2"/>
+                    <xsd:element name="getMergedParticipantsResponse" nillable="true" type="tns:getMergedParticipantsResponse2"/>
                 </xsd:sequence>
             </xsd:complexType>
-            <xsd:complexType name="getMergedDataResponse2">
+            <xsd:complexType name="getMergedParticipantsResponse2">
                 <xsd:sequence>
-                    <xsd:element ref="pcss:getMergedDataResponse"/>
+                    <xsd:element ref="pcss:getMergedParticipantsResponse"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="getFileAccess">
@@ -1526,11 +1526,11 @@
             </xsd:simpleType>
         </xsd:schema>
     </wsdl:types>
-    <wsdl:message name="pcssCriminal_PortType_getMergedData">
-        <wsdl:part name="parameters" element="tns:getMergedData"></wsdl:part>
+    <wsdl:message name="pcssCriminal_PortType_getMergedParticipants">
+        <wsdl:part name="parameters" element="tns:getMergedParticipants"></wsdl:part>
     </wsdl:message>
-    <wsdl:message name="pcssCriminal_PortType_getMergedDataResponse">
-        <wsdl:part name="parameters" element="tns:getMergedDataResponse"></wsdl:part>
+    <wsdl:message name="pcssCriminal_PortType_getMergedParticipantsResponse">
+        <wsdl:part name="parameters" element="tns:getMergedParticipantsResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="pcssCriminal_PortType_getFileAccess">
         <wsdl:part name="parameters" element="tns:getFileAccess"></wsdl:part>
@@ -1736,6 +1736,15 @@
     </wsdl:portType>
     <wsdl:binding name="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder" type="tns:pcssCriminal_PortType">
         <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="getMergedParticipants">
+            <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_getMergedParticipants" style="document"/>
+            <wsdl:input>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="getFileAccess">
             <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_getFileAccess" style="document"/>
             <wsdl:input>
@@ -1819,6 +1828,15 @@
         </wsdl:operation>
         <wsdl:operation name="setFileNote">
             <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_setFileNote" style="document"/>
+            <wsdl:input>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="setFilesNote">
+            <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_setFilesNote" style="document"/>
             <wsdl:input>
                 <soap12:body parts="parameters" use="literal"/>
             </wsdl:input>
