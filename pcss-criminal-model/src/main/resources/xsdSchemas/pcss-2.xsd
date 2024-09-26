@@ -33,6 +33,32 @@
         </xsd:complexType>
     </xsd:element>
 
+    <xsd:element name="getMergedParticipants">
+        <xsd:complexType >
+            <xsd:sequence>
+                <xsd:element name="getMergedParticipantsRequest" nillable="true" type="tns:getMergedParticipantsRequest"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="getMergedParticipantsRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getMergedParticipantsRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="getMergedParticipantsResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="getMergedParticipantsResponse" nillable="true" type="tns:getMergedParticipantsResponse2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="getMergedParticipantsResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:getMergedParticipantsResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:element name="getFileAccess">
         <xsd:complexType >
             <xsd:sequence>
@@ -472,6 +498,32 @@
     <xsd:complexType name="setFileNoteResponse2">
         <xsd:sequence>
             <xsd:element ref="pcss:setFileNoteResponse"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="setFilesNote">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="setFilesNoteRequest" nillable="true" type="tns:setFilesNoteRequest"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="setFilesNoteRequest">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFilesNoteRequest"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="setFilesNoteResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="setFilesNoteResponse" nillable="true" type="tns:setFilesNoteResponse2"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    <xsd:complexType name="setFilesNoteResponse2">
+        <xsd:sequence>
+            <xsd:element ref="pcss:setFilesNoteResponse"/>
         </xsd:sequence>
     </xsd:complexType>
 

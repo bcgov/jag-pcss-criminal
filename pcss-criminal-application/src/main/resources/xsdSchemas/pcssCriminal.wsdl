@@ -49,8 +49,16 @@
             <xsd:element name="setCrownFileDetailResponse" type="pcss:setCrownFileDetailResponse"/>
             <xsd:element name="setCrownAssignmentRequest" type="pcss:setCrownAssignmentRequest"/>
             <xsd:element name="setCrownAssignmentResponse" type="pcss:setCrownAssignmentResponse"/>
+			
             <xsd:element name="setFileNoteRequest" type="pcss:setFileNoteRequest"/>
             <xsd:element name="setFileNoteResponse" type="pcss:setFileNoteResponse"/>
+			
+            <xsd:element name="setFilesNoteRequest" type="pcss:setFilesNoteRequest"/>
+            <xsd:element name="setFilesNoteResponse" type="pcss:setFilesNoteResponse"/>
+			
+            <xsd:element name="getMergedParticipantsRequest" type="pcss:getMergedParticipantsRequest"/>
+            <xsd:element name="getMergedParticipantsResponse" type="pcss:getMergedParticipantsResponse"/>
+			
             <xsd:element name="getAppearanceCriminalRequest" type="pcss:getAppearanceCriminalRequest"/>
             <xsd:element name="getAppearanceCriminalResponse" type="pcss:getAppearanceCriminalResponse"/>
             <xsd:element name="getFileDetailCriminalRequest" type="pcss:getFileDetailCriminalRequest"/>
@@ -541,6 +549,7 @@
                     <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
+			
             <xsd:complexType name="setFileNoteRequest">
                 <xsd:sequence>
                     <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
@@ -557,6 +566,45 @@
                     <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
+			
+            <xsd:complexType name="setFilesNoteRequest">
+                <xsd:sequence>
+                    <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
+                    <xsd:element form="qualified" name="RequestPartId" type="dx:SystemIdType"/>
+                    <xsd:element form="qualified" name="RequestDtm" type="dx:DateTimeType"/>
+                    <xsd:element form="qualified" name="JustinNoList" type="xsd:string"/>
+                    <xsd:element form="qualified" name="NoteTxt" type="xsd:string"/>
+                    <xsd:element form="qualified" name="FileNoteTypeCd" type="dx:FileNoteType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="setFilesNoteResponse">
+                <xsd:sequence>
+                    <xsd:element form="qualified" name="ResponseCd" type="xsd:string"/>
+                    <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:complexType name="getMergedParticipantsRequest">
+                <xsd:sequence>
+                    <xsd:element name="FromDate" type="xsd:string"/>
+                    <xsd:element name="ToDate" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedParticipantsResponse">
+                <xsd:sequence>
+                    <xsd:element name="ResponseCd" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="MergedParticipants" type="pcss:MergedParticipantsType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="MergedParticipantsType">
+                <xsd:sequence>
+                    <xsd:element name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
+                    <xsd:element name="MergedWithPartId" type="dx:SystemIdType"/>
+                    <xsd:element name="MergeEntDate" type="dx:DateTimeType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+			
             <xsd:complexType name="getAppearanceCriminalRequest">
                 <xsd:sequence>
                     <xsd:element form="qualified" name="RequestAgencyIdentifierId" type="dx:AgencyIdentifierType"/>
@@ -803,8 +851,16 @@
             <xsd:element name="setCrownFileDetailResponse" type="tns:setCrownFileDetailResponse"/>
             <xsd:element name="setCrownAssignment" type="tns:setCrownAssignment"/>
             <xsd:element name="setCrownAssignmentResponse" type="tns:setCrownAssignmentResponse"/>
+			
             <xsd:element name="setFileNote" type="tns:setFileNote"/>
             <xsd:element name="setFileNoteResponse" type="tns:setFileNoteResponse"/>
+			
+            <xsd:element name="setFilesNote" type="tns:setFilesNote"/>
+            <xsd:element name="setFilesNoteResponse" type="tns:setFilesNoteResponse"/>
+			
+            <xsd:element name="getMergedParticipants" type="tns:getMergedParticipants"/>
+            <xsd:element name="getMergedParticipantsResponse" type="tns:getMergedParticipantsResponse"/>			
+			
             <xsd:element name="getAppearanceCriminal" type="tns:getAppearanceCriminal"/>
             <xsd:element name="getAppearanceCriminalResponse" type="tns:getAppearanceCriminalResponse"/>
             <xsd:element name="getFileDetailCriminal" type="tns:getFileDetailCriminal"/>
@@ -1131,6 +1187,7 @@
                     <xsd:element ref="pcss:setCrownAssignmentResponse"/>
                 </xsd:sequence>
             </xsd:complexType>
+			
             <xsd:complexType name="setFileNote">
                 <xsd:sequence>
                     <xsd:element name="setFileNoteRequest" nillable="true" type="tns:setFileNoteRequest"/>
@@ -1151,6 +1208,49 @@
                     <xsd:element ref="pcss:setFileNoteResponse"/>
                 </xsd:sequence>
             </xsd:complexType>
+			
+            <xsd:complexType name="setFilesNote">
+                <xsd:sequence>
+                    <xsd:element name="setFilesNoteRequest" nillable="true" type="tns:setFilesNoteRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="setFilesNoteRequest">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:setFilesNoteRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="setFilesNoteResponse">
+                <xsd:sequence>
+                    <xsd:element name="setFilesNoteResponse" nillable="true" type="tns:setFilesNoteResponse2"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="setFilesNoteResponse2">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:setFilesNoteResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+			
+            <xsd:complexType name="getMergedParticipants">
+                <xsd:sequence>
+                    <xsd:element name="getMergedParticipantsRequest" nillable="true" type="tns:getMergedParticipantsRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedParticipantsRequest">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:getMergedParticipantsRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedParticipantsResponse">
+                <xsd:sequence>
+                    <xsd:element name="getMergedParticipantsResponse" nillable="true" type="tns:getMergedParticipantsResponse2"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="getMergedParticipantsResponse2">
+                <xsd:sequence>
+                    <xsd:element ref="pcss:getMergedParticipantsResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>			
+			
             <xsd:complexType name="getAppearanceCriminal">
                 <xsd:sequence>
                     <xsd:element name="getAppearanceCriminalRequest" nillable="true" type="tns:getAppearanceCriminalRequest"/>
@@ -1533,9 +1633,28 @@
     <wsdl:message name="pcssCriminal_PortType_getAppearanceCriminalApprMethodResponse">
         <wsdl:part name="parameters" element="tns:getAppearanceCriminalApprMethodResponse"></wsdl:part>
     </wsdl:message>
+	
     <wsdl:message name="pcssCriminal_PortType_setFileNote">
         <wsdl:part name="parameters" element="tns:setFileNote"></wsdl:part>
     </wsdl:message>
+    <wsdl:message name="pcssCriminal_PortType_setFileNoteResponse">
+        <wsdl:part name="parameters" element="tns:setFileNoteResponse"></wsdl:part>
+    </wsdl:message>
+	
+    <wsdl:message name="pcssCriminal_PortType_setFilesNote">
+        <wsdl:part name="parameters" element="tns:setFilesNote"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="pcssCriminal_PortType_setFilesNoteResponse">
+        <wsdl:part name="parameters" element="tns:setFilesNoteResponse"></wsdl:part>
+    </wsdl:message>
+	
+    <wsdl:message name="pcssCriminal_PortType_getMergedParticipants">
+        <wsdl:part name="parameters" element="tns:getMergedParticipants"></wsdl:part>
+    </wsdl:message>	
+    <wsdl:message name="pcssCriminal_PortType_getMergedParticipantsResponse">
+        <wsdl:part name="parameters" element="tns:getMergedParticipantsResponse"></wsdl:part>
+    </wsdl:message>
+	
     <wsdl:message name="pcssCriminal_PortType_setAppearanceMethodCriminalResponse">
         <wsdl:part name="parameters" element="tns:setAppearanceMethodCriminalResponse"></wsdl:part>
     </wsdl:message>
@@ -1550,9 +1669,6 @@
     </wsdl:message>
     <wsdl:message name="pcssCriminal_PortType_setCounselDetailCriminal">
         <wsdl:part name="parameters" element="tns:setCounselDetailCriminal"></wsdl:part>
-    </wsdl:message>
-    <wsdl:message name="pcssCriminal_PortType_setFileNoteResponse">
-        <wsdl:part name="parameters" element="tns:setFileNoteResponse"></wsdl:part>
     </wsdl:message>
     <wsdl:message name="pcssCriminal_PortType_getPersonnelAvailDetail">
         <wsdl:part name="parameters" element="tns:getPersonnelAvailDetail"></wsdl:part>
@@ -1621,10 +1737,22 @@
             <wsdl:input message="tns:pcssCriminal_PortType_getSyncCriminalAppearance"></wsdl:input>
             <wsdl:output message="tns:pcssCriminal_PortType_getSyncCriminalAppearanceResponse"></wsdl:output>
         </wsdl:operation>
+		
         <wsdl:operation name="setFileNote">
             <wsdl:input message="tns:pcssCriminal_PortType_setFileNote"></wsdl:input>
             <wsdl:output message="tns:pcssCriminal_PortType_setFileNoteResponse"></wsdl:output>
         </wsdl:operation>
+		
+        <wsdl:operation name="setFilesNote">
+            <wsdl:input message="tns:pcssCriminal_PortType_setFilesNote"></wsdl:input>
+            <wsdl:output message="tns:pcssCriminal_PortType_setFilesNoteResponse"></wsdl:output>
+        </wsdl:operation>
+
+        <wsdl:operation name="getMergedParticipants">
+            <wsdl:input message="tns:pcssCriminal_PortType_getMergedParticipants"></wsdl:input>
+            <wsdl:output message="tns:pcssCriminal_PortType_getMergedParticipantsResponse"></wsdl:output>
+        </wsdl:operation>
+		
         <wsdl:operation name="setHearingRestrictionCriminal">
             <wsdl:input message="tns:pcssCriminal_PortType_setHearingRestrictionCriminal"></wsdl:input>
             <wsdl:output message="tns:pcssCriminal_PortType_setHearingRestrictionCriminalResponse"></wsdl:output>
@@ -1749,6 +1877,7 @@
                 <soap12:body parts="parameters" use="literal"/>
             </wsdl:output>
         </wsdl:operation>
+		
         <wsdl:operation name="setFileNote">
             <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_setFileNote" style="document"/>
             <wsdl:input>
@@ -1758,6 +1887,27 @@
                 <soap12:body parts="parameters" use="literal"/>
             </wsdl:output>
         </wsdl:operation>
+		
+        <wsdl:operation name="setFilesNote">
+            <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_setFilesNote" style="document"/>
+            <wsdl:input>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+		
+        <wsdl:operation name="getMergedParticipants">
+            <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_getMergedParticipants" style="document"/>
+            <wsdl:input>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body parts="parameters" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>		
+		
         <wsdl:operation name="setHearingRestrictionCriminal">
             <soap12:operation soapAction="JusticePCSSCriminal_wsProvider_pcssCriminal_Binder_setHearingRestrictionCriminal" style="document"/>
             <wsdl:input>
