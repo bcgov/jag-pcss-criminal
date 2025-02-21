@@ -738,6 +738,7 @@
                 <xsd:sequence>
                     <xsd:element form="qualified" name="SectionTxt" type="xsd:string"/>
                     <xsd:element form="qualified" name="SectionDscTxt" type="xsd:string"/>
+                    <xsd:element form="qualified" name="RestrictedStatuteYN" type="dx:YesNoType"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Witness">
