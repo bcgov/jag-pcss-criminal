@@ -279,6 +279,7 @@
             <xsd:whiteSpace value="preserve"/>
             <xsd:enumeration value="WIT"/>
             <xsd:enumeration value="CRN"/>
+            <xsd:enumeration value="VIC" />
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="JustinFileAccessType">
