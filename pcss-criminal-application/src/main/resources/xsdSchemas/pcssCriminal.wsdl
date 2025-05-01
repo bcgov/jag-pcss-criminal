@@ -732,12 +732,15 @@
                     <xsd:element form="qualified" minOccurs="0" name="RvoYN" type="dx:YesNoType"/>
                     <xsd:element form="qualified" minOccurs="0" name="HroipYN" type="dx:YesNoType"/>
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Charge" type="pcss:Charge"/>
+                    <xsd:element form="qualified" minOccurs="0" name="OutstandingWarrantYN" type="dx:YesNoType"/>
+                    <xsd:element form="qualified" minOccurs="0" name="OutstandingWarrantFiles" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Charge">
                 <xsd:sequence>
                     <xsd:element form="qualified" name="SectionTxt" type="xsd:string"/>
                     <xsd:element form="qualified" name="SectionDscTxt" type="xsd:string"/>
+                    <xsd:element form="qualified" name="RestrictedStatuteYN" type="dx:YesNoType"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Witness">
@@ -1553,6 +1556,7 @@
                     <xsd:whiteSpace value="preserve"/>
                     <xsd:enumeration value="WIT"/>
                     <xsd:enumeration value="CRN"/>
+                    <xsd:enumeration value="VIC" />
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType name="JustinFileAccessType">
