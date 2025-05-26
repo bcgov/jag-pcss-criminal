@@ -21,9 +21,9 @@
     </xsd:element>
     <xsd:complexType name="MergedParticipantsType">
         <xsd:sequence>
-            <xsd:element form="qualified" name="part_id" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
-            <xsd:element form="qualified" name="merged_with_part_id" type="dx:SystemIdType"/>
-            <xsd:element form="qualified" name="mrge_ent_dt" type="dx:DateTimeType"/>
+            <xsd:element form="qualified" name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
+            <xsd:element form="qualified" name="MergedWithPartId" type="dx:SystemIdType"/>
+            <xsd:element form="qualified" name="MergeEntDate" type="dx:DateTimeType"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:element name="getFileAccessRequest">
