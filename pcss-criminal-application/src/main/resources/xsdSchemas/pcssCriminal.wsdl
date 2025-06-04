@@ -586,22 +586,22 @@
 
             <xsd:complexType name="getMergedParticipantsRequest">
                 <xsd:sequence>
-                    <xsd:element name="FromDate" type="xsd:string"/>
-                    <xsd:element name="ToDate" type="xsd:string"/>
+                    <xsd:element form="qualified" name="FromDate" type="xsd:string"/>
+                    <xsd:element form="qualified" name="ToDate" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="getMergedParticipantsResponse">
                 <xsd:sequence>
-                    <xsd:element name="ResponseCd" type="xsd:string"/>
-                    <xsd:element minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
-                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="MergedParticipants" type="pcss:MergedParticipantsType"/>
+                    <xsd:element form="qualified" name="ResponseCd" type="xsd:string"/>
+                    <xsd:element form="qualified" minOccurs="0" name="ResponseMessageTxt" type="xsd:string"/>
+                    <xsd:element form="qualified" minOccurs="0" maxOccurs="unbounded" name="MergedParticipants" type="pcss:MergedParticipantsType"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="MergedParticipantsType">
                 <xsd:sequence>
-                    <xsd:element name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
-                    <xsd:element name="MergedWithPartId" type="dx:SystemIdType"/>
-                    <xsd:element name="MergeEntDate" type="dx:DateTimeType"/>
+                    <xsd:element form="qualified" name="PartId" minOccurs="1" maxOccurs="1" type="dx:SystemIdType"/>
+                    <xsd:element form="qualified" name="MergedWithPartId" type="dx:SystemIdType"/>
+                    <xsd:element form="qualified" name="MergeEntDate" type="dx:DateTimeType"/>
                 </xsd:sequence>
             </xsd:complexType>
 			
