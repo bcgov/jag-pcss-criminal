@@ -21,7 +21,7 @@ RUN mvn -ntp -B clean install \
 #############################################################################################
 FROM eclipse-temurin:17-jre-alpine
 
-RUN apk upgrade expat  # Fix for CVE-2022-43680
+RUN apk update && apk add --no-cache libexpat=2.7.2-r0
 
 ARG SERVICE_NAME=pcss-criminal-application
 
