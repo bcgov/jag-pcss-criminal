@@ -21,7 +21,7 @@ RUN mvn -ntp -B clean install \
 #############################################################################################
 FROM eclipse-temurin:17-jre-jammy
 
-RUN apk update
+RUN apk update && apk add --no-cache libexpat=2.7.3-r0
 
 ARG SERVICE_NAME=pcss-criminal-application
 
