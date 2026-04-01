@@ -19,9 +19,9 @@ RUN mvn -ntp -B clean install \
 #############################################################################################
 ### Stage where Docker is running a java process to run a service built in previous stage ###
 #############################################################################################
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:17.0.18_8-jre-alpine
 
-RUN apk update && apk add --no-cache libexpat
+RUN apk update && apk add --no-cache libexpat zlib libpng gnutls
 
 ARG SERVICE_NAME=pcss-criminal-application
 
