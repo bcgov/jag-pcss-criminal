@@ -25,7 +25,7 @@ RUN apk update \
     && apk add --upgrade --no-cache libexpat \
     && apk add --upgrade --no-cache libpng \
     && apk add --upgrade --no-cache openssl \
-    && apk add --upgrade --no-cache gnutils
+    && apk add --upgrade --no-cache gnutls
 
 ARG SERVICE_NAME=pcss-criminal-application
 
