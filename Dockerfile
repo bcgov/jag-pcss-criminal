@@ -24,7 +24,8 @@ FROM eclipse-temurin:17-jre-alpine
 RUN apk update \
     && apk add --upgrade --no-cache libexpat \
     && apk add --upgrade --no-cache libpng \
-    && apk add --upgrade --no-cache openssl
+    && apk add --upgrade --no-cache openssl \
+    && apk add --upgrade --no-cache gnutils
 
 ARG SERVICE_NAME=pcss-criminal-application
 
