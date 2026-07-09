@@ -1,7 +1,7 @@
 #############################################################################################
 ###              Stage where Docker is building spring boot app using maven               ###
 #############################################################################################
-FROM maven:3.8.3-openjdk-17 as build
+FROM maven:3.9.9-eclipse-temurin-17 as build
 
 ARG SKIP_TESTS=false
 ARG MVN_PROFILE=default
@@ -21,7 +21,11 @@ RUN mvn -ntp -B clean install \
 #############################################################################################
 FROM eclipse-temurin:17-jre-alpine
 
-RUN apk upgrade expat  # Fix for CVE-2022-43680
+RUN apk update \
+    && apk add --upgrade --no-cache libexpat \
+    && apk add --upgrade --no-cache libpng \
+    && apk add --upgrade --no-cache openssl \
+    && apk add --upgrade --no-cache gnutls
 
 ARG SERVICE_NAME=pcss-criminal-application
 
