@@ -719,6 +719,8 @@
                 <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="HearingRestriction" type="pcss:HearingRestriction2"/>
                 <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="CrownFileNote" type="pcss:CrownFileNote"/>
                 <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Rcc" type="pcss:Rcc"/>
+                <xsd:element form="qualified" minOccurs="0" name="SealBanTxt" type="xsd:string"/>
+                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Victims" type="pcss:Victim"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -806,6 +808,23 @@
             <xsd:element form="qualified" name="RccAgencyFileNo" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="SynopsisTxt" type="xsd:string"/>
             <xsd:element form="qualified" name="DemsCaseUrl" minOccurs="0" type="xsd:string"/>
+        </xsd:sequence>
+
+    </xsd:complexType>
+    <xsd:complexType name="Victim">
+        <xsd:sequence>
+            <xsd:element form="qualified" minOccurs="0" name="PartId" type="dx:SystemIdType"/>
+            <xsd:element form="qualified" minOccurs="0" name="ProfSeqNo" type="dx:SystemSeqNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="LastName" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="GivenName" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="OrganizationName" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="BirthDate" type="dx:DateType"/>
+            <xsd:element form="qualified" minOccurs="0" name="VcsrServiceOfferDt" type="dx:DateType"/>
+            <xsd:element form="qualified" minOccurs="0" name="VcsrStmtRecvdDt" type="dx:DateType"/>
+            <xsd:element form="qualified" minOccurs="0" name="VcsrAPRNCNotificationYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="SentencingNotifRequestedYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="VcsrVictimServicesAgencyNm" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="RccId" type="dx:SystemIdType"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:element name="getClosedFileRequest">
