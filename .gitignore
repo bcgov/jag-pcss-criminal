@@ -41,3 +41,4 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 comparison-tool/results/*.txt
+*.versionsBackup
