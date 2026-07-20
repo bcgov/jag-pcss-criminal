@@ -720,7 +720,7 @@
                 <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="CrownFileNote" type="pcss:CrownFileNote"/>
                 <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Rcc" type="pcss:Rcc"/>
                 <xsd:element form="qualified" minOccurs="0" name="SealBanTxt" type="xsd:string"/>
-                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Victims" type="pcss:Victim"/>
+                <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Victim" type="pcss:Victim"/>
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
@@ -753,12 +753,12 @@
             <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Charge" type="pcss:Charge"/>
             <xsd:element form="qualified" minOccurs="0" name="OutstandingWarrantYN" type="dx:YesNoType"/>
             <xsd:element form="qualified" minOccurs="0" name="OutstandingWarrantFiles" type="xsd:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="englishTrialYN" type="dx:YesNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="frenchTrialYN" type="dx:YesNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="bilingualTrialYN" type="dx:YesNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="noLanguageStatedYN" type="dx:YesNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="languageRightsAdvisedYN" type="dx:YesNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="languageNotificationApplicationYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="EnglishTrialYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="FrenchTrialYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="BilingualTrialYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="NoLanguageStatedYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="LanguageRightsAdvisedYN" type="dx:YesNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="LanguageNotificationApplicationYN" type="dx:YesNoType"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="Charge">
@@ -815,10 +815,10 @@
         <xsd:sequence>
             <xsd:element form="qualified" minOccurs="0" name="PartId" type="dx:SystemIdType"/>
             <xsd:element form="qualified" minOccurs="0" name="ProfSeqNo" type="dx:SystemSeqNoType"/>
-            <xsd:element form="qualified" minOccurs="0" name="LastName" type="xsd:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="GivenName" type="xsd:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="OrganizationName" type="xsd:string"/>
-            <xsd:element form="qualified" minOccurs="0" name="BirthDate" type="dx:DateType"/>
+            <xsd:element form="qualified" minOccurs="0" name="LastNm" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="GivenNm" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="OrgNm" type="xsd:string"/>
+            <xsd:element form="qualified" minOccurs="0" name="BirthDt" type="dx:DateType"/>
             <xsd:element form="qualified" minOccurs="0" name="VcsrServiceOfferDt" type="dx:DateType"/>
             <xsd:element form="qualified" minOccurs="0" name="VcsrStmtRecvdDt" type="dx:DateType"/>
             <xsd:element form="qualified" minOccurs="0" name="VcsrAPRNCNotificationYN" type="dx:YesNoType"/>
