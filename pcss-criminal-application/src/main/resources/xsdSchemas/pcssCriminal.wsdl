@@ -799,7 +799,7 @@
                     <xsd:element form="qualified" minOccurs="0" name="ProfSeqNo" type="dx:SystemSeqNoType"/>
                     <xsd:element form="qualified" minOccurs="0" name="LastNm" type="xsd:string"/>
                     <xsd:element form="qualified" minOccurs="0" name="GivenNm" type="xsd:string"/>
-                    <xsd:element form="qualified" minOccurs="0" name="OrganizationNm" type="xsd:string"/>
+                    <xsd:element form="qualified" minOccurs="0" name="OrgNm" type="xsd:string"/>
                     <xsd:element form="qualified" minOccurs="0" name="BirthDt" type="dx:DateType"/>
                     <xsd:element form="qualified" minOccurs="0" name="VcsrServiceOfferDt" type="dx:DateType"/>
                     <xsd:element form="qualified" minOccurs="0" name="VcsrStmtRecvdDt" type="dx:DateType"/>
