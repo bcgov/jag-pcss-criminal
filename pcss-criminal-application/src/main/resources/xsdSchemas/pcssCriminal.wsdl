@@ -705,6 +705,7 @@
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Rcc" type="pcss:Rcc"/>
                     <xsd:element form="qualified" minOccurs="0" name="SealBanTxt" type="xsd:string"/>
                     <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Victim" type="pcss:Victim"/>
+                    <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="SpecializedCourtNeed" type="pcss:SpecializedCourtNeed"/>
                 </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="TrialRemark">
@@ -838,6 +839,12 @@
                     <xsd:element form="qualified" name="PartNm" type="xsd:string"/>
                     <xsd:element form="qualified" name="ApprId" type="dx:SystemIdType"/>
                     <xsd:element form="qualified" name="ApprDt" type="dx:DateType"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="SpecializedCourtNeed">
+                <xsd:sequence>
+                    <xsd:element form="qualified" name="SpecialCourtTypeCd" type="xsd:string"/>
+                    <xsd:element form="qualified" name="SpecialCourtTypeDsc" type="xsd:string"/>
                 </xsd:sequence>
             </xsd:complexType>
         </xsd:schema>
