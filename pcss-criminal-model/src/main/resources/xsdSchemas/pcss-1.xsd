@@ -780,6 +780,8 @@
             <xsd:element form="qualified" minOccurs="0" name="ConfidentialYN" type="dx:YesNoType"/>
             <xsd:element form="qualified" minOccurs="0" name="PinCodeTxt" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="AgencyId" type="dx:SystemIdType"/>
+            <xsd:element form="qualified" minOccurs="0" name="ProfSeqNo" type="dx:SystemSeqNoType"/>
+            <xsd:element form="qualified" minOccurs="0" name="ListIdentifier" type="xsd:string"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:complexType name="HearingRestriction2">
