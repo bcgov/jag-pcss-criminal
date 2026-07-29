@@ -5,11 +5,11 @@
     <parent>
         <groupId>ca.bc.gov.open</groupId>
         <artifactId>pcss-criminal</artifactId>
-        <version>2.0.5-SNAPSHOT</version>
+        <version>2.0.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>pcss-criminal-application</artifactId>
-    <version>2.0.5-SNAPSHOT</version>
+    <version>2.0.6-SNAPSHOT</version>
     <name>pcss-criminal-application</name>
     <description>PCSS Criminal Application</description>
 
@@ -189,19 +189,19 @@
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-model</artifactId>
-            <version>2.0.5-SNAPSHOT</version>
+            <version>2.0.6-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-common</artifactId>
-            <version>2.0.5-SNAPSHOT</version>
+            <version>2.0.6-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>ca.bc.gov.open</groupId>
             <artifactId>pcss-criminal-secure-model</artifactId>
-            <version>2.0.5-SNAPSHOT</version>
+            <version>2.0.6-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
