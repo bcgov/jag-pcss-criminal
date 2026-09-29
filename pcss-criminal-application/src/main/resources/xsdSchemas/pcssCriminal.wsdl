@@ -743,6 +743,7 @@
                     <xsd:element form="qualified" minOccurs="0" name="NoLanguageStatedYN" type="dx:YesNoType"/>
                     <xsd:element form="qualified" minOccurs="0" name="LanguageRightsAdvisedYN" type="dx:YesNoType"/>
                     <xsd:element form="qualified" minOccurs="0" name="LanguageNotificationApplicationYN" type="dx:YesNoType"/>
+                    <xsd:element form="qualified" minOccurs="0" name="CpoYN" type="dx:YesNoType"/>
                     </xsd:sequence>
             </xsd:complexType>
             <xsd:complexType name="Charge">
