@@ -6,6 +6,7 @@ import ca.bc.gov.open.pcsscriminalapplication.properties.CaseLookupProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.DemsProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.IslProperties;
 import ca.bc.gov.open.pcsscriminalapplication.properties.PcssProperties;
+import ca.bc.gov.open.pcsscriminalapplication.observability.SoapMetricsInterceptor;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantDeserializer;
 import ca.bc.gov.open.pcsscriminalcommon.serializer.InstantSerializer;
 import com.fasterxml.jackson.databind.*;
@@ -16,6 +17,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -34,6 +36,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.config.annotation.EnableWs;
 import org.springframework.ws.config.annotation.WsConfigurerAdapter;
+import org.springframework.ws.server.EndpointInterceptor;
 import org.springframework.ws.soap.SoapVersion;
 import org.springframework.ws.soap.saaj.SaajSoapMessageFactory;
 import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
@@ -54,11 +57,21 @@ import org.springframework.xml.xsd.XsdSchema;
     CaseLookupProperties.class
 })
 public class SoapConfig extends WsConfigurerAdapter {
+    private final SoapMetricsInterceptor soapMetricsInterceptor;
+
+    public SoapConfig(SoapMetricsInterceptor soapMetricsInterceptor) {
+        this.soapMetricsInterceptor = soapMetricsInterceptor;
+    }
 
     @Autowired private PcssProperties pcssProperties;
     @Autowired private DemsProperties demsProperties;
     @Autowired private IslProperties islProperties;
     @Autowired private CaseLookupProperties caseLookupProperties;
+
+    @Override
+    public void addInterceptors(List<EndpointInterceptor> interceptors) {
+        interceptors.add(soapMetricsInterceptor);
+    }
 
     @Bean
     public SoapFaultMappingExceptionResolver exceptionResolver() {
