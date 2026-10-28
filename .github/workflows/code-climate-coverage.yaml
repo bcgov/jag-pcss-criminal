@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout PCSS Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       # Get Code Climate binary
       - name: Download Code Climate Binary
